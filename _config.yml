@@ -9,7 +9,7 @@
 title: stkymi
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
-Õâ¸öµØ·½ÊÇ¿ÉÒÔĞŞ¸ÄµÄ£»
+è¿™ä¸ªåœ°æ–¹æ˜¯å¯ä»¥ä¿®æ”¹çš„ï¼›(å»¶è¿Ÿäº†ï¼‰
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: jekyllrb
