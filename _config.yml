@@ -9,8 +9,8 @@
 title: stkymi
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
-这个地方是可以修改的；(延迟了）
-baseurl: "/blog" # the subpath of your site, e.g. /blog
+  Write�� �˴�����
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
 twitter_username: jekyllrb
 github_username:  jekyll
