@@ -7,13 +7,13 @@
 
 # Site settings
 title: stkymi
-email: your-email@domain.com
+email: stkmye@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Write So?
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: stkymi
+github_username:  stkymi
 
 # Build settings
 markdown: kramdown
