@@ -156,17 +156,7 @@ To https://github.com/username/username.github.io.git
 
 代表成功推送。现在在浏览器输入网址 [http://username.github.io](http://username.github.io)，则可以看到博客的样子了。
 
-如果没有修改模板的需求，利用 Git + Github + Jekyll 搭建博客大概就是这样子。写文章，只需要在 `_post/` 文件加中，加入带有 YAML 头信息（YAML front matter）的 markdown 文件，然后 push 到 Github，就会被自动渲染成 HTML。比如，增加一篇名为 My First Post 的博客，在本地创建一个文件名带有日期的 markdown 文件 2015-04-20-my-first-post.md（里面要写好头信息）：
+如果没有修改模板的需求，利用 Git + Github + Jekyll 搭建博客大概就是这样子。写文章，只需要在 `_post/` 文件加中，加入带有 YAML 头信息（YAML front matter）的 markdown 文件，然后(git add / git commit / git push)推送到 Github，就会被自动渲染成 HTML。
 
-{% highlight tex %}
----
-layout: post
-title: My First Post 
----
-	
-这是我的第一篇博客
 
-{% endhighlight %}	
-	
 
-最后按上述方法(git add / git commit / git push)推送到 Github，就大功告成了。
