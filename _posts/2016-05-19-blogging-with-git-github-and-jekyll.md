@@ -1,7 +1,6 @@
 ---
-layout: article
+layout: post
 title: "Git 笔记：用 Github + Jekyll 写博客"
-categories: tech
 ---
 
 简单说，只需要三步，就可以在 Github 搭建起一个博客：
