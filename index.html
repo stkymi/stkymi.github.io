@@ -5,5 +5,29 @@ title: stkymi
 
 
 <div class="comment">
+  <!--引用播放器样式 plyr.css-->
+<p><link rel="stylesheet" href="http://o73mwv6qj.bkt.clouddn.com/plyr%5B1%5D.css"><br><!--加载播放器--></p>
+<script src="http://o73mwv6qj.bkt.clouddn.com/plyr%5B1%5D.js"></script>
+<!--引用播放器按钮 SVG 图标-->
+<script>
+(function(d, p){
+    var a = new XMLHttpRequest(),
+        b = d.body;
+    a.open("GET", p, true);
+    a.send();
+    a.onload = function(){
+        var c = d.createElement("div");
+        c.style.display = "none";
+        c.innerHTML = a.responseText;
+        b.insertBefore(c, b.childNodes[0]);
+    }
+})(document, "https://cdn.plyr.io/1.6.6/sprite.svg");
+</script>
+<div class="player">
+    <audio controls autoplay loop>
+      <source src="http://o73mwv6qj.bkt.clouddn.com/%E5%B0%8F%E5%B9%B8%E8%BF%90.mp3" type="audio/mpeg">
+    </audio>
+</div> 
+<script>plyr.setup();</script>
       	If you have any comment, send me an email at <em>stkmye At gmail Dot com</em> or Twitter me <a href="http://twitter.com/stkymi">@stkymi</a>.
 </div>
