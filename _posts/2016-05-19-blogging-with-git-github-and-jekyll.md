@@ -2,6 +2,7 @@
 layout: post
 title: "Git 笔记：用 Github + Jekyll 写博客"
 ---
+原文链接 http://huangziwei.com/tech/blogging-with-git-github-and-jekyll/
 
 简单说，只需要三步，就可以在 Github 搭建起一个博客：
 
