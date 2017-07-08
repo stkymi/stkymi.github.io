@@ -6,7 +6,7 @@ logo: /assets/images/logo.jpg
 markdown: kramdown
 rouge: true
 
-comments: true
+
 paginate: 5
 paginate_path: "/page:num"
 permalink: /:title.html
