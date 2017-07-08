@@ -7,7 +7,7 @@ markdown: kramdown
 rouge: true
 
 comments: true
+gems: [jekyll-paginate]
 paginate: 5
 paginate_path: "/page:num"
 permalink: /:title.html
-plugins_dir: jekyll-paginate
