@@ -1,18 +1,10 @@
 ---
 layout: default
-title: stkymi
+title: Your New Jekyll Site
 ---
-<div class="comment">
 
-
-  
-  <div class="plyr">
-    <audio controls autoplay loop>
-        <!-- Audio files -->
-        <source src="/music/大黄老鼠皮卡丘.mp3" type="audio/mp3">
-
-    </audio>
-</div>
-<script>plyr.setup();</script>
-      	If you have any comment, send me an email at <em>stkmye At gmail Dot com</em> or Twitter me <a href="http://twitter.com/stkymi">@stkymi</a>.im
-</div>
+{% for post in site.posts %}
+	<section id="{{id}}" class="{{post_class}}">
+		<h3 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a><span class="separator"> &middot; </span>{{ post.date | date_to_long_string }}<span class="taglist">{{tags separator=" " prefix=" &middot; "}}</span></h3>
+	</section>
+{% endfor %}
