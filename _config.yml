@@ -10,4 +10,4 @@ comments: true
 paginate: 5
 paginate_path: "/page:num"
 permalink: /:title.html
-plugins: jekyll-paginate
+plugins_dir: jekyll-paginate
