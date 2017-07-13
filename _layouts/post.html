@@ -3,7 +3,7 @@ layout: default
 ---
 
 <article id="{{id}}" class="{{post_class}}">
-	<div class="post-date">{{ page-date}}<span class="taglist">{{tags separator=" " prefix=" &middot; "}}</span></div>
+	<div class="post-date">{{date_to_long_string}}<span class="taglist">{{tags separator=" " prefix=" &middot; "}}</span></div>
 	<h1 class="post-title">{{ page.title }}</h1>
 	{{ content }}
 
