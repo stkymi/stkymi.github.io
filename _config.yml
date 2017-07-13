@@ -1,11 +1,14 @@
-title: "潇湘夜雨"
-
-logo: /assets/images/logo.jpg
-
-markdown: kramdown
-rouge: true
-
-
-paginate: 5
-paginate_path: "/page:num"
-permalink: /:title.html
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "default"
+  -
+    scope:
+      path: "projects"
+      type: "pages" # previously `page` in Jekyll 2.2.
+    values:
+      layout: "project" # overrides previous default layout
+      author: "Mr. Hyde"
