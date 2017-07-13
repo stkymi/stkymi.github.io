@@ -4,8 +4,9 @@ description: "A minimalist, responsive, and open-source theme for Jekyll"
 logo: /assets/images/logo.jpg
 
 markdown: kramdown
-rouge: true
+pygments: true
 
-#paginate: 5
-#paginate_path: "/page:num"
+
+paginate: 5
+paginate_path: "/page:num"
 permalink: /:title.html
