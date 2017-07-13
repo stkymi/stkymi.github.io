@@ -4,7 +4,7 @@
 }
 
 /* Basic Typography */
- @font-face {
+/* @font-face {
     font-family: 'Open Sans';
     src: url('//7xsjem.com2.z0.glb.clouddn.com/iconFont/opensans-regular-webfont.eot');
     src: url('//7xsjem.com2.z0.glb.clouddn.com/iconFont/opensans-regular-webfont.eot?#iefix') format('embedded-opentype'),
@@ -21,7 +21,7 @@
   		 url('//7xsjem.com2.z0.glb.clouddn.com/iconFont/BreeSerif-Regular.ttf') format('truetype'),
   		 url('//7xsjem.com2.z0.glb.clouddn.com/iconFont/BreeSerif-Regular.woff2') format('woff2');
 }
-
+*/
 html, body {
 	font-size: 0.95em;
 	line-height: 1.65em;
