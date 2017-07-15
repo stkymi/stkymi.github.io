@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Sample Page
+title: About Page
 permalink: /sample/
 ---
 
