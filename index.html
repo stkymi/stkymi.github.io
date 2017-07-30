@@ -6,7 +6,7 @@ index: true
     {% for post in site.posts %}
     <div class="post-meta">
         <h3><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
-        <img src="{{post.featured_image  | prepend: site.baseurl}} ">
+        <img src="{{ prepend: site.baseurl}} ">
         <div class="post-descr">
             <p>
                 {{ post.date | date: "%b %-d, %Y" }} | {% if site.disqus_short_name and page.comments != false and site.disqus_show_comment_count == true %}<a class="comments" href="{% if page.index %}{{ root_url }}{{ post.url | prepend: site.baseurl }}{% endif %}#disqus_thread">Comments</a> {% endif %}
