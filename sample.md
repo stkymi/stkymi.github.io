@@ -19,7 +19,7 @@ permalink: /sample/
 <script type="text/javascript">
 		jwplayer("mediaplayer").setup({
 	
-			file: "http://l.symi.ml/mr.mr.mp4",
+			file: "http://l.symi.ml/Mr.Mr.mp4",
                         width: "100%",
                         aspectratio: "16:9",
 			skin: {
