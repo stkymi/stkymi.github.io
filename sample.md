@@ -22,8 +22,9 @@ permalink: /sample/
 			file: "http://l.symi.ml/galaxy.mp4",
                         width: "100%",
                         aspectratio: "16:9",
-			skin: "/jwplayer/beelden.css",
-		
+			skin: {
+                           name: "/jwplayer/vapor"
+		}
 		});
 </script> 
 <!-- 嵌入播放器结束 -->
