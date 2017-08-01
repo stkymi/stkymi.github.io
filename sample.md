@@ -20,7 +20,8 @@ permalink: /sample/
 		jwplayer("mediaplayer").setup({
 	
 			file: "http://l.symi.ml/galaxy.mp4",
-		
+                        width: "100%",
+                        aspectratio: "16:9",
 			skin: "/jwplayer/five.css",
 		
 		});
