@@ -13,3 +13,17 @@ permalink: /sample/
     </video>
 </div>
 <script>plyr.setup();</script>
+
+<!-- 嵌入播放器开始 -->
+<div id="mediaplayer">JW Player goes here</div>
+<script type="text/javascript">
+		jwplayer("mediaplayer").setup({
+	
+			file: "http://l.symi.ml/galaxy.mp4",
+			width: "960",
+			height: "400",
+			skin: "/jwplayer/six.css",
+		
+		});
+</script> 
+<!-- 嵌入播放器结束 -->
