@@ -19,11 +19,11 @@ permalink: /sample/
 <script type="text/javascript">
 		jwplayer("mediaplayer").setup({
 	
-			file: "http://l.symi.ml/galaxy.mp4",
+			file: "http://l.symi.ml/mr.mr.mp4",
                         width: "100%",
                         aspectratio: "16:9",
 			skin: {
-                           name: "/jwplayer/vapor"
+                           name: "vapor"
 		}
 		});
 </script> 
