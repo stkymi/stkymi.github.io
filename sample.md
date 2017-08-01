@@ -21,7 +21,7 @@ permalink: /sample/
 	
 			file: "http://l.symi.ml/galaxy.mp4",
 		
-			skin: "/jwplayer/six.css",
+			skin: "/jwplayer/five.css",
 		
 		});
 </script> 
