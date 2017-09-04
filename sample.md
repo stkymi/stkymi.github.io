@@ -5,7 +5,7 @@ permalink: /sample/
 ---
 
 
-<div class="plyr">
+<div class="plyr" style="cursor: pointer;">
     <video controls>
         <!-- Video files -->
         <source src="http://l.symi.ml/catallena.mp4" type="video/mp4">
