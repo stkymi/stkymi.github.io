@@ -8,7 +8,7 @@ permalink: /sample/
 <div class="plyr">
     <video controls>
         <!-- Video files -->
-        <source src="http://l.symi.ml/galaxy.mp4" type="video/mp4">
+        <source src="http://l.symi.ml/catallena.mp4" type="video/mp4">
 
     </video>
 </div>
