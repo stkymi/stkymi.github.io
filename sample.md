@@ -23,7 +23,7 @@ permalink: /sample/
 			file: "http://l.symi.ml/Mr.Mr.mp4",
                         width: "100%",
                         aspectratio: "16:9",
-                        preload: 'metadata',
+                        preload: 'auto',
 			skin: {
                            name: "vapor"
 		}
