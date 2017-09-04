@@ -11,6 +11,13 @@ permalink: /sample/
         <source src="http://l.symi.ml/catallena.mp4" type="video/mp4">
 
     </video>
+    <div class="actions">
+    <button type="button" class="btn js-play">Play</button>
+    <button type="button" class="btn js-pause">Pause</button>
+    <button type="button" class="btn js-stop">Stop</button>
+    <button type="button" class="btn js-rewind">Rewind</button>
+    <button type="button" class="btn js-forward">Forward</button>
+  </div>
 </div>
 <script>plyr.setup();</script>
 
