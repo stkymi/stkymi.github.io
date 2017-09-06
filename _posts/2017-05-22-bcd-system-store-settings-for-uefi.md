@@ -18,7 +18,9 @@ translationtype: MT
 2.  [Windows 启动加载程序](#windowsbootloader)
 
 3.  [Windows 内存测试器](#windowsmemorytester)
+
 <!-- more -->
+
 以下各节描述了这些引导应用程序详细信息以及如何修改 UEFI 系统为每个应用程序中的每个可用的设置。
 
 为简单起见，本部分中的 BCDEdit 示例修改 BCD 系统存储区。 若要修改另一个存储，如 BCD 模板的副本包括在命令行中存储区名称。
