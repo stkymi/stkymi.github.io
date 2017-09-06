@@ -7,9 +7,6 @@ ms.openlocfilehash: 36f32e696b52e56a2d112af7b8cc2aa2368e6fa1
 ms.sourcegitcommit: d33e870dc4850bf0ea47fdae0d163b04c1c90f15
 translationtype: MT
 ---
-# <a name="bcd-system-store-settings-for-uefi"></a>UEFI 的 BCD 系统存储设置
-
-
 对于典型的部署方案中，您不需要修改 BCD 存储。 本主题讨论中可以修改 BCD 存储的各种 BCD 设置。 在 UEFI 系统，这包括以下引导应用程序设置︰
 
 1.  [Windows 启动管理器](#windowsbootmanager)
