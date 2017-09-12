@@ -9,7 +9,7 @@ url: "http://maangalabs.com" # the base hostname & protocol for your site
 
 
 #permalink /blog/2014/11/11/this-is-a-sample-post
-permalink: /blog/:year/:month/:day/:title/
+#permalink: /blog/:year/:month/:day/:title/
 # Build settings
 markdown: kramdown
 paginate: 2
