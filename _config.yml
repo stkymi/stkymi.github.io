@@ -12,7 +12,7 @@ url: "http://maangalabs.com" # the base hostname & protocol for your site
 permalink: /blog/:year/:month/:day/:title/
 # Build settings
 markdown: kramdown
-
+paginate: 2
 gems: jekyll-paginate
 #Disqus configuration
 disqus_short_name: maangalabscom
