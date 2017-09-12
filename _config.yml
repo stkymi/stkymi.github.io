@@ -13,9 +13,6 @@ url: "http://maangalabs.com" # the base hostname & protocol for your site
 # Build settings
 markdown: kramdown
 
-paginate: 5
-paginate_path: "page:num"
-gems: [jekyll-paginate]
 #Disqus configuration
 disqus_short_name: maangalabscom
 disqus_show_comment_count: true

@@ -8,7 +8,7 @@ title:  基于jekyll在github pages安装静态博客
 
 此外，一直还怕自己在wordpress上的东西丢失，虽然可以备份，但是备份wordpress实在是复杂，而且天知道会出现什么问题。
 
-<!-- more -->
+<!-- more1 -->
 
 考虑再三，决定使用静态页面创建博客并将其放在github pages上面，我认为有以下优点：
 

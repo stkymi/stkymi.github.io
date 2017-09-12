@@ -17,11 +17,6 @@ index: true
             </p>
         </div>
     </div>
-    {% else %} {{ post.content }} {% endif %} {% endfor %}
-
-
-{% for post in paginator.posts %}
-    <a href="{{ post.url }}">{{ post.title }}</a>
-{% endfor %}
+    {% else %} {{ post.title }} {% endif %} {% endfor %}
 
 </div>
