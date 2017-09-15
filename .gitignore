@@ -1,5 +1,8 @@
 _site
-.sass-cache
-.jekyll-metadata
-src/assets/bundle.js
 node_modules
+.sass-cache
+_vendor
+dev
+.jekyll-metadata
+Gemfile.lock
+deploy/deploy
