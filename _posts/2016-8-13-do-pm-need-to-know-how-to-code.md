@@ -1,0 +1,20 @@
+---
+layout: post
+title: Do Product Managers Need to Know How to Code?
+---
+
+Recently I've spent quite some time recruiting a product manager. I have to admit, it is a first time experience for me, and for our team, since we've never had a product manager before. So it takes us some time to figure out what we want this person to look like — skills, qualities and job duties. And one of the most heated discussion is, whether the product manager should have a technical background. Neither side could convince the other so we've decided to put this aside.
+
+After a few months' interview, we still haven't found our product manager, but we have a better insight into that question: **Product managers don't need to have a technical background, but good ones usually do. Junior ones can probably do without it but senior ones can hardly.**
+
+Let me explain. Not all product managers are equal. Senior product managers have significantly different roles and duties from junior ones. Junior product managers spend more time on detail executions — wireframes, documentations, progress check, releases, etc. It's essentially senior product managers' job to decide what goes into the product and how should the product evolve. They should have a vision and strategy for the product line. Obviously product managers need understand the business, target market and users and they leverage the resource they have to create most value. In order to achieve this, they need to understand the technology, because technology is a big part of the resource they can leverage.
+
+Everyone wants the "low-hanging fruits" — product features that can create most value with least effort. They are probably easy to spot when you start a product, but as time goes on, most of them should already end up in your product. Therefore adding a new feature is always a tradeoff between the value it creates and the efforts it needs. Of course product managers can always consult engineers on the "effort it needs" but oftentimes engineers will not provide a satisfying answer. And when there are disagreements, engineers will argue against product managers, stating that the value they claim is hard to prove — which is true in most cases since it's hard to prove the value of something when it does not exists yet.
+
+When the cost and benefit analysis becomes nuance and product managers get mixed signals from engineers, it becomes very hard for them to make correct decisions. That's where a technical background could really help — product managers can make decisions on their own and adjust according to the feedback from engineers, instead of totally relying on engineers. 
+
+Also, it facilitates the communication and trust. Engineers tend not to trust product managers who always ask stupid technical questions and they are tired of explaining again and again why something is difficult to implement. And these can be avoided if the product manager actually knows technology.
+
+In addition, a tech-savvy product manager can help make sure the technology strategy does not diverge from product strategy. Product strategy has a huge influence on technical decisions and a good product managers should provide all details that could impact the technology. For example, if a product manager knows they will need a solid transaction support, he or she would make it clear to engineering team and they will probably not use MongoDB as data storage. Without technical background, a product manager will not even realise this would have a huge impact.
+
+So should product managers learn how to code? I don't think it will help that much if a product managers simply goes through Coding 101. Because what a product manager needs is the understanding of technical architecture and real-life software development, which only comes from years of actually doing it or working closely with people who actually do it. Learning to write if-else does not make much difference.
