@@ -1,8 +1,4 @@
 _site
-node_modules
 .sass-cache
-_vendor
-dev
 .jekyll-metadata
-Gemfile.lock
-deploy/deploy
+**.orig

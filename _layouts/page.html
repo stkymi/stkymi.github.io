@@ -1,13 +1,20 @@
 ---
 layout: default
 ---
+<article class="post">
 
-<div class="page spage">
-  <div class="row title">
-    <h1>{{ page.title }}</h1>
+  <header class="post-header">
+  <!--  <h1 class="post-title">{{ page.title }}</h1>-->
+  </header>
+
+  {%if page.tagline%}
+  <div class="tagline">
+  <span class="page-title">{{page.title}}</span> <span class="page-tagline"><em>{{page.tagline}}</em></span>
   </div>
-  <div class="row content">
+  {% endif %}
+
+  <div class="post-content">
     {{ content }}
   </div>
-</div>
 
+</article>

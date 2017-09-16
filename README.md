@@ -1,148 +1,182 @@
-# Typing Jekyll Template
+<p align = "center">
+<img src="http://i.imgur.com/JhbQ03z.png"/>
+</p>
 
-**Typing Jekyll Template**, is a template for [Jekyll](http://jekyllrb.com) built especially for those who want to have a blog and pages quickly and lightly. Keep It Simple, my friend!
+---
 
-![Typing Jekyll Template](https://raw.githubusercontent.com/williamcanin/typing-jekyll-template/master/screenshot.png)
+If there's any issue you are facing in setting up this theme I'm there for you. Just create an issue in this repository (<http://github.com/hemangsk/Gravity>), (<https://help.github.com/articles/creating-an-issue/>) and I'll get back to you asap.
 
-## Table of Contents
+![Welcome to Gravity](https://user-images.githubusercontent.com/13018570/27043040-778d80cc-4fb6-11e7-8619-de4be626be67.png)
+<img src="http://i.imgur.com/cPwoX3E.png"/>
+<img src="http://i.imgur.com/3TMoBGj.png"/>
+<img src="http://i.imgur.com/Z6h3uCp.png"/>
+<img src="http://i.imgur.com/bB7IIHr.png"/>
 
-* [Introduction](https://github.com/williamcanin/typing-jekyll-template/#introduction)
-* [Feature](https://github.com/williamcanin/typing-jekyll-template/#feature)
-* [Requeriments](https://github.com/williamcanin/typing-jekyll-template/#requeriments)
-* [Usage](https://github.com/williamcanin/typing-jekyll-template/#usage)
-* [Custom Appearance](https://github.com/williamcanin/typing-jekyll-template/#custom-appearance)
-* [Deploy](https://github.com/williamcanin/typing-jekyll-template/#deploy)
-* [Demo](https://github.com/williamcanin/typing-jekyll-template/#demo)
-* [Questions](https://github.com/williamcanin/typing-jekyll-template/#questions)
-* [Versions](https://github.com/williamcanin/typing-jekyll-template/#versions)
-* [License and Copyrights](https://github.com/williamcanin/typing-jekyll-template/#license-and-copyrights)
-* [Credits](https://github.com/williamcanin/typing-jekyll-template/#credits)
+***
 
-## Introduction
+# INSTALLATION
 
-Its interface is part of the "Keep It Simple" philosophy, precisely to have a high performance in all types of browsers and mobile devices.
+### Dependencies
 
-You already have a template page for ‘Blog’, ‘Projects’, ‘Search’, ‘Contact’, ‘Tags’ and ‘Resume’, but you can leave as you want, modifying strings.
+Gravity uses Jekyll and it's built-in SCSS compiler for the associated CSS, so the first thing you'll need is Jekyll itself:
 
-The page ‘resume’, you can print using the browser’s Ctrl + P shortcut. The printout will use the Open Sans font and will delete useless parts such as sidebar. You’ll also have templates for posts, and you’ll have to follow model the header the post’s.
-
-The contact page uses the Formspree feature, you will need to have an account in the service and add your **e-mail** to the `_data / dbase.yml` file. In addition, the entire contents of the `_data / dbase.yml` file should be changed as needed.
-
-## Feature
-
-- [x] **Google Analytics (Event and Pageview)**
-- [x] **Google Fonts**
-- [x] **Jekyll Search on Blog Page**
-- [x] **Print page resume**
-- [x] **Avatar on sidebar and on Hello page**
-- [x] **404 Error Page**
-- [x] **Disqus [Accountant and Comments]**
-- [x] **Social buttons**
-
-**Used plugins**:
-
-* Vendors:
-    - jekyll-coffeescript
-    - jekyll-jsminify
-    - jekyll-paginate
-    - jekyll-gist
-    - jekyll-youtube
-    - jekyll-tagging
-    - jemoji
-    - jekyll-email-protect
-    - jekyll-spotify-plugin
-* From the project itself:
-    - Readingtime [Estimated reading time]
-    - Imager [Responsive Images]
-    - DateLang [Responsive Images]
-
-## Requeriments
-
-| Requerid        | How to check        | How to install  |
-| --------------- | ------------------- | -------------- | 
-| Git             | `git --version`     | [Git](http://git-scm.com/) |
-| Ruby            | `ruby -v`           | [Ruby](https://www.ruby-lang.org) |
-| Gem             | `gem -v`            | **Ruby** contains **Gem** |
-| Python          | `python --version`  | [Python](https://www.python.org/) |
-| Bundler         | `bundler -v`        | `gem install bundler` |
-
-## Usage
-
-1 - Cloning and entering the folder:
-
-```
-$ git clone https://github.com/williamcanin/typing-jekyll-template.git "typing-jekyll-template"
-$ cd "typing-jekyll-template"
+```bash
+$ gem install jekyll
 ```
 
-2 - Downloading Gems and Jekyll dependencies for Typing:
+In case you don't have the `bundler` gem installed already, you can install it as follows:
 
-```
-$ bundle install
-```
-
-3 - Compiling project:
-
-```
-$ bundle exec jekyll b
+```bash
+$ gem install bundler
 ```
 
-4 - Starting Jekyll serve:
+For pagination, Gravity uses the [jekyll-paginate](https://jekyllrb.com/docs/pagination/) gem :
 
-```
-$ bundle exec jekyll s
-```
-
-**O.S Unix**
-
-If you use a Unix O.S, you can perform from step 2, all action through the `init.sh` file. Type it:
-
-```
-$ bash init.sh help
+```bash
+$ gem install jekyll-paginate
 ```
 
-## Custom Appearance
+***
 
-You can change the colors of **Typing Jekyll Template** by editing the `_sass/base/_variables.scss` file, using the values of the variables contained in it.
+# USAGE
 
-If you want to change the font, change the values of the variables in the `_sass/base/_fonts.scss` file.
+Once you have the required gems, you can go ahead and clone the
+[Gravity repository](https://github.com/hemangsk/Gravity) or [download](https://github.com/hemangsk/Gravity/archive/master.zip)
+a zip of the master branch.
 
-I was forgetting ... there are some extra themes in the `_sass/base/_variables.scss` file disabled. You can leave only one theme, and uncomment the same. 
+Run :
 
-Feel free to configure as you want. :)
+```bash
+$ jekyll serve
+```
 
-## Deploy
+Jekyll should now be generating your content!
 
-Your site will be generated in the `_site` folder. Deploy these files to your hosting server.
+***
 
-**Note:** Before deploying to the server, you have to edit the
-Variables: **url** and **baseurl** in the `_config.yml` file according to url Where your site is crooked. You can get more information on how to set up at: [Jekyll Configuration](https://jekyllrb.com/docs/configuration/#serve-command-options)
+# ADDING POSTS
 
-## Demo
+The theme by default ships with starter posts located in `_posts/`. Delete these posts and add your content to the `_posts`
+folder to see them being served up by Jekyll. [This](https://jekyllrb.com/docs/posts/) would be a good guide to getting started on writing posts using Jekyll. We've added a concise guide below:
 
-If you want to see the project in action, go here > [Demo](http://williamcanin.github.io/typing-jekyll-template/)
+- Create a .markdown file inside `_posts` folder.
+- Name the file according to the format YY-MM-DD-[short name for your post].
+- `2016-03-30-i-love-design.markdown`
+- Write the *Front Matter* and content in the file.
 
-## Questions
+### FORMAT
 
-Make your opinions on Typing Jekyll Template, in:
-[Typing Jekyll Template - Issues](https://github.com/williamcanin/typing-jekyll-template/issues)
+```
+---
+layout: post | default | page
+title: String POST TITLE
+date: Time Stamp
+categories: String | Array of Strings CATEGORY / CATEGORIES
+---
 
-## Versions
+---
+layout: post
+title: "The One with the Blackout"
+date: 2016-03-30 19:45:31 +0530
+categories: ["life", friends]
+---
+```
 
-You can download the versions without making a clone with Git. Go to [Releases](https://github.com/williamcanin/typing-jekyll-template/releases)
+***
 
-## License and Copyrights
+# CREATE PAGES
 
-License: [MIT License (MIT)](https://opensource.org/licenses/MIT)
+- Create a .md file in the root directory.
+- Name the file with the desired page link name.
+  `about.md`
+  `design.md`
+- Write the *Front Matter* and content in the file.
 
-Copyrights: William C. Canin | Copyright © 2017
+### FORMAT
 
-*You can change the structure of Typing Jekyll Template as you wish, as long as you do not manipulate the copyrights of William C.Canin in the project*
+```
+---
+layout: page
+title: String TITLE OF THE WEBPAGE
+permalink: / String / PERMALINK FOR THE WEBPAGE
+tagline: String OPTIONAL GRAVITY FEATURE : TAGLINE FOR THE PAGE
+---
 
-## Credits
+---
+layout: page
+title: "Science"
+permalink: /science/
+tagline: "Humanity is overrated."
+---
+```
 
-* Name: William C. Canin 
-* Country: Brazil - SP
-* EMail: william.costa.canin@gmail.com    
-* GitHub: [William Canin](http://github.com/williamcanin)
-* Home page: [William Canin](http://williamcanin.github.com)
+***
+
+#### Introducing
+
+# ARCHIVE PAGES
+
+#### You can display a list of all the posts corresponding to a particular category on a standalone page using the `ARCHIVE` layout.
+
+- Create a .md file in the root directory.
+- Name the file. Preferred name will be the name of the category.
+    \*`life.md`
+- Write the *Front Matter* and content in the file.
+
+### FORMAT
+
+```
+---
+layout: archive ARCHIVE PAGE LAYOUT
+title: String TITLE OF THE WEBPAGE
+permalink: / String / PERMALINK FOR THE WEBPAGE
+tagline: String TAGLINE FOR THE PAGE
+category: String NAME OF THE CATEGORY OF WHICH THE PAGE WILL SHOW POSTS
+---
+
+---
+layout: archive
+title: "Design"
+permalink: "Design"
+tagline: "It's all about perception"
+category: "design"
+---
+```
+
+#### DIRECTORY STRUCTURE
+
+```
+├── css                                         # => Output of the combined SASS files
+│   └── style.scss
+├── _includes                                   # => Contains partials that can be used with your layouts
+│   ├── footer.html
+│   ├── header.html
+│   ├── head.html
+│   ├── icon-github.html
+│   ├── icon-github.svg
+│   ├── icon-twitter.html
+│   └── icon-twitter.svg
+├── _layouts                                    # => Layout related HTML files
+│   ├── archive.html
+│   ├── default.html
+│   ├── page.html
+│   └── post.html
+├── _posts                                      # => posts, dynamic content. Follow the format: YEAR-MONTH-DAY-title.MARKUP
+│   ├── 2016-03-30-design-stories.markdown
+│   ├── 2016-03-30-science0.markdown
+│   ├── 2016-03-30-science.markdown
+│   └── 2016-03-30-welcome-to-jekyll.markdown
+└── _sass                                       # => SASS partials for styling
+|   ├── _base.scss
+|   ├── _layout.scss
+|   └── _syntax-highlighting.scss
+├── about.md
+├── _config.yml                                 # => Configuration options or flags for your site go here
+├── design.md
+├── download.md
+├── feed.xml
+├── index.html
+├── LICENSE.txt                                 # => Licensing information
+├── README.md
+└── science.md
+```

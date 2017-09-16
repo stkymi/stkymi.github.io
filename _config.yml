@@ -1,136 +1,20 @@
-# Welcome to Jekyll! ... and Typing!
+# Welcome to Jekyll!
 #
 # This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
+# which you are expected to set up once and rarely need to edit after that.
 # For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+# 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ data_string.website.title }}, {{  data_string.website.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
+title: Gravity
+email: hemangsk@gmail.com
+description: The Liberal Jekyll Theme
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+twitter_username: hemang_kumar
+github_username:  hemangsk
+paginate: 5
 
-baseurl: "/typing-jekyll-template" # the subpath of your site, e.g. /blog
-url: "https://williamcanin.me" # the base hostname & protocol for your site, e.g. http://example.com
-
-# Add Avatar in: Sidebar or page Hello, and configure.
-avatar:
-  sidebar: true
-  hello: false
-  size:
-    enable: true
-    value: 165
-  border:
-    enable: false
-    radius: 50
-    value: 1
-
-# Settings to share the post on the social networks below.
-share_social:
-  enable: true
-  facebook: true
-  linkedin: true
-  twitter: true
-  googleplus: true
-
-
-# Enable or disable icons on every website. Use:  true | false
-screen:
-  icons:
-    enable: true
-
-# Settings for the plugins in the _plugins folder.
-plugin:
-  imager:
-    dir_posts: assets/images/posts
-  # To see language support, go to the plugin "_plugins/reading_time.rb"
-  reading_time:
-    locale: en_US
-  # To see language support, go to the plugin "_plugins/datelang.rb"
-  datelang:
-    locale: en_US
-    reload: false
-
-# Plugin music.
-spotify:
-  enable: true
-  open: true
-  theme: "light" # dark | light
-  sass:
-    jekyll: true
-    dir: "_sass"
-  title:
-    enable: true
-    text: "Jekyll Spotify Plugin"
-  content:
-    enable: true
-    text: |
-      Jekyll plugin to generate html snippets for embedding Spotify Musics.
-      To listen to the full song, open your Spotify and start these musics.
-
-
-
-
-
-#  --- SESSION PRIVATE [Do not change anything in the private session unless you know what you are doing.] ---
-
-# Settings Default
-include: ['_pages','_blog','_hello']
+gems: [jekyll-paginate, kramdown]
+# Build settings
 markdown: kramdown
-highlighter: pygments
-permalink: /blog/:title/
-
-# Build local / Server
-destination: _site
-port: 4000
-host: localhost
-
-# Config SASS
-sass:
-  sass_dir: _sass
-  style: compressed
-
-# Config feed for atom
-feed:
-  path: atom.xml
-
-# Config for Compress HTML
-compress_html:
-  clippings: all
-  comments: all
-  endings: []
-  profile: false
-
-# Config plugin 'jekyll-tagging'
-tag_page_layout: tag_page
-tag_page_dir: blog/tags
-tag_permalink_style: pretty
-
-# Config for plugin 'jekyll-gist'
-gist:
-  noscript: false
-
-# Exclude files (or folders) in compilation.
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - screenshot.png
-  - CHANGELOG
-  - LICENSE.txt
-  - COPYING
-  - "**/*.txt"
-  - README.md
-  - init.sh
-  - Rakefile
-  - dev/
-  - src/
-
-#  --- SESSION PRIVATE ---
-
-
-
-
