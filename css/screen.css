@@ -97,6 +97,11 @@ h1, h2, h3 {
   color: #999;
 }
 
+.post-date {
+  font-family: Consolas, Menlo, "Dejavu Sans Mono", monospace;
+  color: #999;
+}
+
 .comment {
   color: #999;
   font-size: 20px;
