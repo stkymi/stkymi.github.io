@@ -10,8 +10,6 @@ title: "Git 笔记：用 Github + Jekyll 写博客"
 2. 把看中了的 Jekyll 模板 clone 到本地；
 3. 把这个模板 push 到自己的库；
 
-<!-- more -->
-
 下面为了从头展示如何用 Git + Github + Jekyll。
 
 ### 在 Github 创建名为 username.github.io 的库
