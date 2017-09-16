@@ -1,5 +1,6 @@
 @import url(normalize.css);
-@import url("et-book.min.css");
+@import url("//brick.a.ssl.fastly.net/Libre+Bodoni:400,700,400i,700i");
+@import url("//cdn.jsdelivr.net/font-et-book/0.1/et-book.min.css");
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

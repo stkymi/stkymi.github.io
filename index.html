@@ -1,18 +1,15 @@
 ---
 layout: default
-title: stkymi
+title: Ruoyu Sun
 ---
-<div class="comment">
 
-
-  
-  <div class="plyr">
-    <audio controls autoplay loop>
-        <!-- Audio files -->
-        <source src="/music/大黄老鼠皮卡丘.mp3" type="audio/mp3">
-
-    </audio>
+<div class="content">
+  <h1>{{ site.posts.first.title }}</h1>
+  <p class="meta">{{ site.posts.first.date | date_to_string }}</p>
+  {{ site.posts.first.content }}
 </div>
-<script>plyr.setup();</script>
-      	If you have any comment, send me an email at <em>stkmye At gmail Dot com</em> or Twitter me <a href="http://twitter.com/stkymi">@stkymi</a>.im
+
+<div class="comment">
+  Next: <a href="{{ site.posts[1].url }}">{{ site.posts[1].title }}</a>
+  <span class="pull-right">&hellip; even more on <a href="/archive.html">archive</a></span>
 </div>
