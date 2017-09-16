@@ -20,7 +20,8 @@ In the test base class, add an extra method that works like this. I am gonna use
       # Publish artifacts, or you can add path/to/screenshot/folder/ as the artifact folder.
       puts "##teamcity[publishArtifacts 'path/to/screenshot/folder/#{name}']"
     end
-{: .prettyprint .lang-ruby}
+
+
 
 In your tests, simple add one line in the flow you are testing.
 
@@ -28,7 +29,8 @@ In your tests, simple add one line in the flow you are testing.
     ...	
     pdiff "homepage-for-logged-in-user"
     ...
-{: .prettyprint .lang-ruby}
+
+
 
 Now you need to actually write your PDiff test. I recommend to create a new type of test, instead putting this with existing Selenium tests, which I will explain later.
 
@@ -62,7 +64,8 @@ Now you need to actually write your PDiff test. I recommend to create a new type
         end
       end
     end
-{: .prettyprint .lang-ruby}
+
+
 
 Then, in Teamcity, set up a new build type "PDiff" and list your Selenium as its dependency, i.e. before PDiff starts, Selenium must be run first. Then set up the build trigger so that PDiff will run for every check in.
 

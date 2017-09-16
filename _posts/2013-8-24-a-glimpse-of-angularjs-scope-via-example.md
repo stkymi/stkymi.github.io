@@ -16,7 +16,7 @@ If you do this in plain jQuery, the JavaScript code looks like this (full implem
             $menu.find('input.to-focus').focus();
         });
     });
-{: .prettyprint .lang-js}
+
 
 The code is simple and straightforward.
 
@@ -28,7 +28,7 @@ In Angular.js, [you are not supposed to manipulate DOM in controller](http://ruo
             <input type="text" focus-if="showMenu">
         </div>
     </div>
-{: .prettyprint .lang-html}
+
 
     app = angular.module('App', []);
     app.controller('MenuCtrl', function () {});
@@ -42,7 +42,7 @@ In Angular.js, [you are not supposed to manipulate DOM in controller](http://ruo
             });
         }
     }]);
-{: .prettyprint .lang-js}
+
 
 We write our own directive called "focusIf" and will trigger a focus event whenever the expression is true. It's simple and elegant, until you realize it does not work.
 
@@ -75,7 +75,7 @@ To make sure `element[0].focus()` will work, we need to make sure it is executed
             });
         }
     }]);
-{: .prettyprint .lang-js}
+
 
 This is the new flow:
 
@@ -104,7 +104,7 @@ However, if you've googled around on this problem, several posts recommend using
             });
         }
     }]);
-{: .prettyprint .lang-js}
+
 
 It will also work, but is not really recommended. This works because Javascript is single-threaded. All the asynchronous events are pushed into an event queue when triggered. Javascript will execute them one by one. `$timeout(Fn)` is equivalent to `setTimeout(Fn, 0)`, which tells the browser to execute `Fn` *as soon as possible* by pushing it into the event queue right away. This does not mean the execution will start *now* as event queue might be processing other code.
 

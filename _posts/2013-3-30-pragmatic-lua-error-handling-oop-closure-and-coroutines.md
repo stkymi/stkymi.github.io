@@ -22,7 +22,8 @@ Lua does not have try-catch like syntax for error handling. In fact, error handl
 	catch Exception e
 		print(e)
 	end
-{: .prettyprint .lang-lua}
+
+
 
 Well, in real Lua, you have to write following
 
@@ -40,7 +41,8 @@ Well, in real Lua, you have to write following
 		print(result) -- print out error message
 	end
 
-{: .prettyprint .lang-lua}
+
+
 
 `pcall` will run the function in protected mode. The first return value is always a boolean, indicating whether the function call is successful (i.e. no errors). The return value of the original function will be returned following this boolean flag. If something is wrong, the second return value will be error message.
 
@@ -87,7 +89,8 @@ Some common tasks of OOP in other languages are
 	print(c.speed) -- 100
 	c.stop()
 	print(c.speed) -- 0
-{: .prettyprint .lang-lua}
+
+
 
 In real Lua, you can write
 
@@ -133,7 +136,8 @@ In real Lua, you can write
 	print(c.speed) -- 100
 	c:stop()
 	print(c.speed) -- 0
-{: .prettyprint .lang-lua}
+
+
 
 Two points to note:
 
@@ -154,7 +158,8 @@ Closure in Lua is very similar to JavaScript, but the concept of closure is not 
 	su = speed_up
 	print(su()) -- 60
 	print(su()) -- 70
-{: .prettyprint .lang-lua}
+
+
 
 In the above example, when you call `su()`, you have access to `local speed`, even though you are out of scope already.
 
@@ -168,19 +173,22 @@ Lua has built-in coroutine support. Coroutine itself is quite easy to understand
 		coroutine.yield(2)
 		coroutine.yield(3)
 	end)
-{: .prettyprint .lang-lua}
+
+
 
 When you create a coroutine, it will not automatically start. In fact, it will pause at `yield`, you have to `resume` it.
 
 	coroutine.resume(co) -- true, 1
 	coroutine.resume(co) -- true, 2
 	coroutine.resume(co) -- true, 3
-{: .prettyprint .lang-lua}
+
+
 
 `coroutine.resume()` first returns a boolean flag indicating whether there is any error - the coroutine body is running in protected mode. The values you yield in coroutine body is gonna be returned following the boolean flag. When the coroutine yields all values, it will be dead and when you try to resume a dead coroutine, it will return error.
 
 	coroutine.resume(co) -- false, cannot resume dead coroutine
-{: .prettyprint .lang-lua}
+
+
 
 Coroutine works like a `thread`, however, the pausing and resuming is done in the code, not in OS level. And you cannot force a coroutine to pause at any time - coroutine only pauses at the point you have specified. Switching between coroutines costs considerably small and synchronization is explicitly achieved in your code. However, coroutine is not real multi-threading in the sense that any blocking code will block the whole program, while in multi-threading it only blocks that thread. That's why to achieve currency, you have to make your code non-blocking.
 

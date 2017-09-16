@@ -34,61 +34,57 @@ JavaScript comes with object oriented paradigm but the inheritance mechanism - p
 Some people consider CoffeeScript to [have bad readability](http://ceronman.com/2012/09/17/coffeescript-less-typing-bad-readability/), while readability is a subjective term, I certainly agree that CoffeeScript has a bad *predictability* - it is full of surprises. Part of the reason is its white space sensitivity. In my opinion, the fact that compiler is tolerant and allows multiple ways to accomplish one thing also contributes to its poor predictability. Take a look at this example:
 
 	set User, -> name: "John", silent: yes
-{: .prettyprint .lang-cs}
 
 What do you expect to be the result (suppose this is what you want)?
 
 	set(User, function() { return {name: "John"}; }, {silent: true});
-{: .prettyprint .lang-js}
+
+
 
 Wrong, this is what you get
 	
 	set(User, function() { return {name: "John",silent: true}; });
-{: .prettyprint .lang-js}
+
+
 
 How about this?
 
 	set User, -> 
 		name: "John",
 	silent: yes
-{: .prettyprint .lang-cs}
 
 Wow, what you get is a disaster
 
 	set(User, function() { return {name: "John"}; });
 	({silent: true});
-{: .prettyprint .lang-js}
+
+
 
 Will this work?
 
 	set User, -> 
 		name: "John",
 		silent: yes
-{: .prettyprint .lang-cs}
 
 Nope. How about this?
 	
 	set User,
 		-> name: "John"
 		silent: yes
-{: .prettyprint .lang-cs}
 
 Yay, it works! By the way, this will also work
 
 	set User, -> name: "John",
 	silent: yes
-{: .prettyprint .lang-cs}
 
 But this will give you the disaster case
 
 	set User, -> name: "John"
 	silent: yes
-{: .prettyprint .lang-cs}
 
 To avoid ambiguity, you probably want to write something like
 
 	set User, (-> name: "John"), silent: yes
-{: .prettyprint .lang-cs}
 
 And the worst thing is, non of the above behavior is documented in the CoffeeScript official website, which makes it a try and error process - the least efficient way to learn. One way people usually use to avoid this is to enforce a coding standards, to make sure everyone are in the same pace and no one uses the "dark magic".
 
@@ -100,14 +96,14 @@ For example
 
 	$('#li').each ->
 		update @
-{: .prettyprint .lang-cs}
 
 This is very common in JavaScript. Your `update` might return `true` or `false` to indicate whether it has been updated but you don't care about the return value - you just want to update everything. Now look at the translated code
 
 	$('#li').each(function() {
 		return update(this);
 	});
-{: .prettyprint .lang-js}
+
+
 
 In CoffeeScript, the last line will be returned by default. which is fine. But in this case, your `.each` will stop (break) if the anonymous function body returns an `false`. That means, although you want to update all record, your loop will simply stop at the first record where `update` returns a false.
 

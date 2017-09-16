@@ -39,7 +39,8 @@ If-else syntax is like this. There is no `switch` statement.
 	else
 		...
 	end
-{: .prettyprint .lang-lua}
+
+
 
 Define function like this. Anonymous function is supported and since function is a data type, you can assign it to a variable, very much like JavaScript. A function can return multiple value can have [variable number of arguments](http://www.lua.org/pil/5.2.html)
 
@@ -51,7 +52,8 @@ Define function like this. Anonymous function is supported and since function is
 	function (a, b, c)
 		...
 	end
-{: .prettyprint .lang-lua}
+
+
 
 There are three types of loop
 	
@@ -68,7 +70,8 @@ There are three types of loop
 	for var=from,to,step do
 		...
 	end
-{: .prettyprint .lang-lua}
+
+
 
 One more thing about variable scope: local variables are local to a block, which can be a function body, a control statement body or a file. There are `return` and `break`. They can only be the [last statement](http://www.lua.org/pil/4.4.html) of a block (Lua 5.2 allows `break` in the middle)
 
@@ -79,13 +82,15 @@ Table is the only built-in data structure. If you have done PHP programming (unf
 	local t1 = {"apple", "orange"}
 	local t2 = {1="apple", 2="orange"}
 	local t3 = {[1]="apple", [2]="orange"}
-{: .prettyprint .lang-lua}
+
+
 
 The above three are equivalent. Note that table index start at **1** by default, which is different from most other languages. If you construct a table with string as key, it will become an associative array
 
 	local t2 = {one="apple", two="orange"}
 	local t3 = {["one"]="apple", ["two"]="orange"}
-{: .prettyprint .lang-lua}
+
+
 
 These two are equivalent, but the second form allows keys to be any string while the first form only allows keys which are valid identifier.
 
@@ -94,7 +99,8 @@ To loop through a table with integer keys, you can do
 	for i = 1, #t do
 		print(t[i])
 	end
-{: .prettyprint .lang-lua}
+
+
 
 `#` is a very handy way to get the length of a table or string.
 
@@ -103,7 +109,8 @@ To loop through a table with string keys, you have to do
 	for key,value in ipairs(t) do
 		print(key .. value)
 	end
-{: .prettyprint .lang-lua}
+
+
 
 `ipairs` is a built in [iterators](http://www.lua.org/pil/7.1.html) that can help you iterate through a table.
 

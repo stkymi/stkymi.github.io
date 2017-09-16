@@ -34,7 +34,8 @@ Why my view will not get updated?
 			$scope.message = "I am here!";
 		}, 1000);
 	}
-{: .prettyprint .lang-js}
+
+
 
 Why `ng-model="touched"` does not work as expected?
 
@@ -42,7 +43,8 @@ Why `ng-model="touched"` does not work as expected?
 		$scope.items = [{ value: 2 }];
 		$scope.touched = false;
 	}
-{: .prettyprint .lang-js}
+
+
 
 	<ul>
 		<li ng-repeat="item in items">
@@ -50,7 +52,8 @@ Why `ng-model="touched"` does not work as expected?
 			<input type="checkbox" ng-model="touched">
 		</li>	
 	</ul>
-{: .prettyprint .lang-html}
+
+
 
 These all have something to do with `$scope`. But more importantly, when your controllers get bigger and bigger, it's time to break it into sub controllers, and inheritance is closely related to `$scope`. You need to understand how `$scope` works:
 
