@@ -380,7 +380,7 @@ a:visited { color: #205caa; }
   .site-nav .trigger {
     clear: both;
     margin-bottom: 5px;
-    display:
+    display: none;
   }
 
   .site-nav:hover .trigger { display: block; }
