@@ -355,7 +355,7 @@ a:visited { color: #205caa; }
   .wrap { padding: 0 12px; }
 
   .site-nav {
-    position: fixed;
+    position: 
     z-index: 10;
     top: 14px; right: 8px;
     background-color: white;
