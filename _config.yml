@@ -1,7 +1,7 @@
 # Site settings
 title: Jekyll's Ramblings
-description: "..."
-baseurl: ""
+description: "This is my tech blog containing random thoughts and code snippets"
+baseurl: "symi.top"
 url: "http://yourdomain.com"
 twitter_username: 
 github_username:  
