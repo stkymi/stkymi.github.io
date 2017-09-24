@@ -92,28 +92,6 @@ https://github.com/username/username.github.io.git
 $ git clone https://github.com/username/scribble.git
 {% endhighlight %}
 
-把名为 scribble 的文件夹改名为 username.github.io (不必要，理由跟之前一样，只是为了比较好找)
-
-{% highlight bash %}
-$ mv scribble username.github.io
-{% endhighlight %}
-
-然后我们可以进入现在叫 `username.github.io` 的文件夹里:
-
-{% highlight bash %}
-$ cd username.github.io
-{% endhighlight %}
-	
-一般而言，克隆了别人的模板，第一件事要做的就是修改 _config.yml 里的个人信息。
-
-只要修改过文件，我们就需要重复 `git add` 和 `git commit` 这两步：
-
-{% highlight bash %}
-$ git add . 
-$ git commit -m 'modified _config.yml'
-{% endhighlight %}
-
-`git add .` 里的一点，指把当前目录所有修改过的文件都加到 Staged Area 去。
 
 前面我们说过 `git remote -v`。因为我们直接 clone 了别人的库，所以 clone 下来的文件夹里，已经登记了模板作者的远程库信息：
 
