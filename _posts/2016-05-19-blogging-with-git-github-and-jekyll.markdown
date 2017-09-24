@@ -1,22 +1,15 @@
 ---
 layout: post
 title: "Git 笔记：用 Github + Jekyll 写博客"
+date:   2016-05-19 10:35:06
+categories: jekyll
 ---
-原文链接 http://huangziwei.com/tech/blogging-with-git-github-and-jekyll/
-
-简单说，只需要三步，就可以在 Github 搭建起一个博客：
-
-1. 在 Github 上建一个名为 xxx.github.io 的库；
-2. 把看中了的 Jekyll 模板 clone 到本地；
-3. 把这个模板 push 到自己的库；
 
 <!-- more -->
 
-下面为了从头展示如何用 Git + Github + Jekyll。
-
 ### 在 Github 创建名为 username.github.io 的库
 
-按照 [Github Pages](https://pages.github.com) 上的说明，首先要创建一个新的库，把它命名为 username.github.io。[.io](http://zh.wikipedia.org/wiki/.io) 是英属印度洋领地的顶级域名，博客搭建成功后，这就是该博客的访问网址。库名的第一部分需要与用户名一致才能生效。所以如果你的用户名是 the10thdoctor，库的名字就要 the10thdoctor.github.io。另外，不需要勾选「Initialize this repository with a README」。
+按照 [Github Pages](https://pages.github.com) 上的说明，首先要创建一个新的库，把它命名为 username.github.io。库名的第一部分需要与用户名一致才能生效。另外，不需要勾选「Initialize this repository with a README」。
 
 创建成功后，会跳转到一个页面（如果你勾选了「Initialize this repository with a README」，则看不到这个页面），提示把已经创建的库 clone 到本地，或者输入以下命令：
 
@@ -29,7 +22,7 @@ git remote add origin https://github.com/username/username.github.io.git
 git push -u origin master
 {% endhighlight %}
 
-我们不按这些来做。为了理解这些指令，这里我们先一条一条地看看这些指令到底是什么意思。在[前一篇](http://huangziwei.com/tech/git-for-thesis/)，我们解释过第二、三和四步的意思。这里再简单地说一次，目的是弄明白每一个命令到底是什么：
+我们不按这些来做。为了理解这些指令，这里我们先一条一条地看看这些指令到底是什么意思：
 
 首先，我们在**本地**创建一个同名文件夹 username.github.io （之所以这样做，是为了与在网站上的库保持一致。如果我们直接把 Github 上创建的库 clone 到本地，就是一个同名的文件夹；但我们选择不直接 clone，而是自己创建一个，目的只是学习这些指令）：
 
@@ -60,7 +53,7 @@ origin	https://github.com/username/username.github.io.git (fetch)
 origin	https://github.com/username/username.github.io.git (push)
 {% endhighlight %}
 
-所以，这一行的意思是，给我们本地的 Git 文件夹登记一个远程库，然后在第六行的时候，它就知道该把文件夹里的内容推送到哪里去了。更详细一点：命令 `git remote` 等于是告诉 Git 我们要关于远程库（remote）做点什么；`add` 表明要登记一些信息；`origin` 是我们给那个远程库的名字，没有必要一定要叫 origin，只是习惯如此，可以叫任何名字，比如 tardis；最后就是要告诉 Git 那个远程库的具体地址是什么。
+所以，这一行的意思是，给我们本地的 Git 文件夹登记一个远程库，然后在第六行的时候，它就知道该把文件夹里的内容推送到哪里去了。更详细一点：命令 `git remote` 等于是告诉 Git 我们要关于远程库（remote）做点什么；`add` 表明要登记一些信息；`origin` 是我们给那个远程库的名字，没有必要一定要叫 origin，只是习惯如此，可以叫任何名字；最后就是要告诉 Git 那个远程库的具体地址是什么。
 
 如果我又创建另一个叫做 Tardis 的库，它的地址是 https://github.com/username/tardis.git，我也可以把这个地址登记到我们本地的 username.github.io 文件夹里。输入
 
@@ -79,13 +72,11 @@ tardis	https://github.com/username/tardis.git (push)
 
 第六行，`git push -u origin master`，意思就是把我们本地目录 master 分支（branch）里的文件，推送到（push）名为 origin 实际上代表作 https://github.com/username/username.github.io.git 这个地址的库。我们本地在哪个分支，就会推送到远程库的哪个分支。再直白一点，命令 `git push` 是告诉 Git，我要推送当前文件夹里的东西到某个地方了，origin 指向我们要把内容推向的那个远程库，后面的 master 则是想要推向远程库的、**本地的**分支。假设，我们想要把本地一个名为 timeVortex 的分支里的文件，推送到一个名为 tardis 的远程库（无论我们当前到底是处在哪个分支），那么我们就输入 `git push tardis timeVortex`，那样子，timeVortex 分支里的文件就会被推送到 tardis 库的一个同样叫做 timeVortex 的分支上。那么，如果希望把本地 master 分支上的文件推送到远程库里的 doctor 分支上，又该怎样做呢？可以输入 `git push origin master:doctor`。冒号前面是本地的分支，冒号后面是远程的分支。
 
-以上只是讲解，没有必要跟着做。但我还是希望你跟着做了，这样也许会更明白每一步到底发生了什么作用。现在，我们可以把 xxx.github.io 文件夹**删掉**，再进行下一步。
+以上只是讲解,现在，我们可以把 xxx.github.io 文件夹**删掉**，再进行下一步。
 
 ### 选择模板
 
 再次重新从零出发。这一次从选模板开始。
-
-现在 Jekyll 有很多好看的模板，可以到 [jekyllthemes.org](http://jekyllthemes.org) 上寻找自己喜欢的。我这里用的模板是小改自 [Skinny Bones](http://mmistakes.github.io/skinny-bones-jekyll/)，其他比较喜欢的有 [Scribble](http://jekyllthemes.org/themes/scribble/) 和 [Long Haul](http://jekyllthemes.org/themes/long-haul/)，[Incorporated](http://jekyllthemes.org/themes/incorporated/) 则比较适合用来做公司网站。
 
 本文余下部分用 Scribble 为例。
 
@@ -97,7 +88,7 @@ tardis	https://github.com/username/tardis.git (push)
 $ git clone https://github.com/username/scribble.git
 {% endhighlight %}
 
-把名为 scribble 的文件夹改名为 username.github.io (不必要，理由跟之前一样，只是为了比较好找)，只需要下面这行命令（`mv` 是移动文件夹的命令，可是也能用来重命名文件。我明白，一开始这很难理解）：
+把名为 scribble 的文件夹改名为 username.github.io (不必要，理由跟之前一样，只是为了比较好找)
 
 {% highlight bash %}
 $ mv scribble username.github.io
@@ -109,7 +100,7 @@ $ mv scribble username.github.io
 $ cd username.github.io
 {% endhighlight %}
 	
-一般而言，克隆了别人的模板，第一件事要做的就是修改 _config.yml 里的个人信息。在 scribble 这个模板中，修改的地方不多，只需要把导航栏相关的连接修改成自己的就可以了，比如 Blog 的 url 改成 http://username.github.io，邮件和 Github 帐号改成自己的帐号。
+一般而言，克隆了别人的模板，第一件事要做的就是修改 _config.yml 里的个人信息。
 
 只要修改过文件，我们就需要重复 `git add` 和 `git commit` 这两步：
 
@@ -137,7 +128,6 @@ origin	https://github.com/username/username.github.io.git (fetch)
 origin	https://github.com/username/username.github.io.git (push)
 {% endhighlight %}
 
-现在已经变成我们自己的了。
 
 最后输入
 
@@ -145,21 +135,7 @@ origin	https://github.com/username/username.github.io.git (push)
 $ git push -u origin master 
 {% endhighlight %}
 
-如果没有绑定 SSH key，一般会要求输入用户名和密码。输入后则会出现
-
-{% highlight bash %}
-Counting objects: 268, done.
-Delta compression using up to 4 threads.
-Compressing objects: 100% (187/187), done.
-Writing objects: 100% (268/268), 224.02 KiB | 0 bytes/s, done.
-Total 268 (delta 76), reused 268 (delta 76)
-To https://github.com/username/username.github.io.git
- * [new branch]      master -> master
-{% endhighlight %}
-
-代表成功推送。现在在浏览器输入网址 [http://username.github.io](http://username.github.io)，则可以看到博客的样子了。
-
-如果没有修改模板的需求，利用 Git + Github + Jekyll 搭建博客大概就是这样子。写文章，只需要在 `_post/` 文件加中，加入带有 YAML 头信息（YAML front matter）的 markdown 文件，然后(git add / git commit / git push)推送到 Github，就会被自动渲染成 HTML。
+如果没有绑定 SSH key，一般会要求输入用户名和密码。
 
 
 
