@@ -70,7 +70,11 @@ tardis	https://github.com/username/tardis.git (fetch)
 tardis	https://github.com/username/tardis.git (push)
 {% endhighlight %}
 
-第六行，`git push -u origin master`，意思就是把我们本地目录 master 分支（branch）里的文件，推送到（push）名为 origin 实际上代表`https://github.com/username/username.github.io.git`这个地址的库。我们本地在哪个分支，就会推送到远程库的哪个分支。再直白一点，命令 `git push` 是告诉 Git，我要推送当前文件夹里的东西到某个地方了，origin 指向我们要把内容推向的那个远程库，后面的 master 则是想要推向远程库的、**本地的**分支。假设，我们想要把本地一个名为 timeVortex 的分支里的文件，推送到一个名为 tardis 的远程库（无论我们当前到底是处在哪个分支），那么我们就输入 `git push tardis timeVortex`，那样子，timeVortex 分支里的文件就会被推送到 tardis 库的一个同样叫做 timeVortex 的分支上。那么，如果希望把本地 master 分支上的文件推送到远程库里的 doctor 分支上，又该怎样做呢？可以输入 `git push origin master:doctor`。冒号前面是本地的分支，冒号后面是远程的分支。
+第六行，`git push -u origin master`，意思就是把我们本地目录 master 分支（branch）里的文件，推送到（push）名为 origin 实际上代表以下地址的库：
+{% highlight bash %}
+https://github.com/username/username.github.io.git
+{% endhighlight %}
+我们本地在哪个分支，就会推送到远程库的哪个分支。再直白一点，命令 `git push` 是告诉 Git，我要推送当前文件夹里的东西到某个地方了，origin 指向我们要把内容推向的那个远程库，后面的 master 则是想要推向远程库的、**本地的**分支。假设，我们想要把本地一个名为 timeVortex 的分支里的文件，推送到一个名为 tardis 的远程库（无论我们当前到底是处在哪个分支），那么我们就输入 `git push tardis timeVortex`，那样子，timeVortex 分支里的文件就会被推送到 tardis 库的一个同样叫做 timeVortex 的分支上。那么，如果希望把本地 master 分支上的文件推送到远程库里的 doctor 分支上，又该怎样做呢？可以输入 `git push origin master:doctor`。冒号前面是本地的分支，冒号后面是远程的分支。
 
 以上只是讲解,现在，我们可以把 xxx.github.io 文件夹**删掉**，再进行下一步。
 
