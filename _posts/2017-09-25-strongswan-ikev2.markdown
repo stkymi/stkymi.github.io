@@ -5,9 +5,9 @@ date:   2017-09-26 10:35:06
 categories:
 ---
 
-###生成证书
+### 生成证书
 
-####生成CA根证书
+#### 生成CA根证书
 
 1、生成一个私钥
 ```
@@ -17,7 +17,7 @@ strongswan pki --gen --outform pem > ca.key.pem
 ```
 strongswan pki --self --in ca.key.pem --dn "C=CN, O=ZhuZhou, CN=StrongSwan CA" --ca --lifetime 3650 --outform pem > ca.cert.pem
 ```
-####生成服务器证书
+#### 生成服务器证书
 1、生成一个私钥
 ```
 strongswan pki --gen --outform pem > server.key.pem
@@ -27,7 +27,7 @@ strongswan pki --gen --outform pem > server.key.pem
 strongswan pki --pub --in server.key.pem --outform pem > server.pub.pem
 strongswan pki --issue --lifetime 3650 --cacert ca.cert.pem --cakey ca.key.pem --in server.pub.pem --dn "C=CN, O=ZhuZhou, CN=IP or domain" --san="IP or domain" --flag serverAuth --flag ikeIntermediate --outform pem > server.cert.pem
 ```
-####安装证书
+#### 安装证书
 ```
 cp ca.key.pem /etc/strongswan/ipsec.d/private/
 cp ca.cert.pem /etc/strongswan/ipsec.d/cacerts/
@@ -35,7 +35,7 @@ cp server.cert.pem /etc/strongswan/ipsec.d/certs/
 cp server.pub.pem /etc/strongswan/ipsec.d/certs/
 cp server.key.pem /etc/strongswan/ipsec.d/private/
 ```
-###配置Strongswan
+### 配置Strongswan
 ipsec 配置文件`/etc/strongswan/ipsec.conf`
 ```
 config setup
