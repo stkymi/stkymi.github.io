@@ -78,17 +78,11 @@ conn IKEv1-PSK-XAUTH
 密码认证文件 `/etc/strongswan/ipsec.secrets`
 
 ```
-#使用证书验证时的服务器端私钥
-: RSA server.key.pem
-
-#使用预共享密钥
-: PSK "预设加密密钥"
-
-#EAP 方式
-用户名 : EAP "密码"
-
-#XAUTH 方式, 只适用于 IKEv1
-用户名 : XAUTH "密码"
+: RSA server.key.pem  #使用证书验证时的服务器端私钥
+: PSK "预设加密密钥"    #使用预共享密钥
+用户名 : EAP "密码"     #EAP 方式
+用户名 : XAUTH "密码"   #XAUTH 方式, 只适用于 IKEv1
 ```
+
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”。
