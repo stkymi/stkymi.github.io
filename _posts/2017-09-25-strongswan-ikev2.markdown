@@ -42,7 +42,7 @@ config setup
 	uniqueids = no  #如果同一个用户在不同的设备上重复登录,yes 断开旧连接,创建新连接;no 保持旧连接,并发送通知; never 保持旧连接, 但不发送通知.
 
 conn %default                        #定义连接项, 命名为 %default 所有连接都会继承它
-	keyexchange=ike2             #默认的密钥交换算法, ike 为自动, 优先使用 ikev2
+	keyexchange=ike           
 	left=%any                    #服务端公网ip, %any表示从本地ip地址表中取.
 	leftsubnet=0.0.0.0/0         #服务器端子网, 如果为客户端分配虚拟 IP 地址，那表示之后要做 iptables 转发，此处就必须是用魔术字
 	right=%any                   #客户端公网ip, %any表示从本地ip地址表中取.
