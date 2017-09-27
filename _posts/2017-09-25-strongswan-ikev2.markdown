@@ -41,7 +41,7 @@ ipsec 配置文件`/etc/strongswan/ipsec.conf`
 config setup
 	uniqueids = no  #如果同一个用户在不同的设备上重复登录,yes 断开旧连接,创建新连接;no 保持旧连接,并发送通知; never 保持旧连接, 但不发送通知.
 
-conn %default  #定义连接项, 命名为 %default 所有连接都会继承它
+conn %default                        #定义连接项, 命名为 %default 所有连接都会继承它
 	keyexchange=ike2             #默认的密钥交换算法, ike 为自动, 优先使用 ikev2
 	left=%any                    #服务端公网ip, %any表示从本地ip地址表中取.
 	leftsubnet=0.0.0.0/0         #服务器端子网, 如果为客户端分配虚拟 IP 地址，那表示之后要做 iptables 转发，此处就必须是用魔术字
@@ -53,7 +53,9 @@ conn %default  #定义连接项, 命名为 %default 所有连接都会继承它
 	esp=aes256-sha256,3des-sha1,aes256-sha1!
         leftid=IP or @domain          #远程ID，
         rightid=%any                  #本地ID，
-
+        leftdns=8.8.8.8
+        rightdns=8.8.8.8
+        
 conn IKEv2-Pubkey-EAP	
 	leftauth=pubkey               #服务器使用证书认证
        	rightauth=eap-mschapv2        #客户端使用 EAP 扩展认证
@@ -78,10 +80,18 @@ conn IKEv1-PSK-XAUTH
 密码认证文件 `/etc/strongswan/ipsec.secrets`
 
 ```
-: RSA server.key.pem  #使用证书验证时的服务器端私钥
+: RSA server.key.pem   #使用证书验证时的服务器端私钥
 : PSK "预设加密密钥"    #使用预共享密钥
 用户名 : EAP "密码"     #EAP 方式
 用户名 : XAUTH "密码"   #XAUTH 方式, 只适用于 IKEv1
+```
+内核转发与iptables配置
+修改/etc/sysctl.conf 并执行命令 `sysctl -p'
+```
+net.ipv4.ip_forward = 1
+```
+```
+iptables -t nat -A POSTROUTING -s 10.1.0.0/16 -o eth0 -j MASQUERADE
 ```
 
 ### 配置客户端
