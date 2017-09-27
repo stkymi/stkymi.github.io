@@ -86,7 +86,7 @@ conn IKEv1-PSK-XAUTH
 用户名 : XAUTH "密码"   #XAUTH 方式, 只适用于 IKEv1
 ```
 内核转发与iptables配置
-修改/etc/sysctl.conf 并执行命令 `sysctl -p'
+修改/etc/sysctl.conf 并执行命令 `sysctl -p`
 ```
 net.ipv4.ip_forward = 1
 ```
