@@ -4,17 +4,12 @@ title:  "IKEv2"
 date:   2017-09-26 10:35:06
 categories:
 ---
+OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和xauth插件
+### 证书（Windows必选，Iphone可选）
 
-### 生成证书
-
-#### 生成CA根证书
-
-1、生成一个私钥
+#### 生成CA根证书：生成一个私钥，基于这个私钥自己签一个CA根证书
 ```
 strongswan pki --gen --outform pem > ca.key.pem
-```
-2、基于这个私钥自己签一个CA根证书
-```
 strongswan pki --self --in ca.key.pem --dn "C=CN, O=ZhuZhou, CN=StrongSwan CA" --ca --lifetime 3650 --outform pem > ca.cert.pem
 ```
 #### 生成服务器证书
@@ -46,11 +41,9 @@ conn %default                        #定义连接项, 命名为 %default 所有
 	left=%any                    #服务端公网ip, %any表示从本地ip地址表中取.
 	leftsubnet=0.0.0.0/0         #服务器端子网, 如果为客户端分配虚拟 IP 地址，那表示之后要做 iptables 转发，此处就必须是用魔术字
 	right=%any                   #客户端公网ip, %any表示从本地ip地址表中取.
- 	rightsourceip=10.0.0.0/24    #分配给客户端的虚拟 ip 段
+ 	rightsourceip=192.168.0.0/16    
 	leftca=ca.cert.pem           #服务器 CA 证书
 	leftcert=server.cert.pem     #服务器证书
-        ike=aes256-sha256-modp1024,3des-sha1-modp1024,aes256-sha1-modp1024!
-	esp=aes256-sha256,3des-sha1,aes256-sha1!
         leftid=IP or @domain          #远程ID，
         rightid=%any                  #本地ID，
         leftdns=8.8.8.8
@@ -63,7 +56,7 @@ conn IKEv2-Pubkey-EAP
 	rightsendcert=never           #客户端是否发送证书到服务器
 	auto=add                      #定义 strongswan 启动时该连接的行为。start 是启动; route 是添加路由表，有数据通过就启动; add 是添加连接类型但不启动; ignore 是当它不存在。默认是 ignore。
 
-conn IKEv2-PSK
+conn IKEv2-PSK-PSK
         leftauth=psk
         rightauth=psk
         auto=add
@@ -91,8 +84,8 @@ conn IKEv1-PSK-XAUTH
 net.ipv4.ip_forward = 1
 ```
 ```
-iptables -t nat -A POSTROUTING -s 10.1.0.0/16 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ens3 -j MASQUERADE
 ```
 
 ### 配置客户端
-安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”。
+安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”。必须开启“在远程网络上使用默认网关”
