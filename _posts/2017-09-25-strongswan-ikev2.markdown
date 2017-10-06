@@ -24,6 +24,12 @@ strongswan pki --issue --lifetime 3650 --cacert ca.cert.pem --cakey ca.key.pem -
 ```
 #### 安装证书
 ```
+cp ca.key.pem /etc/ipsec.d/private/
+cp ca.cert.pem /etc/ipsec.d/cacerts/
+cp server.cert.pem /etc/ipsec.d/certs/
+cp server.pub.pem /etc/ipsec.d/certs/
+cp server.key.pem /etc/ipsec.d/private/
+
 cp ca.key.pem /etc/strongswan/ipsec.d/private/
 cp ca.cert.pem /etc/strongswan/ipsec.d/cacerts/
 cp server.cert.pem /etc/strongswan/ipsec.d/certs/
@@ -34,33 +40,29 @@ cp server.key.pem /etc/strongswan/ipsec.d/private/
 ipsec 配置文件`/etc/strongswan/ipsec.conf`
 ```
 config setup
-	uniqueids = no  #如果同一个用户在不同的设备上重复登录,yes 断开旧连接,创建新连接;no 保持旧连接,并发送通知; never 保持旧连接, 但不发送通知.
 
-conn %default                        #定义连接项, 命名为 %default 所有连接都会继承它
+conn %default                       
 	keyexchange=ike           
-	left=%any                    #服务端公网ip, %any表示从本地ip地址表中取.
-	leftsubnet=0.0.0.0/0         #服务器端子网, 如果为客户端分配虚拟 IP 地址，那表示之后要做 iptables 转发，此处就必须是用魔术字
-	right=%any                   #客户端公网ip, %any表示从本地ip地址表中取.
+	left=%any                    
+	leftsubnet=0.0.0.0/0        
+	right=%any                  
  	rightsourceip=192.168.0.0/16    
-	leftca=ca.cert.pem           #服务器 CA 证书
-	leftcert=server.cert.pem     #服务器证书
-        leftid=IP or @domain          #远程ID，
-        rightid=%any                  #本地ID，
+	leftca=ca.cert.pem          
+	leftcert=server.cert.pem    
+        leftid=IP or @domain         
+        rightid=%any                 
         leftdns=8.8.8.8
         rightdns=8.8.8.8
-        
 conn IKEv2-Pubkey-EAP	
-	leftauth=pubkey               #服务器使用证书认证
-       	rightauth=eap-mschapv2        #客户端使用 EAP 扩展认证
-	leftsendcert=always           #是否发送服务器证书到客户端	
-	rightsendcert=never           #客户端是否发送证书到服务器
-	auto=add                      #定义 strongswan 启动时该连接的行为。start 是启动; route 是添加路由表，有数据通过就启动; add 是添加连接类型但不启动; ignore 是当它不存在。默认是 ignore。
-
+	leftauth=pubkey            
+       	rightauth=eap-mschapv2       
+	leftsendcert=always        
+	rightsendcert=never          
+	auto=add                     
 conn IKEv2-PSK-PSK
         leftauth=psk
         rightauth=psk
         auto=add
-        
 conn IKEv1-PSK-XAUTH
 	keyexchange=ikev1
 	fragmentation=yes
@@ -73,10 +75,10 @@ conn IKEv1-PSK-XAUTH
 密码认证文件 `/etc/strongswan/ipsec.secrets`
 
 ```
-: RSA server.key.pem   #使用证书验证时的服务器端私钥
-: PSK "预设加密密钥"    #使用预共享密钥
-用户名 : EAP "密码"     #EAP 方式
-用户名 : XAUTH "密码"   #XAUTH 方式, 只适用于 IKEv1
+: RSA server.key.pem  
+: PSK "The key"    
+username : XAUTH "password"    
+username : EAP "password"  
 ```
 内核转发与iptables配置
 修改/etc/sysctl.conf 并执行命令 `sysctl -p`
@@ -88,4 +90,4 @@ iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ens3 -j MASQUERADE
 ```
 
 ### 配置客户端
-安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”。必须开启“在远程网络上使用默认网关”
+安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
