@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Caddy | nghttpx+squid"
+title:  "Caddy | 甩开nghttpx+squid"
 date:   2017-10-20 10:35:06
 categories:
 ---
@@ -8,7 +8,6 @@ categories:
 ### caddy
 ```
 http://***.com https://***.com {  # 同时启用 http 和 https 不会自动转跳
-        gzip
         forwardproxy {
         basicauth caddyuser1 0NtCL2JPJBgPPMmlPcJ
         basicauth caddyuser2 key
