@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Caddy | 甩开nghttpx+squid"
+title:  "Caddy | 甩开 Nghttpx + Squid"
 date:   2017-10-20 10:35:06
 categories:
 ---

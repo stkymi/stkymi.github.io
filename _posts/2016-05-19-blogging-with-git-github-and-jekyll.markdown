@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Git 笔记：用 Github + Jekyll 写博客"
+title: "Git 笔记 | Github + Jekyll" 
 date:   2016-05-19 10:35:06
 categories: jekyll
 ---
