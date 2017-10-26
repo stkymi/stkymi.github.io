@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "IKEv2 | "
+title:  "IKEv2 | IPSec"
 date:   2017-09-26 10:35:06
 categories:
 ---
@@ -87,7 +87,14 @@ net.ipv4.ip_forward = 1
 ```
 ```
 iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ens3 -j MASQUERADE
+iptables-save > /etc/iptables
 ```
+编辑`/etc/network/if-pre-up.d/iptables`，添加启动脚本
+```
+#!/bin/sh
+/sbin/iptables-restore < /etc/iptables
+```
+必须赋予脚本执行权限，修改配置后应保存
 
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
