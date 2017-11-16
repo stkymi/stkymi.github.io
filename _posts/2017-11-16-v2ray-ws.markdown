@@ -1,0 +1,44 @@
+---
+layout: post
+title:  "V2ray"
+date:   2017-11-16 10:35:06
+categories:
+---
+
+### 服务端`/etc/v2ray/config.json
+```
+{
+  "inbound": {
+    "port": 80,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "UUID",
+          "alterId": 10
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "ws",
+        "wsSettings": {
+        "path": ""
+        }
+    }
+  },
+  "outbound": {
+    "protocol": "freedom",
+    "settings": {}
+  }
+}
+```
+
+### Caddyfile
+```
+http://***.com {
+        proxy / localhost:81 {
+        websocket
+        header_upstream -Origin
+        }
+}
+```

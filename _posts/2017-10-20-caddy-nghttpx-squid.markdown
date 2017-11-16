@@ -7,7 +7,7 @@ categories:
 
 ### caddy
 ```
-http://***.com https://***.com {  # 同时启用 http 和 https 不会自动转跳
+http://***.com https://***.com { 
         forwardproxy {
         basicauth caddyuser1 0NtCL2JPJBgPPMmlPcJ
         basicauth caddyuser2 key
@@ -20,4 +20,4 @@ http://***.com https://***.com {  # 同时启用 http 和 https 不会自动转�
         }
 }
 ```
-执行`./caddy -conf caddyfile`
+执行`./caddy -conf Caddyfile`
