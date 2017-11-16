@@ -5,7 +5,7 @@ date:   2017-11-16 10:35:06
 categories:
 ---
 
-### 服务端`/etc/v2ray/config.json
+### 服务端`/etc/v2ray/config.json`
 ```
 {
   "inbound": {
