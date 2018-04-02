@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "企业服务器部署"
+date:   2018-03-16 10:35:06
+categories:
+---
+
 ### 第一篇: 校园网 DNS 服务器
 添加需要解析的域名
 ```
@@ -24,7 +31,7 @@ ns      IN      A       ***.***.***.***
 @       IN      TXT     "============="
 @       IN      MX      5 mail.example.com.
 ```
-配置从属服务器，并在主服务器对应域名添加 allow-transfer { ***.***.***.***; }; 以及NS记录，注册商填写 Glue Record
+配置从属服务器，并在主服务器对应域名添加 `allow-transfer { ***.***.***.***; };` 以及NS记录，注册商填写 Glue Record
 ```
 zone "example.com" IN {
     type slave;  从属服务器（Slave）
