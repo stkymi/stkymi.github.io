@@ -44,3 +44,93 @@ http://***.com {
         }
 }
 ```
+
+### 客户端
+```
+{
+  "log": {
+    "access": "",
+    "loglevel": ""
+  },
+  "inbound": {
+    "port": 1080,
+    "listen": "127.0.0.1",
+    "protocol": "http",
+    "settings": {
+      "auth": "noauth",
+      "udp": false
+    }
+  },
+  "outbound": {
+    "protocol": "vmess",
+    "settings": {
+      "vnext": [
+        {
+          "address": "",
+          "port": 443,
+          "users": [
+            {
+              "id": "3ce67bea-814c-427f-b6bd-347edc663326",
+              "alterId": 64
+            }
+          ]
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "ws",
+      "security": "tls",
+      "tlsSettings": {
+        "serverName": ""
+      },
+      "wsSettings": {
+        "path": ""
+      }
+    }
+  },
+  "outboundDetour": [
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "IPIfNonMatch",
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "0.0.0.0/8",
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "127.0.0.0/8",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "chinasites",
+          "outboundTag": "direct"
+        },
+        {
+          "type": "chinaip",
+          "outboundTag": "direct"
+        }
+      ]
+    }
+  }
+}
+```
