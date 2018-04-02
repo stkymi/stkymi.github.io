@@ -7,7 +7,7 @@ categories:
 
 <!--more-->
 
-> ### 第一篇: 设定 MTA (Mail Transfer Agent)，即: 让服务器可以接收和发送邮件
+### 第一篇: 设定 MTA (Mail Transfer Agent)，即: 让服务器可以接收和发送邮件
 
 ```
     apt install postfix
