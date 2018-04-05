@@ -36,6 +36,18 @@ cp server.cert.pem /etc/strongswan/ipsec.d/certs/
 cp server.pub.pem /etc/strongswan/ipsec.d/certs/
 cp server.key.pem /etc/strongswan/ipsec.d/private/
 ```
+
+### 更新：通过Caddy从Let's Encrypt获得的服务器证书
+链接服务器证书和私钥
+```
+ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/strongswan/ipsec.d/certs/cert.crt
+ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.key /etc/strongswan/ipsec.d/private/private.key
+```
+Windows必须提供Let's Encrypt中间证书，否则会出现`错误13801:IKE身份验证凭证不可接受。` 中间证书和根证书都可以在官网https://letsencrypt.org/certificates/ 获取。
+```
+wget https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem -O \
+/etc/strongswan/ipsec.d/cacerts/lets-encrypt-x3-cross-signed.pem
+```
 ### 配置Strongswan
 ipsec 配置文件`/etc/strongswan/ipsec.conf`
 ```
