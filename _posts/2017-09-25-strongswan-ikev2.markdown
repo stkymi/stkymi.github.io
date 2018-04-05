@@ -37,7 +37,7 @@ cp server.pub.pem /etc/strongswan/ipsec.d/certs/
 cp server.key.pem /etc/strongswan/ipsec.d/private/
 ```
 
-### 更新：通过Caddy从Let's Encrypt获得的服务器证书
+### 更新：通过Caddy从Let's Encrypt获取服务器证书
 链接服务器证书和私钥
 ```
 ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/strongswan/ipsec.d/certs/cert.crt
