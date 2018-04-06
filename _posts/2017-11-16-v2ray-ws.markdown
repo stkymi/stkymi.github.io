@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "V2ray"
+title:  "V2ray | Caddy"
 date:   2017-11-16 10:35:06
 categories:
 ---
@@ -11,7 +11,7 @@ categories:
 ```
 {
   "inbound": {
-    "port": 80,
+    "port": 81,
     "protocol": "vmess",
     "settings": {
       "clients": [
@@ -34,16 +34,27 @@ categories:
   }
 }
 ```
-
 ### Caddyfile
 ```
-http://***.com {
-        proxy / localhost:81 {
+***.com { 
+        forwardproxy {
+        basicauth caddyuser1 0NtCL2JPJBgPPMmlPcJ
+        basicauth caddyuser2 key
+        }
+        proxy / http://127.0.0.1:8080 {
+                header_upstream Host {host}
+                header_upstream X-Real-IP {remote}
+                header_upstream X-Forwarded-For {remote}
+                header_upstream X-Forwarded-Proto {scheme}
+        }
+        proxy /path localhost:81 {
         websocket
         header_upstream -Origin
-        }
+        }          
 }
 ```
+执行`./caddy -conf Caddyfile`
+
 
 ### 客户端
 ```
