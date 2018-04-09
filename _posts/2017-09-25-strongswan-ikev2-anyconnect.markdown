@@ -2,7 +2,7 @@
 layout: post
 title:  "IKEv2 | AnyConnect"
 date:   2017-09-26 10:35:06
-categories:Strongswan Ocserv
+
 ---
 ### Strongswan
 OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2、xauth插件
