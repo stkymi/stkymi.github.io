@@ -129,7 +129,7 @@ cert-user-oid = 2.5.4.3
 
 server-cert = /etc/pki/ocserv/public/domain.com.crt
 server-key = /etc/pki/ocserv/private/domain.com.key
-ca-cert = /etc/pki/ocserv/cacert/ca.crt
+ca-cert = /etc/pki/ocserv/cacerts/ca.crt
 # 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA 
  
 max-clients = 16
