@@ -1,9 +1,10 @@
 ---
 layout: post
-title:  "IKEv2 | IPSec"
+title:  "IKEv2 | AnyConnect"
 date:   2017-09-26 10:35:06
 categories:
 ---
+### Strongswan
 OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2、xauth插件
 ### 证书（Windows必选，Iphone可选）
 
@@ -109,3 +110,48 @@ iptables-save > /etc/iptables
 
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
+
+### ocserve
+```
+auth = "plain[passwd=/etc/ocserv/ocpasswd]"
+# 选择登陆方式，plain[passwd=/etc/ocserv/ocpasswd] 代表使用密码登陆并且从 /etc/ocserv/ocpasswd 文件中读取用户名和密码
+# 使用证书登录则启用 auth="certificate"
+ 
+tcp-port = 443
+udp-port = 443
+# 这个代表 TCP和UDP监听的端口 默认443，可以更换其他端口，端口号可分开
+ 
+try-mtu-discovery = true
+# 开启以后可以增强VPN性能
+
+cert-user-oid = 2.5.4.3
+# 让服务器读取用户证书,适用于证书登录
+
+server-cert = /etc/pki/ocserv/public/server.crt
+server-key = /etc/pki/ocserv/private/server.key
+ca-cert = /etc/pki/ocserv/cacert/ca.crt
+# 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA 
+ 
+max-clients = 16
+# 允许同时连接的总客户端数量
+max-same-clients = 2
+# 同账号连接VPN最大客户端数量，0是不作限制
+
+ipv4-network = 192.168.8.0
+ipv4-netmask = 255.255.255.0
+ 
+dns = 8.8.8.8
+dns = 1.1.1.1
+# 服务端的DNS
+
+cisco-client-compat = true
+# 使ocserv兼容AnyConnect
+```
+用户管理
+```
+ocpasswd -c /etc/ocserv/ocpasswd name      #创建用户名为name的用户，会提示创建密码
+ocpasswd -c /etc/ocserv/ocpasswd -d name   #删除用户名为name的用户，无任何提示
+ocpasswd -c /etc/ocserv/ocpasswd -l name   #锁定用户名为name的用户，无任何提示
+ocpasswd -c /etc/ocserv/ocpasswd -u name   #解锁用户名为name的用户，无任何提示
+```
+
