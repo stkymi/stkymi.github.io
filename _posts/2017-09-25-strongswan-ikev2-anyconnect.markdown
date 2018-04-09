@@ -54,13 +54,13 @@ ipsec 配置文件`/etc/strongswan/ipsec.conf`
 config setup
 
 conn %default                       
-	keyexchange=ike2           
+	keyexchange=ike           
 	left=%any                    
 	leftsubnet=0.0.0.0/0        
 	right=%any                  
  	rightsourceip=192.168.0.0/16    
 	leftcert=server.cert.pem    
-        leftid=IP or @domain         
+        leftid=domain         
         rightid=%any                 
         leftdns=8.8.8.8
         rightdns=8.8.8.8
