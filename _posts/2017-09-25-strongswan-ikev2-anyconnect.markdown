@@ -2,7 +2,7 @@
 layout: post
 title:  "IKEv2 | AnyConnect"
 date:   2017-09-26 10:35:06
-categories:
+categories:Strongswan Ocserv
 ---
 ### Strongswan
 OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2、xauth插件
@@ -54,12 +54,11 @@ ipsec 配置文件`/etc/strongswan/ipsec.conf`
 config setup
 
 conn %default                       
-	keyexchange=ike           
+	keyexchange=ike2           
 	left=%any                    
 	leftsubnet=0.0.0.0/0        
 	right=%any                  
  	rightsourceip=192.168.0.0/16    
-	leftca="C=CN, O=ZhuZhou, CN=StrongSwan CA"      
 	leftcert=server.cert.pem    
         leftid=IP or @domain         
         rightid=%any                 
@@ -75,13 +74,6 @@ conn IKEv2-PSK-PSK
         leftauth=psk
         rightauth=psk
         auto=add
-conn IKEv1-PSK-XAUTH
-	keyexchange=ikev1
-	fragmentation=yes
-	leftauth=psk
-	rightauth=psk
-	rightauth2=xauth
-	auto=add
 ```
 
 密码认证文件 `/etc/strongswan/ipsec.secrets`
