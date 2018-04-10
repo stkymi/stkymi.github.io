@@ -74,6 +74,18 @@ conn IKEv2-PSK-PSK
         leftauth=psk
         rightauth=psk
         auto=add
+conn Windows
+    keyexchange=ikev2
+    ike=aes256-sha256-modp1024,aes256-sha1-modp1024,3des-sha1-modp1024!
+    esp=aes256-sha256,aes256-sha1,3des-sha1!
+    leftsendcert=always
+    leftauth=pubkey
+    rightauth=eap-mschapv2
+    rightsendcert=never
+    eap_identity=%any
+    rekey=no
+    auto=add
+
 ```
 
 密码认证文件 `/etc/strongswan/ipsec.secrets`
@@ -81,7 +93,6 @@ conn IKEv2-PSK-PSK
 ```
 : RSA server.key.pem  
 : PSK "The key"    
-username : XAUTH "password"    
 username : EAP "password"  
 ```
 内核转发与iptables配置
