@@ -1,11 +1,9 @@
 # Site settings
 title: Jekyll's Ramblings
-description: "This is my tech blog containing random thoughts and code snippets"
-baseurl: ""
-url: "http://m.symi.ml"
+description: ""
 #twitter_username: 
 #github_username:  
 
 # Build settings
 markdown: kramdown
-permalink: pretty
+#permalink: pretty
