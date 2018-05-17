@@ -110,8 +110,8 @@ iptables-save > /etc/iptables
 /sbin/iptables-restore < /etc/iptables
 ```
 必须赋予脚本执行权限，修改配置后应保存
- _______________
- ```
+
+```
  service iptables save
  chkconfig iptables on
 
