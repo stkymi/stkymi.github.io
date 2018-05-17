@@ -5,7 +5,7 @@ date:   2017-09-26 10:35:06
 
 ---
 ### Strongswan
-OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2、xauth插件
+OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
 ### 证书（Windows必选，Iphone可选）
 
 #### 生成CA根证书：生成一个私钥，基于这个私钥自己签一个CA根证书
@@ -110,7 +110,14 @@ iptables-save > /etc/iptables
 /sbin/iptables-restore < /etc/iptables
 ```
 必须赋予脚本执行权限，修改配置后应保存
+ _______________
+ ```
+ service iptables save
+ chkconfig iptables on
 
+ apt install iptables-persistent
+ service  iptables-persistent save
+ ```
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
 
