@@ -11,28 +11,79 @@ categories:
 ```
 {
   "inbound": {
-    "port": 81,
+    "port": 8081,
     "protocol": "vmess",
     "settings": {
       "clients": [
         {
           "id": "UUID",
-          "alterId": 10
+          "alterId": 64
         }
       ]
     },
     "streamSettings": {
       "network": "ws",
         "wsSettings": {
-        "path": ""
+        "path": "/html"
         }
     }
   },
-  "outbound": {
+"inboundDetour": [
+{
+    "port": 8080,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "UUID",
+          "level": 1,
+          "alterId": 10
+        }
+      ]
+    },
+"streamSettings": {
+      "network": "tcp",
+        "tcpSettings": {
+        "header":{
+  "type": "http",
+  "request": {
+    "version": "1.1",
+    "method": "GET",
+    "path": ["/"],
+    "headers": {
+      "Host": [" "],
+      "User-Agent": [
+        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
+      ],
+      "Accept-Encoding": ["gzip, deflate"],
+      "Connection": ["keep-alive"],
+      "Pragma": "no-cache"
+    }
+  },
+ "response": {
+    "version": "1.1",
+    "status": "200",
+    "reason": "OK",
+    "headers": {
+      "Content-Type": ["application/octet-stream", "video/mpeg"],
+      "Transfer-Encoding": ["chunked"],
+      "Connection": ["keep-alive"],
+      "Pragma": "no-cache"
+    }
+  }
+       }
+    }
+}
+  }
+],
+ 
+ "outbound": {
     "protocol": "freedom",
     "settings": {}
   }
 }
+
 ```
 ### Caddyfile
 ```
@@ -81,7 +132,7 @@ categories:
           "port": 443,
           "users": [
             {
-              "id": "3ce67bea-814c-427f-b6bd-347edc663326",
+              "id": "UUID",
               "alterId": 64
             }
           ]
@@ -145,3 +196,57 @@ categories:
   }
 }
 ```
+```
+{
+  "log": {
+    "loglevel": ""
+  },
+  "inbound": {
+    "port": 1080,
+    "protocol": "http",
+    "domainOverride": ["tls","http"],
+    "settings": {
+      "auth": "noauth"
+    }
+  },
+  "outbound": {
+    "protocol": "vmess",
+    "settings": {
+      "vnext": [
+        {
+          "address": "mmmi.tk",
+          "port": 8080,
+          "users": [
+            {
+              "id": "e3ec6e2a-d397-4dc2-882a-622c327aee04",
+              "alterId": 10
+            }
+          ]
+        }
+      ]
+    },
+    "streamSettings": {
+      "network": "tcp",
+      "tcpSettings": {
+        "header": {  
+          "type": "http",
+          "request": {
+            "version": "1.1",
+            "method": "GET",
+            "path": ["/"],
+            "headers": {
+              "Host": ["t7z.cupid.iqiyi.com"],
+              "User-Agent": [
+                "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.75 Safari/537.36",
+                        "Mozilla/5.0 (iPhone; CPU iPhone OS 10_0_2 like Mac OS X) AppleWebKit/601.1 (KHTML, like Gecko) CriOS/53.0.2785.109 Mobile/14A456 Safari/601.1.46"
+              ],
+              "Accept-Encoding": ["gzip, deflate"],
+              "Connection": ["keep-alive"],
+              "Pragma": "no-cache"
+            }
+          }
+        }
+      }
+    }
+  }
+}
