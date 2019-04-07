@@ -35,7 +35,10 @@ slmgr ato
 
 `cscript ospp.vbs /sethst:kms.03k.org`
 
-也可以把ospp.vbs拖进CMD窗口，然后`cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /sethst:kms.03k.org`
+也可以把ospp.vbs拖进CMD窗口，然后
+```
+cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /sethst:kms.03k.org
+```
 
 `cscript ospp.vbs /act`
 
