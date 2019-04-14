@@ -9,7 +9,7 @@ categories:
 
 ### 搭建KMS服务器
 
-Chmod赋予`vlmcsd-x64-musl-static`可执行权限并启动服务./
+`chmod -R`赋予`vlmcsd-x64-musl-static`可执行权限并启动服务`./`
 
 侦听端口是1688，可查看`ss -lnp|grep 1688`
 
@@ -29,7 +29,9 @@ https://docs.microsoft.com/zh-cn/previous-versions/office/office-2010/ee624355(v
 ```
 slmgr /ipk xxxxx-xxxxx-xxxxx-xxxxx
 slmgr /skms kms.03k.org
-slmgr ato
+slmgr /ato
+slmgr /xpr
+slmgr /dlv
 ```
 激活命令：找到安装目录`C:\Program Files\Microsoft Office\Office16`，确认目录下的`OSPP.VBS`，CD到这个目录
 
