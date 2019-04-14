@@ -8,6 +8,13 @@ categories:
 <!-- more -->
 
 ### 第一篇:  Mariadb 的账户管理
+安装运行`mariadb`
+```
+mysql_secure_installation     #初始化设置
+mysql -u root -p              #以root账户登入
+create/drop database <库名>; 
+show databases;
+```
 数据库默认的管理员用户只能在具有系统管理员权限的程序中使用
 ```
 MariaDB [(none)]> CREATE USER 'by2'@'localhost' IDENTIFIED BY 'my password';
