@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Centos | Debian" 
+title: "CentOS | Debian" 
 date:   2016-05-20 10:35:06
 categories:
 ---
