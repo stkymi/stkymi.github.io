@@ -121,11 +121,17 @@ postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
 ```
 ### 第四篇: 安装 SquirrelMail，即: 使用浏览器登录
 
-转换 locale/zh_CN/LC_MESSAGES/ 语言文件编码，并修改 locale/zh_CN/setup.php 以及 functions/i18n.php
+系统应先安装apache2,再安装php，否则可能无法解析php。下载、解压缩SquirrelMail，运行`./configure`以创建初始配置文件
+
+在SquirrelMail下载页面，下载语言包Translations，解压后运行`install`脚本。简体中文`zh_CN`默认使用`gb2312`编码,将其转换成`utf-8`编码
+
+进入目录`locale/zh_CN/LC_MESSAGES/`转换语言文件编码：
 ```
     cp squirrelmail.po squirrelmail.po.bak
     iconv -f gb2312 -t utf-8 squirrelmail.po.bak >squirrelmail.po 
 ```
+将`locale/zh_CN/setup.php` 以及 `functions/i18n.php`文件里的`gb2312`改为`utf-8`
+
 将by2用户添加到mail组
 ```
     usermod -a -G mail by2
