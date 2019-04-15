@@ -79,7 +79,7 @@ Debug
     # static userdb with shared uid and gid
     userdb {
     driver = static
-    args = uid=vmail gid=vmail
+    args = uid=by2 gid=by2
     }
     # using password file
     passdb {
@@ -119,6 +119,11 @@ postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
 ```
     apt install dovecot-imapd dovecot-pop3d
 ```
+配置加密连接是否启用`/etc/dovecot/conf.d/10-auth.conf`
+```
+disable_plaintext_auth = no
+auth_mechanisms = plain login
+```
 ### 第四篇: 安装 SquirrelMail，即: 使用浏览器登录
 
 系统应先安装apache2,再安装php，否则可能无法解析php。下载、解压缩SquirrelMail，运行`./configure`以创建初始配置文件
@@ -136,6 +141,9 @@ postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
 ```
     usermod -a -G mail by2
 ```
+#### SquirrelMail 常见错误及排除
+`ERROR:Connection dropped by IMAP server.` 原因：SquirrelMail找不到用户邮箱的位置。检查邮箱路径设置`mail_location = maildir:/var/mail/vhosts/%d/%n`以及文件夹`/var/mail/vhosts`的归属用户是否正确。
+
 
 
 
