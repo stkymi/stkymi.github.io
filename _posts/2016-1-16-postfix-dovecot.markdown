@@ -9,7 +9,7 @@ categories:
 
 ## 端口及原理知识
 
-MUA (Mail User Agent) 或许是到目前为止最为熟悉的部分。它可以是web-based的，像网页版的SquirrelMail, 也可以是桌面客户端，例如Outlook。当一封邮件编写完成后，它会通过SMTP协议被发往一个叫做MSA (Mail Submission Agent)的服务器, 然后被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同程序，例如Postfix。接下来MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。通过DNS查询，MTA查明了邮件将发往何处。然后MTA将会通过SMTP协议将邮件发送到收件地址的MTA。收件MTA接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。最后MUA通过IMAP (Internet Message Access Protocol) 或 POP3 (Post Office Protocol)协议提取邮件。
+MUA (Mail User Agent) 可以是web-based的，SquirrelMail, 也可以是桌面客户端，例如Outlook。当一封邮件编写完成后，它会通过SMTP协议被发往一个叫做MSA (Mail Submission Agent)的服务器, 然后被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同程序，例如Postfix。接下来MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。通过DNS查询，MTA查明了邮件将发往何处。然后MTA将会通过SMTP协议将邮件发送到收件地址的MTA。收件MTA接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。最后MUA通过IMAP (Internet Message Access Protocol) 或 POP3 (Post Office Protocol)协议提取邮件。
 
 SMTP协议中，Port 25 同时用作收取其它MTA (Postfix) 发来的信件以及MUA (Outlook) 委托MTA发出信件, 即 Relay
 
