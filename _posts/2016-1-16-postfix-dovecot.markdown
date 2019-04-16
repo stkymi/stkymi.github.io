@@ -7,6 +7,12 @@ categories:
 
 <!--more-->
 
+## 端口及原理知识
+
+SMTP协议中，Port 25 同时用作收取其它MTA（Postfix)发来的信件以及MUA(Outlook)委托MTA发出信件, 即 Relay
+
+SMTP 有定义另一个Port 587 专做 Mail Submission (MSA)，而 587 Port 的连接并不能让 MTA 发信给另一个MTA
+
 ### 第一篇: 设定 MTA (Mail Transfer Agent)，即: 让服务器可以接收和发送邮件
 
 ```
