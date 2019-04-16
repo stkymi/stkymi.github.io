@@ -9,6 +9,8 @@ categories:
 
 ### 搭建KMS服务器
 
+确定linux服务器的CPU架构：`cat /proc/cpuinfo`
+
 `chmod -R`赋予`vlmcsd-x64-musl-static`可执行权限并启动服务`./`
 
 侦听端口是1688，可查看`ss -lnp|grep 1688`
