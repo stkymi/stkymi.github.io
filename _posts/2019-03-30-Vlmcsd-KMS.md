@@ -49,7 +49,10 @@ cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /sethst:kms.03k.or
 
 ### 自定义系统OEM信息
 
-打开注册表`RegEdit`，定位`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation`
+打开注册表`RegEdit`，定位
+```
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation
+```
 
 通过新建字符串值，并修改数值数据来实现自定义OEM信息：
 ```
@@ -60,3 +63,4 @@ SupportPhone ---------- 企业服务支持电话
 SupportHours ---------- 企业服务支持时间
 SupportURL ------------ 企业服务支持网站
 ```
+logo默认路径`"C:\Windows\System32\OEMlogo.bmp"`
