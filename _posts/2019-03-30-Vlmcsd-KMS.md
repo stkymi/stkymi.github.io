@@ -63,4 +63,4 @@ SupportPhone ---------- 企业服务支持电话
 SupportHours ---------- 企业服务支持时间
 SupportURL ------------ 企业服务支持网站
 ```
-logo默认路径`"C:\Windows\System32\OEMlogo.bmp"`
+logo默认路径```"C:\Windows\System32\OEMlogo.bmp"```
