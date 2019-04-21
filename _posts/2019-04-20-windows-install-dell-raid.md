@@ -20,3 +20,4 @@ create
 active
 format quick
 ```
+注意：DiskPart必须选对目标，当前被选中的磁盘或分区前面会有`*`标记，可以用`list`查看
