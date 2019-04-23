@@ -21,3 +21,7 @@ active
 format quick
 ```
 注意：DiskPart必须选对目标，当前被选中的磁盘或分区前面会有`*`标记，可以用`list`查看
+
+### 磁盘检查 
+
+进系统时蓝屏，PE查看系统盘打不开、格式为RAW。DiskGenius备份数据后，运行`chkdsk C:/F`修复损坏的文件
