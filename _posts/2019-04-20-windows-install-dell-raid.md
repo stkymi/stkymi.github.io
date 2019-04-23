@@ -25,3 +25,10 @@ format quick
 ### 磁盘检查 
 
 进系统时蓝屏，PE查看系统盘打不开、格式为RAW。DiskGenius备份数据后，运行`chkdsk C:/F`修复损坏的文件
+
+### 运营商ISP
+
+```
+中国电信  telecomadmin  nE7jA%5m
+中国移动  CMCCAdmin    aDm8H%MdA
+```
