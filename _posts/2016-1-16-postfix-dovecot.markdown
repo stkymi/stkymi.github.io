@@ -14,7 +14,7 @@ MUA (Mail User Agent) 可以是web-based的，例如 SquirrelMail, 也可以是�
 SMTP协议中，Port 25 同时用作收取其它MTA (Postfix) 发来的信件以及MUA (Outlook) 委托MTA发出信件, 即 Relay
 
 SMTP 有定义另一个Port 587 专做 Mail Submission (MSA)，而 587 Port 的连接并不能让 MTA 发信给另一个MTA
-
+```
 SMTP ----------– 25
 SMTP     (MSA)-– 587
 SMTP(tls)(MSA)-– 465
@@ -22,6 +22,7 @@ IMAP ----------– 143
 IMAP(tls) -----– 993
 POP3 ----------– 110
 POP3(tls) -----– 995
+```
 ### 第一篇: 设定 MTA (Mail Transfer Agent)，即: 让服务器可以接收和发送邮件
 
 ```
