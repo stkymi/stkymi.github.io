@@ -49,6 +49,16 @@ sysctl net.ipv4.tcp_congestion_control
 lsmod | grep bbr
 ```
 ### 第四篇: FFmpeg
+
+转码
+```
+ffmpeg -i i.flv o.mp4
+
+合并
+```
+ffmpeg -i video.mp4 -i audio.m4a -c copy o.mp4
+```
+
 剪辑
 ```
 ffmpeg -ss 00:00:00 -t 00:00:30 -i i.mp4 -vcodec copy -acodec copy o1.mp4
