@@ -26,6 +26,10 @@ format quick
 
 进系统时蓝屏，PE查看系统盘打不开、格式为RAW。DiskGenius备份数据后，运行`chkdsk C:/F`修复损坏的文件
 
+### VMware 桥接模式
+
+首先查看本地以太网属性是否安装VMware Bridge Protocol：`控制面板>>网络和Internet>>网络连接`选择实际使用的网卡，右键查看属性是否安装并启用VMware Bridge Protocol，然后查看VMware虚拟网络编辑器的桥接模式设置：`编辑>>虚拟网络编辑器>>桥接模式`桥接目标修改为本地实际的网卡适配器，最后刷新（禁用再启用）虚拟机的本地连接
+
 ### 运营商ISP
 
 ```
