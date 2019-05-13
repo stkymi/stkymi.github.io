@@ -56,12 +56,14 @@ bash <(curl -L -s https://install.direct/go.sh)
 
 ```
 ### Caddyfile
+
+```
+curl https://getcaddy.com | bash -s personal
+```
+
 ```
 ***.com { 
-        forwardproxy {
-        basicauth caddyuser1 0NtCL2JPJBgPPMmlPcJ
-        basicauth caddyuser2 key
-        }
+        
         proxy / http://127.0.0.1:8080 {
                 header_upstream Host {host}
                 header_upstream X-Real-IP {remote}
