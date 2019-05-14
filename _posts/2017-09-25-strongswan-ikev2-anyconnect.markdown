@@ -5,7 +5,40 @@ date:   2017-09-26 10:35:06
 
 ---
 ### Strongswan
-OpenVZ需要开启TUN，并安装libipsec插件；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
+OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apk并不提供此插件，因此OpenVZ架构下的Debian只能编译安装；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
+
+#### 编译安装
+
+安装依赖
+
+```
+apt install libpam0g-dev libssl-dev make gcc   
+wget http://download.strongswan.org/strongswan.tar.gz
+tar -xzf strongswan.tar.gz
+cd strongswan-*
+```
+
+编译：OpenVZ必须添加 `--enable-kernel-libipsec`
+
+```
+./configure  --enable-eap-identity --enable-eap-md5 \
+--enable-eap-mschapv2 --enable-eap-tls --enable-eap-ttls --enable-eap-peap  \
+--enable-eap-tnc --enable-eap-dynamic --enable-eap-radius --enable-xauth-eap  \
+--enable-xauth-pam  --enable-dhcp  --enable-openssl  --enable-addrblock --enable-unity  \
+--enable-certexpire --enable-radattr --enable-tools --enable-openssl --disable-gmp --enable-kernel-libipsec
+```
+```
+make; make install
+```
+
+默认安装到/usr/local目录下，配置文件在/usr/local/etc目录下
+
+```
+ipsec start/stop/status
+```
+
+
+
 ### 证书（Windows必选，Iphone可选）
 
 #### 生成CA根证书：生成一个私钥，基于这个私钥自己签一个CA根证书
