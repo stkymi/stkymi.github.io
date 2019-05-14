@@ -17,7 +17,6 @@ wget http://download.strongswan.org/strongswan.tar.gz
 tar -xzf strongswan.tar.gz
 cd strongswan-*
 ```
-
 编译：OpenVZ必须添加 `--enable-kernel-libipsec`
 
 ```
@@ -31,7 +30,7 @@ cd strongswan-*
 make; make install
 ```
 
-默认安装到/usr/local目录下，配置文件在/usr/local/etc目录下
+默认安装到`/usr/local`目录，配置文件在 `/usr/local/etc`
 
 ```
 ipsec start/stop/status
