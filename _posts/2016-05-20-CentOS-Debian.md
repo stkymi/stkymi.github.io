@@ -26,3 +26,9 @@ categories:
 全屏设置：`Behaviour ---> Alt+Enter` 所有修改需保存Session配置。
 全屏后鼠标移动到左上角单击，可弹出选项菜单，想当于标题栏右键
 
+配置文件 `/etc/ssh/sshd_config`
+```
+TCPKeepAlive yes
+ClientAliveInterval 30
+ClientAliveCountMax 60
+```
