@@ -28,6 +28,12 @@ POP3(tls) -----– 995
 ```
     apt install postfix
 ```
+编辑 `/etc/aliases`设置别名（即转发功能）,例如将`m@****.tk`收到的邮件转发至微软的邮箱
+`m: ****@***.com`
+执行`postalias /etc/aliases`刷新配置
+
+
+
 MTA服务器之间的TLS传输设定 /etc/postfix/main.cf
 ```
     smtpd_tls_security_level = may  #作为接收服务器: 支持加密但允许客户端使用不加密方式传输邮件
@@ -72,7 +78,14 @@ Debug
     v=spf1 a ip4:***.***.***.*** ~all  #允许此IP使用该域名发送邮件
 
 ```
-### 第二篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox
+
+### 第二篇：设定 MSA (Mail Submission Agent)，即：使用SMTP协议透过服务器发送邮件
+这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay)
+而MTA与MTA之间传送邮件也是使用SMTP协议（此处为25端口）
+SMTP Submission 当然需要有登入认证，不然肯定會成为 Spam Mail 的 Open Relay
+
+
+### 第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox
 
 安装Dovecot的LMTP服务「Local Mail Transfer Protocol service」，以接管Postfix收到邮件后的本地存储以及投递
 ```
@@ -129,7 +142,7 @@ Debug
     virtual_transport = lmtp:unix:private/dovecot-lmtp
 ```
 
-### 第三篇: 设定 MDA (Mail Delivery Agent)，即: 让用户从服务器收取信件
+### 第四篇: 设定 MDA (Mail Delivery Agent)，即: 让用户从服务器收取信件
 
 postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
 ```
@@ -140,7 +153,7 @@ postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
 disable_plaintext_auth = no
 auth_mechanisms = plain login
 ```
-### 第四篇: 安装 SquirrelMail，即: 使用浏览器登录
+### 第五篇: 安装 SquirrelMail，即: 使用浏览器登录
 
 系统应先安装apache2,再安装php，否则可能无法解析php。下载、解压缩SquirrelMail，运行`./configure`以创建初始配置文件
 
