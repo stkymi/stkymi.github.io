@@ -29,9 +29,21 @@ POP3(tls) -----– 995
     apt install postfix
 ```
 编辑 `/etc/aliases`设置别名（即转发功能）,例如将`m@****.tk`收到的邮件转发至微软的邮箱
+
 `m: ****@***.com`
+
 执行`postalias /etc/aliases`刷新配置
 
+修改Postfix的配置文件`/etc/postfix/main.cf`
+
+```
+myhostname =        描述邮件服务器的主机名称
+myorigin =          指定服务器使用那个域名来发送邮件
+mydestination =     指定服务器使用那个域名来接收邮件
+mynetworks =        规定哪些网络IP可以使用服务器发送邮件
+inet_interfaces =   默认值为all,即监听所有网络接口
+inet_protocols =    网络协议 这里ipv4即可，也可以为all，则支持ipv4,ipv6
+```
 
 
 MTA服务器之间的TLS传输设定 /etc/postfix/main.cf
@@ -81,8 +93,29 @@ Debug
 
 ### 第二篇：设定 MSA (Mail Submission Agent)，即：使用SMTP协议透过服务器发送邮件
 这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay)
+
 而MTA与MTA之间传送邮件也是使用SMTP协议（此处为25端口）
+
 SMTP Submission 当然需要有登入认证，不然肯定會成为 Spam Mail 的 Open Relay
+
+默认情况下，smtpd服务器只允许$mynetworks规定的IP子网使用，postfix没有账号认证功能，需要借助SASL(Simple Authentication Security Layer)组件来完成。支持的组件有Cyrus SASL 以及 Dovecot SASL
+
+查看SMTP服务器中的SASL支持情况可用命令：
+```
+postconf -a
+```
+Cyrus SASL的守护进程是saslauthd，Cyrus SASL支持多种认证方式,通过saslauthd守护程序支持/etc/shadow,PAM和IMAP server，然后通过auxprop插件机制auxiliary property plugins支持sasldb、sql、ldapdb。
+安装Cyrus SASL
+```
+apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules
+```
+
+配置Cyrus SASL的第一步是确定配置文件的名称和位置，该文件描述Postfix SMTP服务器将如何使用SASL框架。
+
+配置文件smtpd.conf位于`/usr/lib/sasl2/`，Debian的也可以放在`/etc/postfix/sasl/`，cyrus会优先查找/usr/lib/sasl2/目录下的smtpd.conf,如果找到则不继续查找。
+
+
+
 
 
 ### 第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox
