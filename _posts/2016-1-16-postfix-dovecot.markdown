@@ -52,7 +52,7 @@ MTA服务器之间的TLS传输设定 /etc/postfix/main.cf
     smtp_tls_security_level = may  #作为发送服务器: 如果对方支持加密即使用加密方式传输邮件
     # encrypt表示强制要求加密，none表示禁用
 ```
-DKIM验证: 在DNS公开一个公钥，服务器发送邮件时用私钥进行签名
+DKIM (DomainKeys Identified Mail) 验证: 在DNS公开一个公钥，服务器发送邮件时用私钥对邮件进行签名
 ```
     apt install opendkim opendkim-tools
 ```
@@ -85,11 +85,14 @@ Debug
     systemctl restart opendkim
     tail /var/log/mail.log | grep OpenDKIM
 ```
-发件人策略框架(SPF)是一种以IP地址认证电子邮件发件人身份的技术
+发件人策略框架Sender Policy Framework (SPF) 是一种以IP地址认证电子邮件发件人身份的技术
+
+在域名DNS增加一个TXT记录即可
 ```
     v=spf1 a ip4:***.***.***.*** ~all  #允许此IP使用该域名发送邮件
 
 ```
+另外VPS服务商的rDNS设置为邮件域名
 
 ### 第二篇：设定 MSA (Mail Submission Agent)，即：使用SMTP协议透过服务器发送邮件
 这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay)
@@ -104,7 +107,7 @@ SMTP Submission 当然需要有登入认证，不然肯定會成为 Spam Mail �
 ```
 postconf -a
 ```
-Cyrus SASL的守护进程是saslauthd，Cyrus SASL支持多种认证方式,通过saslauthd守护程序支持/etc/shadow,PAM和IMAP server，然后通过auxprop插件机制auxiliary property plugins支持sasldb、sql、ldapdb。
+Cyrus SASL的守护进程是saslauthd，Cyrus SASL支持多种认证方式,通过saslauthd守护程序支持/etc/shadow,PAM和IMAP server，然后通过auxprop插件机制auxiliary property plugins支持sasldb、sql、ldapdb。可用命令`saslauthd -v`查看
 安装Cyrus SASL
 ```
 apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules
