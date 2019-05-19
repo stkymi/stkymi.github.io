@@ -62,15 +62,25 @@ DKIM (DomainKeys Identified Mail) 验证: 在DNS公开一个公钥，服务器�
     opendkim-genkey -b 1024 -s mail -d example.com
     chown -R opendkim:opendkim /etc/opendkim
 ```
-配置 /etc/opendkim.conf 以及 /etc/default/opendkim
+配置 /etc/opendkim.conf 
 ```
     Domain                  example.com
     KeyFile                 /etc/opendkim/keys/mail.private
     Selector                mail
-
     Socket                  inet:8891@localhost
 ```
-修改 /etc/postfix/main.cf 指示 Postfix 使用 DKIM
+这里的Domain为自己的域名，KeyFile 为域名对于的私钥，Selector 与之前生成密钥时的`-s`参数必须一致，而且会成为DNS服务商公钥存放记录的主机名前缀
+
+打开`/etc/default/opendkim`，配置监听端口与上一步骤中的一致
+```
+SOCKET=inet:8891@localhost  # listen on loopback on port 8891
+```
+重启opendkim服务，查看端口是否被监听
+```
+ss -lnp | grep 8891
+```
+
+修改 /etc/postfix/main.cf 指示 Postfix 使用 DKIM 并重启Postfix
 ```
     # DKIM
     milter_default_action = accept
@@ -78,6 +88,13 @@ DKIM (DomainKeys Identified Mail) 验证: 在DNS公开一个公钥，服务器�
     smtpd_milters = inet:localhost:8891
     non_smtpd_milters = inet:localhost:8891
 ```
+进入之前生成密钥的位置`/etc/opendkim/keys`，查看`.txt`文件，里面有 dkim 的公钥，将它添加为 DNS TXT 记录，类似于
+```
+mail._domainkey.example.com. IN TXT "v=DKIM1; k=rsa; p=PpYHdE2tevfEpvL1Tk2dDYv0pF28/f5M..."
+```
+
+注意DNS服务商的记录值不能存在任何的双引号
+
 Debug
 ```
     /lib/opendkim/opendkim.service.generate
@@ -90,9 +107,10 @@ Debug
 在域名DNS增加一个TXT记录即可
 ```
     v=spf1 a ip4:***.***.***.*** ~all  #允许此IP使用该域名发送邮件
-
+或
+    v=spf1 mx ~all  # 域名自身 MX 记录指向的主机为可信主机
 ```
-另外VPS服务商的rDNS设置为邮件域名
+另外VPS服务商的rDNS设置为邮件域名，在DNS服务商将VPS的hostname主机名添加A记录，指向MX记录的IP地址
 
 ### 第二篇：设定 MSA (Mail Submission Agent)，即：使用SMTP协议透过服务器发送邮件
 这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay)
