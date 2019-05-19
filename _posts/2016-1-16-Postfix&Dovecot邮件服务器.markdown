@@ -141,7 +141,11 @@ apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules
 
 ### ~~第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox~~
 
+Postfix默认使用系统用户作为邮箱用户，如果 mydestination 同時包括 domain1.com 及 domain2.com，那发出 root@domain1.com 和 root@domain2.com 都同样会寄到 root Unix user
 
+如果安装`dovecot-lmtpd`接管本地邮件存储，则可以创建虚拟邮箱（类似apache2的虚拟主机概念），而且可以选择启用系统用户或者虚拟用户作为邮箱用户
+
+考虑到长时间不使用的知识点容易忘记，此处倾向于使用系统用户，并熟悉系统用户的分组与权限管理
 
 ### 第四篇: 设定 MDA (Mail Delivery Agent)，即: 让用户从服务器收取信件
 
@@ -150,9 +154,18 @@ postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
     apt install dovecot-core dovecot-imapd dovecot-pop3d
 ```
 配置加密连接是否启用`/etc/dovecot/conf.d/10-auth.conf`
+
+不加密
 ```
 disable_plaintext_auth = no
-auth_mechanisms = plain login
+auth_mechanisms = plain login（微软使用login认证）
+```
+配置ssl证书路径`/etc/dovecot/conf.d/10-ssl.conf`
+
+```
+ssl = yes
+ssl_cert = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt
+ssl_key = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key
 ```
 ### 第五篇: 安装 SquirrelMail，即: 使用浏览器登录
 
