@@ -139,68 +139,15 @@ apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules
 
 
 
-### 第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox
+### ~~第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox
 
-安装Dovecot的LMTP服务「Local Mail Transfer Protocol service」，以接管Postfix收到邮件后的本地存储以及投递
-```
-    apt install dovecot-core dovecot-lmtpd
-    mkdir /var/mail/vhosts
-    chown by2:by2  /var/mail/vhosts
-```
-修改邮件目录 /etc/dovecot/conf.d/10-mail.conf，%d代表Domain；%n代表Username 
 
-   ` mail_location = maildir:/var/mail/vhosts/%d/%n`
-修改登入授权方式 /etc/dovecot/conf.d/10-auth.conf；禁用系统用户而改用虚拟用户
-```
-    # 注释掉
-    #!include auth-system.conf.ext
-    # 启用
-    !include auth-static.conf.ext
-```
-虚拟用户方式的具体设定 `/etc/dovecot/conf.d/auth-static.conf.ext`
-```
-    # static userdb with shared uid and gid
-    userdb {
-    driver = static
-    args = uid=by2 gid=by2
-    }
-    # using password file
-    passdb {
-    driver = passwd-file
-    args = /etc/dovecot/passwd
-    }
-```
-添加虚拟用户至密码文件：此处使用Dovecot的dovead内置pw工具生成密码
-```
-    echo name@domain.com:`doveadm pw`:::::: >> /etc/dovecot/passwd
-```
-修改Dovecot lmtp设置 /etc/dovecot/conf.d/10-master.conf
-```
-    service lmtp {
-      unix_listener /var/spool/postfix/private/dovecot-lmtp {
-        mode = 0600
-        group = postfix
-        user = postfix
-      }    
-      # Create inet listener only if you can't use the above UNIX socket
-      #inet_listener lmtp {
-        # Avoid making LMTP visible for the entire internet
-        #address =
-        #port = 
-      #}
-    }
-```
-修改 /etc/postfix/main.cf，加入以下两行，并在mydestination删除域名：
-```
-    virtual_mailbox_domains = domain1.com
-    virtual_transport = lmtp:unix:private/dovecot-lmtp
-```
 
 ### 第四篇: 设定 MDA (Mail Delivery Agent)，即: 让用户从服务器收取信件
 
 postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
 ```
-    apt install dovecot-imapd dovecot-pop3d
+    apt install dovecot-core dovecot-imapd dovecot-pop3d
 ```
 配置加密连接是否启用`/etc/dovecot/conf.d/10-auth.conf`
 ```
