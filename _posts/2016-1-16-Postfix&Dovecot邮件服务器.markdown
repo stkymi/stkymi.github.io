@@ -139,7 +139,7 @@ apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules
 
 
 
-### ~~第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox
+### ~~第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox~~
 
 
 
