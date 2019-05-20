@@ -9,7 +9,13 @@ categories:
 
 ## 端口及原理知识
 
-MUA (Mail User Agent) 可以是web-based的，例如 SquirrelMail, 也可以是桌面客户端，例如 Outlook。一封邮件编写完成后，MUA通过SMTP协议将邮件发往一个叫做MSA (Mail Submission Agent)的服务器, 随后邮件被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同程序，例如Postfix。接下来MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。通过DNS查询，MTA查明了邮件将发往何处。然后MTA将会通过SMTP协议将邮件发送到收件地址的MTA。收件MTA接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。最后MUA通过IMAP (Internet Message Access Protocol) 或 POP3 (Post Office Protocol)协议提取邮件。
+MUA (Mail User Agent) 可以是web-based的，例如 SquirrelMail, 也可以是桌面客户端，例如 Outlook。
+
+一封邮件编写完成后，MUA通过SMTP协议将邮件发往一个叫做MSA (Mail Submission Agent)的服务器, 随后邮件被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同程序，例如Postfix。
+
+接下来MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。通过DNS查询，MTA查明了邮件将发往何处。然后MTA将会通过SMTP协议将邮件发送到收件地址的MTA。
+
+收件MTA接受的邮件下一步会被转发到 LDA (Local Delivery Agent) 或 MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。最后MUA通过IMAP (Internet Message Access Protocol) 或 POP3 (Post Office Protocol)协议提取邮件。
 
 SMTP协议中，Port 25 同时用作收取其它MTA (Postfix) 发来的信件以及MUA (Outlook) 委托MTA发出信件, 即 Relay
 
@@ -125,37 +131,43 @@ SMTP Submission 当然需要有登入认证，不然肯定會成为 Spam Mail �
 ```
 postconf -a
 ```
-Cyrus SASL的守护进程是saslauthd，Cyrus SASL支持多种认证方式,通过saslauthd守护程序支持/etc/shadow,PAM和IMAP server，然后通过auxprop插件机制auxiliary property plugins支持sasldb、sql、ldapdb。可用命令`saslauthd -v`查看
-安装Cyrus SASL
+Cyrus SASL涉及到函数与系统相关联，不熟悉的情况下不建议配置。当我尝试卸载`libsasl2*`时，对其有依赖的众多软件均会提示被移除
+
+~~安装Cyrus SASL~~
+
+~~`apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules`~~
+Dovecot的SASL安装及配置在第四篇中记录
+
+Postfix配置SASL以及指示SSL证书位置
+
 ```
-apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
 ```
 
-配置Cyrus SASL的第一步是确定配置文件的名称和位置，该文件描述Postfix SMTP服务器将如何使用SASL框架。
+### ~~第三篇: 设定 MDA (Mail Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox~~
 
-配置文件smtpd.conf位于`/usr/lib/sasl2/`，Debian的也可以放在`/etc/postfix/sasl/`，cyrus会优先查找/usr/lib/sasl2/目录下的smtpd.conf,如果找到则不继续查找。
-
-
-
-
-
-### ~~第三篇: 设定 LDA (Local Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox~~
-
-Postfix默认使用系统用户作为邮箱用户，如果 mydestination 同時包括 domain1.com 及 domain2.com，那发出 root@domain1.com 和 root@domain2.com 都同样会寄到 root Unix user
+Postfix默认使用系统用户作为邮箱用户，并且具备LDA (Local Delivery Agent)，如果 mydestination 同時包括 domain1.com 及 domain2.com，那发出 root@domain1.com 和 root@domain2.com 都同样会寄到 root Unix user 
 
 如果安装`dovecot-lmtpd`接管本地邮件存储，则可以创建虚拟邮箱（类似apache2的虚拟主机概念），而且可以选择启用系统用户或者虚拟用户作为邮箱用户
 
 考虑到长时间不使用的知识点容易忘记，此处倾向于使用系统用户，并熟悉系统用户的分组与权限管理
 
-### 第四篇: 设定 MDA (Mail Delivery Agent)，即: 让用户从服务器收取信件
+### 第四篇: 设定 MRA (Mail Retrieval Agent)，即: 让用户从服务器收取信件
 
-postfix并未带有MDA，需要安装Dovecot提供IMAP及POP3支持
+正如MTA (Postfix)提供了smtp协议，MRA (Dovecot)所提供的是POP3和IMAP协议,MUA通过这些协议与服务器取得联系
+
 ```
     apt install dovecot-core dovecot-imapd dovecot-pop3d
 ```
+如果只需要Dovecot的SASL认证，那么安装`dovecot-core`即可
+
+
 配置加密连接是否启用`/etc/dovecot/conf.d/10-auth.conf`
 
-不加密
+不加密 （不仅影响POP3和IMAP服务器的连接认证，启用SASL之后的smtpd连接认证也会受此影响）
 ```
 disable_plaintext_auth = no
 auth_mechanisms = plain login（微软使用login认证）
@@ -167,6 +179,21 @@ ssl = yes
 ssl_cert = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt
 ssl_key = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key
 ```
+启用 Dovecot的SASL
+
+配置 `/etc/dovecot/conf.d/10-master.conf`
+
+```
+# Postfix smtp-auth
+  unix_listener /var/spool/postfix/private/auth {
+    mode = 0666
+    user = postfix
+    group = postfix
+  }
+```
+
+
+
 ### 第五篇: 安装 SquirrelMail，即: 使用浏览器登录
 
 系统应先安装apache2,再安装php，否则可能无法解析php。下载、解压缩SquirrelMail，运行`./configure`以创建初始配置文件
