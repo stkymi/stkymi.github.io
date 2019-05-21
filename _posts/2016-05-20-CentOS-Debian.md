@@ -32,3 +32,17 @@ TCPKeepAlive yes
 ClientAliveInterval 30
 ClientAliveCountMax 60
 ```
+### linux系统用户管理
+
+Unix系统支持多个用户在同一时间内登陆并执行不同的任务、互不影响
+
+实际上，Unix并不识别用户和组的名称，它只识别用户和组对应的 ID 号；分别是用户 ID（User ID，简称 UID）和组 ID（Group ID，简称 GID）
+
+Linux 系统将所有用户名称与 ID 的对应关系都存储在`/etc/passwd`文件，组名称与 ID 的对应关系存储在`/etc/group`文件
+
+创建用户和删除用户
+```
+adduser 用户名   # 会自动为创建的用户指定主目录、系统shell版本，会在创建时输入用户密码
+useradd 用户名   # 需要使用参数选项指定上述基本设置，如果不使用任何参数，则创建的用户无密码、无主目录、没有指定shell版本
+userdel 用户名   
+
