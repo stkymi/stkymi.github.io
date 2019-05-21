@@ -140,11 +140,16 @@ Dovecot的SASL安装及配置在第四篇中记录
 
 Postfix配置SASL以及指示SSL证书位置
 
+配置文件`/etc/postfix/main.cf`
 ```
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
+
+smtpd_tls_auth_only = yes
+smtpd_tls_cert_file=/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt
+smtpd_tls_key_file=/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key
 ```
 
 ### ~~第三篇: 设定 MDA (Mail Delivery Agent)，即: 启用 Dovecot 管理 Virtual Mailbox~~
@@ -179,6 +184,7 @@ ssl = yes
 ssl_cert = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt
 ssl_key = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key
 ```
+然后关闭之前的`plain`登录认证
 启用 Dovecot的SASL
 
 配置 `/etc/dovecot/conf.d/10-master.conf`
