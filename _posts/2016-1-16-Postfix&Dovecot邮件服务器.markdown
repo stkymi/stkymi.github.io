@@ -44,8 +44,8 @@ POP3(tls) -----– 995
 
 ```
 myhostname =        描述邮件服务器的主机名称
-myorigin =          指定服务器使用那个域名来发送邮件
-mydestination =     指定服务器使用那个域名来接收邮件
+myorigin =          发送邮件时发件人地址显示的域名
+mydestination =     收件人域名在这里列出的才会被接收，而不仅仅是要求MX记录指向这里。可配置多个域名
 mynetworks =        规定哪些网络IP可以使用服务器发送邮件
 inet_interfaces =   默认值为all,即监听所有网络接口
 inet_protocols =    网络协议 这里ipv4即可，也可以为all，则支持ipv4,ipv6
@@ -54,7 +54,7 @@ inet_protocols =    网络协议 这里ipv4即可，也可以为all，则支持i
 
 MTA服务器之间的TLS传输设定 /etc/postfix/main.cf
 ```
-    smtpd_tls_security_level = may  #作为接收服务器: 支持加密但允许客户端使用不加密方式传输邮件
+    smtpd_tls_security_level = may  #作为接收服务器: 支持加密但允许对方使用不加密方式传输邮件
     smtp_tls_security_level = may  #作为发送服务器: 如果对方支持加密即使用加密方式传输邮件
     # encrypt表示强制要求加密，none表示禁用
 ```
