@@ -60,3 +60,34 @@ useradd 用户名   # 需要使用参数选项指定上述基本设置，如果�
 userdel 用户名   
 
 ```
+
+
+### 单网卡配置多个IP地址
+
+配置文件 `/etc/network/interfaces`
+```
+ auto ens3                         #自动启用
+    iface ens3 inet static         #static或是dhcp方式
+    address 192.168.1.88           #IP地址
+    netmask 255.255.255.0          #子网掩码
+    gateway 192.168.1.1            #默认网关
+
+auto ens3:0                        #自动启用
+    iface ens3:0 inet static       #static或是dhcp方式
+    address 192.168.1.89           #IP地址
+    netmask 255.255.255.0          #子网掩码
+
+auto ens3:1                        #自动启用
+    iface ens3:1 inet static       #static或是dhcp方式
+    address 192.168.1.90           #IP地址
+    netmask 255.255.255.0          #子网掩码
+
+
+ifup ens3:0 ens3:1
+```
+
+### 第三篇: FTP服务器
+安装vsftpd,配置文件 /etc/vsftpd.conf，并对默认文件夹 /srv/ftp给予合适权限
+```
+anonymous_enable=YES    #设置匿名可登录
+```
