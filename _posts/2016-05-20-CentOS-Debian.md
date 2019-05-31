@@ -6,6 +6,13 @@ categories:
 ---
 
 <!-- more -->
+
+### 旧版本的仓库被归档
+
+打开`/etc/apt/sources.list`配置文件,编辑源地址
+
+发行文档https://wiki.debian.org/DebianReleases
+
 ### tar
 
 当前目录所有文件移动到上一级目录 `mv * ../`
