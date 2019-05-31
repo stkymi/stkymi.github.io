@@ -60,6 +60,61 @@ useradd 用户名   # 需要使用参数选项指定上述基本设置，如果�
 userdel 用户名   
 
 ```
+```
+useradd命令：创建用户 
+useradd [选项] 登录名 
+-u，–uid UID：指定UID，默认是上一个用户的UID+1 
+-g，–gid GID：指定基本组ID，此组得事先存在； 
+-G，–groups GROUP1[,GROUP2,……[,GROUPSN]]：指明用户所属的附加组，多个组之间用逗号分隔。 
+-c，–comment COMMENT：指明注释信息 
+-d，–home HOME_DIR：以指定路径为用户的家目录；通过复制/etc/skel此目录并重命名实现；指定的家目录路径如果事先存在，则不会为用户复制环境配置文件。 
+-s，–shell SHELL：指定用户的默认shell，可用的所有shell列表存储在/etc/shells文件中； 
+-r，–system：创建系统用户 
+-M：不为用户创建主目录 
+-f，–incative INACTIVE：在密码过期后，账户被彻底禁用之前的天数，0表示立即禁用，-1表示禁用该功能。 
+注意：创建用户时的诸多默认设定配置文件为/etc/login.defs
+
+useradd -D：显示创建用户的默认选项配置； 
+useradd -D 选项：修改默认选项的值； 
+修改的结果保存于/etc/default/useradd文件中；可以直接修改此文件来实现。
+
+usermod命令：修改用户属性 
+usermod [选项] 登录名 
+-u，–uid UID：修改用户的ID为此处指定的新UID； 
+-g，–group GROUP：修改用户所属的基本组；此组得事先存在； 
+-G, –groupsGROUP1[,GROUP2,…[,GROUPN]]]：修改用户所属的附加组，原来的附加组会被覆盖； 
+-a, –append：与-G一同使用，用于用户追加新的附加组； 
+-c，–comment COMMENT：修改注释信息； 
+-d，–home HOME_DIR：修改用户的家目录；用户原有的文件不会被转移至新位置； 
+-m，–move-home：只能与-d选项一同使用，用于将原来的家目录移动为新的家目录； 
+-l，–login NEW_LOGING：修改用户名； 
+-s, –shell SHELL：修改用户的默认shell； 
+-L，–lock：锁定用户密码；即在用户原来的密码字符串之前添加一个”！”； 
+-U，–unlock：解锁用户密码，
+
+userdel命令：删除用户， 
+userdel [选项] 登录名 
+-r：删除用户时一并删除其家目录和用户邮箱；
+
+id命令：显示用户的真实和有效的UID和GID 
+id [OPTION]… [USERNAME] 
+-u：仅显示有效的UID； 
+-g：仅显示用户的基本组的ID； 
+-G：仅显示用户所属的所有组的ID； 
+-n：显示名字而非ID；一般与g一起使用：-ng
+
+su命令：switch user **不指定用户就默认切换到root**
+登录式切换：会通过重新读取目标用户的配置文件来重新初始化 
+su - USERNAME   **可以获取该用户的环境变量**
+
+非登录式切换：不会读取目标用户的配置文件进行初始化 
+su USERNAME
+
+注意：管理员可无密码切换至其它任何用户；其它用户在切换用户时必须输入密码。
+
+-c “COMMAND”：仅以指定用户的身份运行此处指定的命令 
+```
+
 
 
 ### 单网卡配置多个IP地址
