@@ -38,7 +38,7 @@ POP3(tls) -----– 995
 
 `m: ****@***.com`
 
-执行`postalias /etc/aliases`将文件/etc/aliases生成postfix可以读取的数据库文件 /etc/aliases.db
+执行`postalias /etc/aliases`将此文件生成postfix可以读取的数据库文件`/etc/aliases.db`
 
 修改Postfix的配置文件`/etc/postfix/main.cf`
 
