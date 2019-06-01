@@ -43,7 +43,7 @@ POP3(tls) -----– 995
 修改Postfix的配置文件`/etc/postfix/main.cf`
 
 ```
-myhostname =        描述邮件服务器的主机名称
+myhostname =        描述邮件服务器的主机名称,应该有相应的A记录解析
 myorigin =          发送邮件时发件人地址显示的域名
 mydestination =     收件人域名在这里列出的才会被接收，而不仅仅是要求MX记录指向这里。可配置多个域名
 mynetworks =        规定哪些网络IP可以使用服务器发送邮件
