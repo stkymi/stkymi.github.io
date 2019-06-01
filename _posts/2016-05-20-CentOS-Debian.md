@@ -7,11 +7,14 @@ categories:
 
 <!-- more -->
 
+### 修改主机名,重启生效
+`hostnamectl set-hostname NAME`
+
 ### 旧版本的仓库被归档
 
 打开`/etc/apt/sources.list`配置文件,编辑源地址
 
-发行文档https://wiki.debian.org/DebianReleases
+发行文档 https://wiki.debian.org/DebianReleases
 
 ### tar
 
