@@ -38,7 +38,7 @@ POP3(tls) -----– 995
 
 `m: ****@***.com`
 
-执行`postalias /etc/aliases`刷新配置
+执行`postalias /etc/aliases`将文件/etc/aliases生成postfix可以读取的数据库文件 /etc/aliases.db
 
 修改Postfix的配置文件`/etc/postfix/main.cf`
 
@@ -136,6 +136,7 @@ Cyrus SASL涉及到函数与系统相关联，不熟悉的情况下不建议配�
 ~~安装Cyrus SASL~~
 
 ~~`apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules`~~
+
 Dovecot的SASL安装及配置在第四篇中记录
 
 Postfix配置SASL以及指示SSL证书位置
