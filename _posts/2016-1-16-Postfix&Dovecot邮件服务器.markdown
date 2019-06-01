@@ -55,6 +55,7 @@ inet_protocols =    网络协议 这里ipv4即可，也可以为all，则支持i
 MTA服务器之间的TLS传输设定 /etc/postfix/main.cf
 ```
     smtpd_tls_security_level = may  #作为接收服务器: 支持加密但允许对方使用不加密方式传输邮件
+                                     2019.6.1 如果增加这行，客户端将无法连接smtp服务器
     smtp_tls_security_level = may  #作为发送服务器: 如果对方支持加密即使用加密方式传输邮件
     # encrypt表示强制要求加密，none表示禁用
 ```
@@ -139,11 +140,12 @@ Cyrus SASL涉及到函数与系统相关联，不熟悉的情况下不建议配�
 
 Dovecot的SASL安装及配置在第四篇中记录
 
-Postfix配置SASL以及指示SSL证书位置
+Postfix配置SASL以及指示SSL证书位置 (证书需要755权限）
 
 配置文件`/etc/postfix/main.cf`
 ```
 smtpd_sasl_auth_enable = yes
+smtpd_tls_auth_only = yes   #只允许加密登录smtp
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
@@ -173,7 +175,7 @@ Postfix默认使用系统用户作为邮箱用户，并且具备LDA (Local Deliv
 
 配置加密连接是否启用`/etc/dovecot/conf.d/10-auth.conf`
 
-不加密 （不仅影响POP3和IMAP服务器的连接认证，启用SASL之后的smtpd连接认证也会受此影响）
+不加密 ~~（不仅影响POP3和IMAP服务器的连接认证，启用SASL之后的smtpd连接认证也会受此影响）~~
 ```
 disable_plaintext_auth = no
 auth_mechanisms = plain login（微软使用login认证）
