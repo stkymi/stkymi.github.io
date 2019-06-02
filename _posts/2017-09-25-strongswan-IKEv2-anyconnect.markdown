@@ -144,12 +144,8 @@ iptables-save > /etc/iptables
 必须赋予脚本执行权限，修改配置后应保存
 
 ```
- service iptables save
- chkconfig iptables on
-
- apt install iptables-persistent
- service  iptables-persistent save
- ```
+chmod -R 755 /etc/network/if-pre-up.d/iptables 
+```
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
 
