@@ -169,7 +169,7 @@ server-cert = /etc/pki/ocserv/public/domain.com.crt
 server-key = /etc/pki/ocserv/private/domain.com.key
 ca-cert = /etc/pki/ocserv/cacerts/ca.crt
 # 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA 
- 
+# 注意这里的路径最后的位置不能有空格
 max-clients = 16
 # 允许同时连接的总客户端数量
 max-same-clients = 2
@@ -189,6 +189,7 @@ cisco-client-compat = true
 ```
 添加路由表，以下IP段不经过VPN。AnyConnect限制200条路由表
 ```
+#  route = #全部注释掉route选项，启用 no-route
 no-route = 1.0.0.0/255.128.0.0
 no-route = 1.160.0.0/255.224.0.0
 no-route = 1.192.0.0/255.224.0.0
