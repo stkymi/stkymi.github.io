@@ -109,13 +109,15 @@ Debug
     systemctl restart opendkim
     tail /var/log/mail.log | grep OpenDKIM
 ```
-发件人策略框架Sender Policy Framework (SPF) 是一种以IP地址认证电子邮件发件人身份的技术
+根据 SMTP 的规则，发件人的邮箱地址是可以由发信方任意声明的。发件人策略框架Sender Policy Framework (SPF) 是一种以IP地址认证电子邮件发件人身份的技术
+
+假设邮件服务器收到了一封邮件，来自主机的 IP 是8.8.8.8，并且声称发件人为google@gmail.com。为了确认发件人不是伪造的，邮件服务器会去查询google.com的 SPF 记录。如果该域的 SPF 记录设置允许 IP 为8.8.8.8的主机发送邮件，则服务器就认为这封邮件是合法的；如果不允许，则通常会退信，或将其标记为垃圾/仿冒邮件。
 
 在域名DNS增加一个TXT记录即可
 ```
-    v=spf1 a ip4:***.***.***.*** ~all  #允许此IP使用该域名发送邮件
+    v=spf1 ip4:***.***.***.*** ~all  #允许此IP使用该域名发送邮件
 或
-    v=spf1 mx ~all  # 域名自身 MX 记录指向的主机为可信主机
+    v=spf1 a mx ~all  # 域名自身 A 和 MX 记录指向的主机为可信主机
 ```
 另外VPS服务商的rDNS设置为邮件域名，在DNS服务商将VPS的hostname主机名添加A记录，指向MX记录的IP地址
 
