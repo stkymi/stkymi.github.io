@@ -124,7 +124,7 @@ Debug
 ### 第二篇：设定 MSA (Mail Submission Agent)，即：使用SMTP协议透过服务器发送邮件
 这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay),可以使用587端口、465端口或者25端口
 
-编辑`/etc/postfix/master.cf`，注释以下这行即可启用587端口
+编辑`/etc/postfix/master.cf`，取消注释以下这行即可启用587端口
 ```
 submission inet n       -       y       -       -       smtpd
 ```
