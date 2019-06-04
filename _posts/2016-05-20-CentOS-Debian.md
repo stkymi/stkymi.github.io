@@ -16,6 +16,11 @@ categories:
 
 发行文档 https://wiki.debian.org/DebianReleases
 
+### 查询指定包的详情
+```
+apt-cache show package
+```
+
 ### tar
 
 当前目录所有文件移动到上一级目录 `mv * ../`
