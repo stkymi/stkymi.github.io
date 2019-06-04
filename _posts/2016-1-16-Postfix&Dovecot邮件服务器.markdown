@@ -122,9 +122,13 @@ Debug
 另外VPS服务商的rDNS设置为邮件域名，在DNS服务商将VPS的hostname主机名添加A记录，指向MX记录的IP地址
 
 ### 第二篇：设定 MSA (Mail Submission Agent)，即：使用SMTP协议透过服务器发送邮件
-这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay)
+这里 SMTP 清晰一点是 SMTP Submission，即是 MUA 透过 MSA 委托 MTA 代为传送邮件 (Relay),可以使用587端口、465端口或者25端口
 
-而MTA与MTA之间传送邮件也是使用SMTP协议（此处为25端口）
+编辑`/etc/postfix/master.cf`，注释以下这行即可启用587端口
+```
+submission inet n       -       y       -       -       smtpd
+```
+而MTA与MTA之间传送邮件也是使用SMTP协议（此处必须使用25端口）
 
 SMTP Submission 当然需要有登入认证，不然肯定會成为 Spam Mail 的 Open Relay
 
