@@ -179,21 +179,21 @@ Postfix默认使用系统用户作为邮箱用户，并且具备LDA (Local Deliv
 如果只需要Dovecot的SASL认证，那么安装`dovecot-core`即可
 
 
-配置加密连接是否启用`/etc/dovecot/conf.d/10-auth.conf`
+配置认证方式`/etc/dovecot/conf.d/10-auth.conf`
 
-不加密 ~~（不仅影响POP3和IMAP服务器的连接认证，启用SASL之后的smtpd连接认证也会受此影响）~~
+不仅影响POP3和IMAP服务器的连接认证，启用SASL之后的smtpd连接认证也会受此影响
 ```
-disable_plaintext_auth = no
-auth_mechanisms = plain login（微软使用login认证）
+disable_plaintext_auth = no    # 允许不加密连接
+auth_mechanisms = plain login  #（微软使用login认证）
 ```
 配置ssl证书路径`/etc/dovecot/conf.d/10-ssl.conf`
 
+这里仅影响POP3和IMAP的连接
 ```
 ssl = yes
 ssl_cert = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt
 ssl_key = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key
 ```
-然后关闭之前的`plain`登录认证
 启用 Dovecot的SASL
 
 配置 `/etc/dovecot/conf.d/10-master.conf`
