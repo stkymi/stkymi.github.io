@@ -34,6 +34,21 @@ POP3(tls) -----– 995
 ```
     apt install postfix
 ```
+编译安装
+
+创建组账号postfix和postdrop，以及用户账号postfix、并附加到postdrop组
+
+安装依赖`yum install db*-devel` 编译器`yum install gcc`
+```
+wget https://archive.mgm51.com/mirrors/postfix-source/official/postfix-3.2.9.tar.gz
+tar -xzvf postfix-3.2.9.tar.gz
+cd postfix-3.2.9
+make -f Makefile.init makefile CCARGS='-DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl' AUXLIBS='-lsasl2'
+make
+make install 或 make upgrade
+```
+查看版本`postconf mail_version `
+
 编辑 `/etc/aliases`设置别名（即转发功能）,例如将`m@****.tk`收到的邮件转发至微软的邮箱
 
 `m: ****@***.com`
