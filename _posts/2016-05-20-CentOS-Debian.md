@@ -47,7 +47,7 @@ TCPKeepAlive yes
 ClientAliveInterval 30
 ClientAliveCountMax 60
 ```
-### linux系统用户管理
+### linux系统用户管理与组管理
 
 Unix系统支持多个用户在同一时间内登陆并执行不同的任务、互不影响
 
@@ -128,6 +128,20 @@ su USERNAME
 注意：管理员可无密码切换至其它任何用户；其它用户在切换用户时必须输入密码。
 
 -c “COMMAND”：仅以指定用户的身份运行此处指定的命令 
+
+groupadd命令：添加用户组
+groupadd [选项] 组名
+-g GID：指定组ID；
+
+groupmod命令：修改组属性
+groupmod [选项] 组名称
+-g GID：修改后的组ID；
+-n 新组名：修改后的组名；
+
+groupdel命令：删除用户组
+groupdel [选项] 组名
+此命令仅适用于删除那些 "不是任何用户初始组" 的群组
+
 ```
 
 
