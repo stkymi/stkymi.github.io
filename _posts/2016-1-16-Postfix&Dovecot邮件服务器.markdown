@@ -162,10 +162,7 @@ mech_list: PLAIN LOGIN
 Postfix配置Cyrus-SASL
 ```
 smtpd_sasl_auth_enable = yes
-smtpd_sasl_security_options = noanonymous
-broken_sasl_auth_clients = yes
-smtpd_recipient_restrictions = permit_sasl_authenticated,reject_unauth_destination,permit_mynetworks
-smtpd_client_restrictions = permit_sasl_authenticated
+
 ```
 Dovecot的SASL安装及配置在第四篇中记录
 
