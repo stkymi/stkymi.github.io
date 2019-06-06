@@ -141,21 +141,45 @@ postconf -a
 Cyrus SASL涉及到函数与系统相关联，不熟悉的情况下不建议配置。当我尝试卸载`libsasl2*`时，对其有依赖的众多软件均会提示被移除
 
 ~~安装Cyrus SASL~~
-
+```
+yum install cyrus-sasl-*
+```
+PLAIN身份验证机制(即SMTP / STARTTLS),需要安装cyrus-sasl-plain
 ~~`apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules`~~
 
+Cyrus-SASL的守护进程是saslauthd，用以访问Unix系统密码
+
+编辑`/etc/sysconfig/saslauthd`修改验证方式
+```
+MECH=shadow  #使用Unix系统用户认证
+```
+在`/etc/sasl2/`目录下创建smtpd.conf文件
+
+```
+pwcheck_method: saslauthd
+mech_list: PLAIN LOGIN
+```
+Postfix配置Cyrus-SASL
+```
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+broken_sasl_auth_clients = yes
+smtpd_recipient_restrictions = permit_sasl_authenticated,reject_unauth_destination,permit_mynetworks
+smtpd_client_restrictions = permit_sasl_authenticated
+```
 Dovecot的SASL安装及配置在第四篇中记录
 
-Postfix配置SASL以及指示SSL证书位置 (证书需要755权限）
+Postfix配置Dovecot-SASL
 
 配置文件`/etc/postfix/main.cf`
 ```
 smtpd_sasl_auth_enable = yes
-smtpd_tls_auth_only = yes   #只允许加密登录smtp
 smtpd_sasl_security_options = noanonymous
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
-
+```
+指示SSL证书位置 (证书需要755权限）
+```
 smtpd_tls_auth_only = yes
 smtpd_tls_cert_file=/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.crt
 smtpd_tls_key_file=/root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.key
@@ -184,7 +208,8 @@ Postfix默认使用系统用户作为邮箱用户，并且具备LDA (Local Deliv
 不仅影响POP3和IMAP服务器的连接认证，启用SASL之后的smtpd连接认证也会受此影响
 ```
 disable_plaintext_auth = no    # 允许不加密连接
-auth_mechanisms = plain login  #（微软使用login认证）
+auth_mechanisms = plain login  
+注意：plain身份验证机制使用简单的明文传输，可以结合tls（微软使用login认证）
 ```
 配置ssl证书路径`/etc/dovecot/conf.d/10-ssl.conf`
 
