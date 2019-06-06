@@ -97,8 +97,8 @@ usermod命令：修改用户属性
 usermod [选项] 登录名 
 -u，–uid UID：修改用户的ID为此处指定的新UID； 
 -g，–group GROUP：修改用户所属的基本组；此组得事先存在； 
--G, –groupsGROUP1[,GROUP2,…[,GROUPN]]]：修改用户所属的附加组，原来的附加组会被覆盖； 
--a, –append：与-G一同使用，用于用户追加新的附加组； 
+-G, –groups GROUP1[,GROUP2,…[,GROUPN]]]：修改用户所属的附加组，原来的附加组会被覆盖； 
+-a, –append：与-G一同使用(即 -a -G 附加组名)，用于用户追加新的附加组； 
 -c，–comment COMMENT：修改注释信息； 
 -d，–home HOME_DIR：修改用户的家目录；用户原有的文件不会被转移至新位置； 
 -m，–move-home：只能与-d选项一同使用，用于将原来的家目录移动为新的家目录； 
