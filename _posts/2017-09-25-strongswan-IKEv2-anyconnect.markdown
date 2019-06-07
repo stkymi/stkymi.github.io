@@ -146,6 +146,11 @@ iptables-save > /etc/iptables
 ```
 chmod -R 755 /etc/network/if-pre-up.d/iptables 
 ```
+centOS
+```
+service iptables save  # IPv4规则会保存到 /etc/sysconfig/iptables 文件,保存后系统重启会自动加载
+chkconfig iptables on  # 开机启动
+```
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
 
