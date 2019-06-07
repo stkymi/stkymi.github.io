@@ -43,7 +43,7 @@ POP3(tls) -----– 995
 wget https://archive.mgm51.com/mirrors/postfix-source/official/postfix-3.2.9.tar.gz
 tar -xzvf postfix-3.2.9.tar.gz
 cd postfix-3.2.9
-make -f Makefile.init makefile CCARGS='-DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl' AUXLIBS='-lsasl2'
+make -f Makefile.init makefiles CCARGS='-DUSE_SASL_AUTH -DUSE_CYRUS_SASL -I/usr/include/sasl -DUSE_TLS -I/usr/include/openssl/' AUXLIBS='-lsasl2 -lssl -lcrypto'
 make
 make install 或 make upgrade
 ```
