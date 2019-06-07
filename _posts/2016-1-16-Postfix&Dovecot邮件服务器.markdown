@@ -281,11 +281,12 @@ postconf -a
 ```
 Cyrus SASL涉及到函数与系统相关联，不熟悉的情况下不建议配置。当我尝试卸载`libsasl2*`时，对其有依赖的众多软件均会提示被移除
 
-~~安装Cyrus SASL~~
+安装Cyrus SASL
 ```
 yum install cyrus-sasl-*
 ```
 PLAIN身份验证机制(即SMTP / STARTTLS),需要安装cyrus-sasl-plain
+
 ~~`apt install sasl2-bin libsasl2-2 libsasl2-dev libsasl2-modules`~~
 
 Cyrus-SASL的守护进程是saslauthd，用以访问Unix系统密码
