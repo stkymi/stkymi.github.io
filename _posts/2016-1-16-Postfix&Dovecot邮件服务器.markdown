@@ -41,6 +41,8 @@ POP3(tls) -----– 995
 安装组件`yum install cyrus-sasl openssl cyrus-sasl-*`
 
 安装依赖`yum install db*-devel` 编译器`yum install gcc`
+
+新版提示未找到`m4`命令,需要`yum install m4`
 ```
 wget https://archive.mgm51.com/mirrors/postfix-source/official/postfix-3.2.9.tar.gz
 tar -xzvf postfix-3.2.9.tar.gz
