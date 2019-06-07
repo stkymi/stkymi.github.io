@@ -38,6 +38,8 @@ POP3(tls) -----– 995
 
 创建组账号postfix和postdrop，以及用户账号postfix、并附加到postdrop组
 
+安装组件`yum install cyrus-sasl openssl cyrus-sasl-*`
+
 安装依赖`yum install db*-devel` 编译器`yum install gcc`
 ```
 wget https://archive.mgm51.com/mirrors/postfix-source/official/postfix-3.2.9.tar.gz
@@ -69,8 +71,9 @@ inet_protocols =    网络协议 这里ipv4即可，也可以为all，则支持i
 
 MTA服务器之间的TLS传输设定 /etc/postfix/main.cf
 ```
-    smtpd_tls_security_level = may  #作为接收服务器: 支持加密但允许对方使用不加密方式传输邮件
+    smtpd_tls_security_level = may  #作为接收服务器: 支持加密但允许对方使用不加密方式传输邮件 包括MTA和MUA的STARTTLS支持
                                      2019.6.1 如果增加这行，客户端将无法连接smtp服务器
+                                     2019.6.7 取代旧有的 smtpd_use_tls = yes
     smtp_tls_security_level = may  #作为发送服务器: 如果对方支持加密即使用加密方式传输邮件
     # encrypt表示强制要求加密，none表示禁用
 ```
