@@ -6,11 +6,8 @@ categories:
 ---
 
 <!-- more -->
-### 查询软件版本以及最新编译
-
+### 查询软件版本
 https://pkgs.org/
-
-http://www.linuxfromscratch.org/
 
 ### 修改主机名,重启生效
 `hostnamectl set-hostname NAME`
