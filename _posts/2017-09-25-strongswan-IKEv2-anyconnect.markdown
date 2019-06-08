@@ -81,6 +81,8 @@ Windows必须提供Let's Encrypt中间证书，否则会出现`错误13801:IKE�
 wget https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem -O /etc/strongswan/ipsec.d/cacerts/intermediate.pem
 ```
 ### 配置Strongswan
+自5.7版本开始使用`swanctl.conf`配置文件，但目前仍兼容旧的配置方法
+
 ipsec 配置文件`/etc/strongswan/ipsec.conf`
 ```
 config setup
@@ -95,17 +97,17 @@ conn %default
         leftid=domain         
         rightid=%any                 
         leftdns=8.8.8.8
-        rightdns=8.8.8.8
+        rightdns=8.8.8.8          
+conn IKEv2-PSK-PSK
+        leftauth=psk
+        rightauth=psk
+        auto=add
 conn IKEv2-Pubkey-EAP	
 	leftauth=pubkey            
        	rightauth=eap-mschapv2       
 	leftsendcert=always        
 	rightsendcert=never          
-	auto=add                     
-conn IKEv2-PSK-PSK
-        leftauth=psk
-        rightauth=psk
-        auto=add
+	auto=add           
 conn Windows
     keyexchange=ikev2
     ike=aes256-sha256-modp1024,aes256-sha1-modp1024,3des-sha1-modp1024!
