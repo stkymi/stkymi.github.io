@@ -5,11 +5,14 @@ date:   2017-09-26 10:35:06
 
 ---
 ### Strongswan
-OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apk并不提供此插件，因此OpenVZ架构下的Debian只能编译安装；CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
+OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apk并不提供此插件，因此OpenVZ架构下的Debian只能编译安装（编译后均使用ipsec和swanctl命令）；若是包安装方式：CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
 
 #### 编译安装
 
 安装依赖
+```
+yum install pam-devel openssl-devel gmp
+```
 
 ```
 apt install libpam0g-dev libssl-dev make gcc   
@@ -20,7 +23,11 @@ cd strongswan-*
 编译：OpenVZ必须添加 `--enable-kernel-libipsec`
 
 ```
-./configure  --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-eap-tls --enable-eap-ttls --enable-eap-peap --enable-eap-tnc --enable-eap-dynamic --enable-eap-radius --enable-xauth-eap --enable-xauth-pam  --enable-dhcp  --enable-openssl  --enable-addrblock --enable-unity --enable-certexpire --enable-radattr --enable-tools --enable-openssl --disable-gmp --enable-kernel-libipsec
+./configure --enable-openssl --disable-gmp --enable-kernel-libipsec
+```
+仅包含最简单的PSK预共享密钥认证，这里使用openssl替换gmp,因为Debian不带gmp包，也要编译，呵呵
+```
+./configure  --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-eap-tls --enable-eap-ttls --enable-eap-peap --enable-eap-tnc --enable-eap-dynamic --enable-eap-radius --enable-xauth-eap --enable-xauth-pam --enable-dhcp --enable-addrblock --enable-unity --enable-certexpire --enable-radattr --enable-tools --enable-openssl --disable-gmp --enable-kernel-libipsec
 ```
 ```
 make; make install
@@ -31,8 +38,6 @@ make; make install
 ```
 ipsec start/stop/status
 ```
-
-
 
 ### 证书（Windows必选，Iphone、Android可选）
 
@@ -52,6 +57,7 @@ ipsec pki --pub --in server.key.pem --outform pem > server.pub.pem
 ipsec pki --issue --lifetime 3650 --cacert ca.cert.pem --cakey ca.key.pem --in server.pub.pem --dn "C=CN, O=ZhuZhou, CN=IP or domain" --san="IP or domain" --outform pem > server.cert.pem
 ```
 #### ~~安装证书~~
+编译的路径为`/usr/local/etc/ipsec.d`
 ```
 cp ca.key.pem /etc/ipsec.d/private/
 cp ca.cert.pem /etc/ipsec.d/cacerts/
@@ -89,10 +95,10 @@ conn %default
 	left=%any                    
 	leftsubnet=0.0.0.0/0        
 	right=%any                  
- 	rightsourceip=192.168.0.0/16    
-	leftcert=server.cert.pem    
-        leftid=domain         
-        rightid=%any                 
+ 	rightsourceip=192.168.0.0/16
+	leftcert=server.cert.pem
+	leftid=domain
+	rightid=%any                 
         leftdns=8.8.8.8
         rightdns=8.8.8.8          
 conn IKEv2-PSK-PSK
