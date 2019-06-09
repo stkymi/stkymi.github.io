@@ -50,6 +50,8 @@ lsmod | grep bbr
 ```
 ### 第四篇: FFmpeg
 
+添加环境变量：在名为`PATH`的变量值追加路径`D:\ffmpeg\bin;`
+
 转码
 ```
 ffmpeg -i i.flv o.mp4
