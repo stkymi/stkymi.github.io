@@ -20,8 +20,13 @@ https://pkgs.org/
 
 ### 查询指定包的详情
 ```
-apt-cache show package
+yum search NAME
+yum list | grep NAME
+
+apt-cache show NAME
 ```
+### 搜索文本
+`grep 'fonts.googleapis.com' -n --color -r .`
 
 ### tar
 
