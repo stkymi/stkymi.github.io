@@ -5,17 +5,16 @@ date:   2017-09-26 10:35:06
 
 ---
 ### Strongswan
-OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apk并不提供此插件，因此OpenVZ架构下的Debian只能编译安装（编译后均使用ipsec和swanctl命令）；若是包安装方式：CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
+OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供此插件，因此OpenVZ架构下的Debian只能编译安装（编译后均使用`ipsec`和`swanctl`命令）；若是包安装方式：CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
 
 #### 编译安装
 
 安装依赖
 ```
 yum install pam-devel openssl-devel gmp
+apt install libpam0g-dev libssl-dev
 ```
-
 ```
-apt install libpam0g-dev libssl-dev make gcc   
 wget http://download.strongswan.org/strongswan.tar.gz
 tar -xzf strongswan.tar.gz
 cd strongswan-*
@@ -30,7 +29,8 @@ cd strongswan-*
 ./configure  --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-eap-tls --enable-eap-ttls --enable-eap-peap --enable-eap-tnc --enable-eap-dynamic --enable-eap-radius --enable-xauth-eap --enable-xauth-pam --enable-dhcp --enable-addrblock --enable-unity --enable-certexpire --enable-radattr --enable-tools --enable-openssl --disable-gmp --enable-kernel-libipsec
 ```
 ```
-make; make install
+make
+make install 或者 make upgrade
 ```
 
 默认安装到`/usr/local`目录，配置文件在 `/usr/local/etc`
@@ -122,7 +122,6 @@ conn Windows
     eap_identity=%any
     rekey=no
     auto=add
-
 ```
 
 密码认证文件 `/etc/strongswan/ipsec.secrets`
