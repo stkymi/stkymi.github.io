@@ -158,6 +158,116 @@ centOS
 service iptables save  # IPv4规则会保存到 /etc/sysconfig/iptables 文件,保存后系统重启会自动加载
 chkconfig iptables on  # 开机启动
 ```
+### 启动脚本
+
+保存到`/etc/init.d/`目录并赋予执行权限
+```
+#!/bin/sh
+#
+# strongswan   An implementation of key management system for IPsec
+#
+# chkconfig:   - 48 52
+# description: Starts or stops the Strongswan daemon.
+
+### BEGIN INIT INFO
+# Provides: ipsec
+# Required-Start: $network $remote_fs $syslog $named
+# Required-Stop: $syslog $remote_fs
+# Default-Start:
+# Default-Stop: 0 1 6
+# Short-Description: Start Strongswan daemons at boot time
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+#exec="/usr/sbin/strongswan"
+exec=/usr/local/sbin/ipsec
+prog="strongswan"
+status_prog="starter"
+config="/usr/local/etc/strongswan.conf"
+
+lockfile=/var/lock/subsys/$prog
+
+start() {
+    [ -x $exec ] || exit 5
+    [ -f $config ] || exit 6
+    echo -n $"Starting $prog: "
+    daemon $exec start
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    $exec stop
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+_status() {
+    # run checks to determine if the service is running or use generic status
+    status $status_prog
+}
+
+_status_q() {
+    _status >/dev/null 2>&1
+}
+
+
+case "$1" in
+    start)
+        _status_q && exit 0
+        $1
+        ;;
+    stop)
+        _status_q || exit 0
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        _status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        _status
+        ;;
+    condrestart|try-restart)
+        _status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?
+```
+```
+chkconfig --add strongswan
+chkconfig strongswan on
+```
 ### 配置客户端
 安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
 
