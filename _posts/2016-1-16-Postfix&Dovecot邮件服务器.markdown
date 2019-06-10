@@ -373,25 +373,25 @@ ssl_key = </root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain/domain.ke
 
 
 
-### 第五篇: 安装 SquirrelMail，即: 使用浏览器登录
+### ~~第五篇: 安装 SquirrelMail，即: 使用浏览器登录~~
 
-系统应先安装apache2,再安装php，否则可能无法解析php。下载、解压缩SquirrelMail，运行`./configure`以创建初始配置文件
+系统应先安装apache2,再安装php，否则可能无法解析php。~~下载、解压缩SquirrelMail，运行`./configure`以创建初始配置文件~~
 
-在SquirrelMail下载页面，下载语言包Translations，解压后运行`install`脚本。简体中文`zh_CN`默认使用`gb2312`编码,将其转换成`utf-8`编码
+~~在SquirrelMail下载页面，下载语言包Translations，解压后运行`install`脚本。简体中文`zh_CN`默认使用`gb2312`编码,将其转换成`utf-8`编码~~
 
-进入目录`locale/zh_CN/LC_MESSAGES/`转换语言文件编码：
+~~进入目录`locale/zh_CN/LC_MESSAGES/`转换语言文件编码：~~
 ```
     cp squirrelmail.po squirrelmail.po.bak
     iconv -f gb2312 -t utf-8 squirrelmail.po.bak >squirrelmail.po 
 ```
-将`locale/zh_CN/setup.php` 以及 `functions/i18n.php`文件里的`gb2312`改为`utf-8`
+~~将`locale/zh_CN/setup.php` 以及 `functions/i18n.php`文件里的`gb2312`改为`utf-8`~~
 
 将by2用户添加到mail组
 ```
     usermod -a -G mail by2
 ```
-#### SquirrelMail 常见错误及排除
-`ERROR:Connection dropped by IMAP server.` 原因：SquirrelMail找不到用户邮箱的位置。检查邮箱路径设置`mail_location = maildir:/var/mail/vhosts/%d/%n`以及文件夹`/var/mail/vhosts`的归属用户是否正确。
+#### ~~SquirrelMail 常见错误及排除~~
+~~`ERROR:Connection dropped by IMAP server.` 原因：SquirrelMail找不到用户邮箱的位置。检查邮箱路径设置`mail_location = maildir:/var/mail/vhosts/%d/%n`以及文件夹`/var/mail/vhosts`的归属用户是否正确。~~
 
 
 
