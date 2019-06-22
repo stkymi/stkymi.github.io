@@ -183,12 +183,16 @@ chkconfig postfix on
 修改Postfix的配置文件`/etc/postfix/main.cf`
 
 ```
+mailbox_size_limit = 0      邮箱存储空间无限制
+message_size_limit = 0      邮件附件大小无限制
+
 myhostname =        描述邮件服务器的主机名称,应该有相应的A记录解析
 myorigin =          发送邮件时发件人地址显示的域名
 mydestination =     收件人域名在这里列出的才会被接收，而不仅仅是要求MX记录指向这里。可配置多个域名
 mynetworks =        规定哪些网络IP可以使用服务器发送邮件
 inet_interfaces =   默认值为all,即监听所有网络接口
 inet_protocols =    网络协议 这里ipv4即可，也可以为all，则支持ipv4,ipv6
+
 ```
 
 
