@@ -8,3 +8,11 @@ categories:
 <!-- more -->
 
 ### Windows Deployment Services（Windows部署服务，简称：WDS）
+
+WDS必须和DHCP服务器配合。当设置完成后，客户端从网卡启动时，会通过DHCP获取到IP和PXE服务器的信息。随后客户端连接到WDS服务器下载特定的启动镜像来引导。引导完成后就进入了Windows PE环境，即可开始安装过程。Windows 7之后的系统镜像(ISO)内，最关键的两个文件就是"boot.wim"(启动映像）和"install.wim"（安装映像）。
+
+### Microsoft Deployment Toolkit (微软部署工具包，简称：MDT）
+
+MDT可以在安装过程中自动的安装驱动、软件、加入域控制器等等各种细化的系统定制。不需要像WDS那种部署方式，每一次修改都需要修改WIM文件，重新封装打包。
+
+MDT必须依赖WDS服务和Windows Assessment and Deployment Kit (简称Windows ADK)，安装完成后的主控制台为"Deployment Workbench"。
