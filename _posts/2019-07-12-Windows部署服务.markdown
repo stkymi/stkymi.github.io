@@ -17,4 +17,4 @@ MDT可以在安装过程中自动的安装驱动、软件、加入域控制器�
 
 MDT必须依赖WDS服务和Windows Assessment and Deployment Kit (简称Windows ADK)，安装完成后的主控制台为`Deployment Workbench`。~~Microsoft SQL Server和MDT结合起来可以使得部署的定制性非常的详细，此处不作分析~~
 
-MDT是使用配置文件来控制整个部署过程，其中最关键的文件是`Bootstrap.ini`和`CustomSettings.ini`，MDT配置完成后，通过`Update Deployment Share` 更新或生成默认文件名为`LiteTouchPE_x64.wim`以及`LiteTouchPE_x86.wim`的启动映像，然后将需要的启动映像添加到WDS以替代默认的系统启动映像，则会根据MDT的既定配置完成部署。
+MDT是使用配置文件来控制整个部署过程，其中最关键的文件是`Bootstrap.ini`和`CustomSettings.ini`，MDT配置完成后，通过`Update Deployment Share` 更新或生成默认文件名为`LiteTouchPE_x64.wim`以及`LiteTouchPE_x86.wim`的启动映像，然后将需要的启动映像添加到WDS以替代默认的系统启动映像，引导后则会根据MDT的既定配置完成部署。
