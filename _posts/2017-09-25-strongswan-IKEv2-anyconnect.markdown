@@ -89,6 +89,7 @@ wget https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem
 ipsec 配置文件`/etc/strongswan/ipsec.conf`
 ```
 config setup
+uniqueids = no
 
 conn %default                       
 	keyexchange=ike           
