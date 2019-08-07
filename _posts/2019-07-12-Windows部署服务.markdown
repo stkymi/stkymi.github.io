@@ -18,3 +18,13 @@ MDT可以在安装过程中自动的安装驱动、软件、加入域控制器�
 MDT必须依赖WDS服务和Windows Assessment and Deployment Kit (简称Windows ADK)，安装完成后的主控制台为`Deployment Workbench`。~~Microsoft SQL Server和MDT结合起来可以使得部署的定制性非常的详细，此处不作分析~~
 
 MDT是使用配置文件来控制整个部署过程，其中最关键的文件是`Bootstrap.ini`和`CustomSettings.ini`，MDT配置完成后，通过`Update Deployment Share` 更新或生成默认文件名为`LiteTouchPE_x64.wim`以及`LiteTouchPE_x86.wim`的启动映像，然后将需要的启动映像添加到WDS以替代默认的系统启动映像，引导后则会根据MDT的既定配置完成部署。
+
+## 安装驱动
+
+在大多数情况下，ZTIDrivers.wsf实际上并不在操作系统安装期间为每个设备安装驱动程序。相反，在预安装阶段，它将：
+收集计算机上所有设备的列表及其相应的即插即用设备ID（PnPID）。 PnPID可能类似于：PCI \ VEN_8086＆DEV_27C9＆SUBSYS_01C21028
+然后，它将在您的部署共享（在Out-of-Box Drivers文件夹和control\drivers.xml文件中）的“Out-of-Box Drivers”文件夹中搜索任何匹配项。
+对于找到的每个驱动程序包，它会将驱动程序本地复制到c:\drivers文件夹中。
+
+对于添加到c:\drivers中的每个文件夹。该文件夹将添加到注册表：`HKLM\Software\Microsoft\Windows\CurrentVersion\DevicePath`
+当真正的操作系统开始安装并找到新设备时，它将在这些路径中查找驱动程序。
