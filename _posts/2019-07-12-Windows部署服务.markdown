@@ -21,10 +21,13 @@ MDT是使用配置文件来控制整个部署过程，其中最关键的文件�
 
 ## 安装驱动
 
-在大多数情况下，ZTIDrivers.wsf实际上并不在操作系统安装期间为每个设备安装驱动程序。相反，在预安装阶段，它将：
-收集计算机上所有设备的列表及其相应的即插即用设备ID（PnPID）。 PnPID可能类似于：PCI \ VEN_8086＆DEV_27C9＆SUBSYS_01C21028
-然后，它将在您的部署共享（在Out-of-Box Drivers文件夹和control\drivers.xml文件中）的“Out-of-Box Drivers”文件夹中搜索任何匹配项。
-对于找到的每个驱动程序包，它会将驱动程序本地复制到c:\drivers文件夹中。
+在大多数情况下，实际上并不在操作系统安装期间为每个设备安装驱动程序。相反，在Preinstall阶段，它将：
+收集计算机上所有设备的列表及其相应的即插即用设备ID（PnPID）。然后，它将在您的部署共享（在Out-of-Box Drivers文件夹和control\drivers.xml文件中）的“Out-of-Box Drivers”文件夹中搜索任何匹配项。对于找到的每个驱动程序包，它会将驱动程序本地复制到c:\drivers文件夹中；或者根据选择的selection profile所关联的驱动进行全部复制。
 
 对于添加到c:\drivers中的每个文件夹。该文件夹将添加到注册表：`HKLM\Software\Microsoft\Windows\CurrentVersion\DevicePath`
-当真正的操作系统开始安装并找到新设备时，它将在这些路径中查找驱动程序。
+在Postinstall阶段，当操作系统安装后并找到新设备时，将在这些路径中查找驱动程序。
+
+**关键参数就是两个阶段中的 Inject drivers
+
+They're named the same but they are two different things. "Inject Drivers" under the Preinstall section is an Inject Drivers task that allows you to designate which drivers will be installed (via selection profile) ; "Inject Drivers" under Postinstall is actually a Run Command Line task that calls ZTIDrivers.wsf
+
