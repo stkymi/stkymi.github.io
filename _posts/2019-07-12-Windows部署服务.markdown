@@ -31,3 +31,5 @@ MDT是使用配置文件来控制整个部署过程，其中最关键的文件�
 
 They're named the same but they are two different things. "Inject Drivers" under the Preinstall section is an Inject Drivers task that allows you to designate which drivers will be installed (via selection profile) ; "Inject Drivers" under Postinstall is actually a Run Command Line task that calls ZTIDrivers.wsf
 
+The pre-install driver injection simply gathers the necessary drivers based on your selection profile if any, or the PnP automatic detection. It copies those drivers from your deployment location to a temporary Out-of-Box folder in the internal hard disk. After that, it decompresses your WIM image into the internal drive and reboots. During the second driver injection phase, it will actually do the driver install into the operating system using the drivers that were copied during the pre-install phase.
+
