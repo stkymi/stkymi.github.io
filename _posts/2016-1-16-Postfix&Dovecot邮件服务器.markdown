@@ -36,7 +36,7 @@ POP3(tls) -----– 995
 ```
 编译安装
 
-创建组账号postfix和postdrop，以及用户账号postfix、并附加到postdrop组
+创建组账号postfix和postdrop，以及用户账号postfix、~~并附加到postdrop组~~
 ```
 postfix:x:500:500::/home/postfix:/bin/bash
 postdrop:x:501:501::/home/postdrop:/bin/bash
