@@ -37,6 +37,15 @@ POP3(tls) -----– 995
 编译安装
 
 创建组账号postfix和postdrop，以及用户账号postfix、并附加到postdrop组
+```
+postfix:x:500:500::/home/postfix:/bin/bash
+postdrop:x:501:501::/home/postdrop:/bin/bash
+0:x:502:502::/home/0:/sbin/nologin
+
+postfix:x:500:
+postdrop:x:501:
+0:x:502:
+```
 
 安装组件`yum install cyrus-sasl openssl cyrus-sasl-*`
 
