@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Darren&#39;s Ramblings</title>
+    <description>...</description>
+    <link>http://yourdomain.com/</link>
+    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 03 Jul 2014 14:49:50 +0800</pubDate>
+    <lastBuildDate>Thu, 03 Jul 2014 14:49:50 +0800</lastBuildDate>
+    <generator>Jekyll v2.1.0</generator>
+    
+      <item>
+        <title>在OpenVZ VPS上搭建和使用Strongswan</title>
+        <description>&lt;p&gt;由于OpenVZ的限制以前使用Racoon和xl2tpd组合的方式无法在这类VPS使用，只好购买价格更贵的Xen的。开源的世界总是三十年河东，三十年河西， 从Openswan到Racoon, 现在轮到Strongswan了。得益于灵活的插件体系结构，Strongswan具备良好的扩展性， 架设一个L2TP/IPSec的服务器你再也不需要其他的组件，Strongswan就一站式提供了。 尤其是&lt;a href=&quot;http://wiki.strongswan.org/projects/strongswan/wiki/Kernel-libipsec&quot;&gt;kernel-libipsec&lt;/a&gt; 插件使得在OpenVZ这样的受限的VPS上也能轻松的使用L2TP/IPec了, 一般的IPSec/IKE实现都要在kernel的IPsec stack中实现，libipsec提供另一种实现方式， 即利用TUN设备，Strongswan的守护程序在收到ESP的UDP包后,通过libipsec进行解密，解密后的明文注入到TUN设备来实现网络连接。&lt;/p&gt;
+
+&lt;p&gt;大概了解了基本原理，下面就开始动手安装吧，首先记得去VPS的控制面板下启用TUN/TAP设备， 安装过程稍微有点麻烦，首先需要最新的Strongswan(5.1.3)版本，各发行版不一定有最新的版本， 所以需要手动编译。这里简单说一下在CentOS 6 上的安装, 我习惯用yum 编译安装.&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;编译安装&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# rpm -ivh http://mirror.es.its.nyu.edu/epel/6/i386/epel-release-6-8.noarch.rpm
+# rpm install yum-utils
+$ yumdownloader --source strongswan
+$ rpm -ivh strongswan-5.1.3-1.el6.src.rpm
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;修改 rpmbuild/SPECS/strongswan.spec , diff 如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-diff&quot; data-lang=&quot;diff&quot;&gt;&lt;span class=&quot;gd&quot;&gt;--- rpmbuild/SPECS/strongswan.spec.bak	2014-04-15 11:20:24.000000000 +0400&lt;/span&gt;
+&lt;span class=&quot;gi&quot;&gt;+++ rpmbuild/SPECS/strongswan.spec	2014-06-29 12:21:20.061817133 +0400&lt;/span&gt;
+&lt;span class=&quot;gu&quot;&gt;@@ -129,7 +129,8 @@&lt;/span&gt;
+     --enable-eap-radius \
+     --enable-curl \
+     --enable-eap-identity \
+&lt;span class=&quot;gd&quot;&gt;-    --enable-cmd&lt;/span&gt;
+&lt;span class=&quot;gi&quot;&gt;+    --enable-cmd \&lt;/span&gt;
+&lt;span class=&quot;gi&quot;&gt;+    --enable-kernel-libipsec&lt;/span&gt;
+ make %{?_smp_mflags}
+ 
+ %install
+&lt;span class=&quot;gu&quot;&gt;@@ -204,6 +205,8 @@&lt;/span&gt;
+ %{_libdir}/%{name}/libtls.so.0.0.0
+ %{_libdir}/%{name}/libpttls.so.0
+ %{_libdir}/%{name}/libpttls.so.0.0.0
+&lt;span class=&quot;gi&quot;&gt;+%{_libdir}/%{name}/libipsec.so.0&lt;/span&gt;
+&lt;span class=&quot;gi&quot;&gt;+%{_libdir}/%{name}/libipsec.so.0.0.0&lt;/span&gt;
+ %{_libdir}/%{name}/lib%{name}.so.0
+ %{_libdir}/%{name}/lib%{name}.so.0.0.0
+ %dir %{_libdir}/%{name}/plugins
+&lt;span class=&quot;gu&quot;&gt;@@ -252,6 +255,7 @@&lt;/span&gt;
+ %{_libdir}/%{name}/plugins/lib%{name}-dhcp.so
+ %{_libdir}/%{name}/plugins/lib%{name}-curl.so
+ %{_libdir}/%{name}/plugins/lib%{name}-eap-identity.so
+&lt;span class=&quot;gi&quot;&gt;+%{_libdir}/%{name}/plugins/lib%{name}-kernel-libipsec.so&lt;/span&gt;
+ %dir %{_libexecdir}/%{name}
+ %{_libexecdir}/%{name}/_copyright
+ %{_libexecdir}/%{name}/_updown
+&lt;span class=&quot;gu&quot;&gt;@@ -335,6 +339,7 @@&lt;/span&gt;
+ %{_sysconfdir}/%{name}/%{name}.d/charon/xauth-generic.conf
+ %{_sysconfdir}/%{name}/%{name}.d/charon/xauth-pam.conf
+ %{_sysconfdir}/%{name}/%{name}.d/charon/xcbc.conf
+&lt;span class=&quot;gi&quot;&gt;+%{_sysconfdir}/%{name}/%{name}.d/charon/kernel-libipsec.conf&lt;/span&gt;
+ %{_sysconfdir}/%{name}/%{name}.d/imcv.conf
+ %{_sysconfdir}/%{name}/%{name}.d/pacman.conf
+ %{_sysconfdir}/%{name}/%{name}.d/starter.conf
+&lt;span class=&quot;gu&quot;&gt;@@ -397,6 +402,7 @@&lt;/span&gt;
+ %{_datadir}/%{name}/templates/config/plugins/xauth-generic.conf
+ %{_datadir}/%{name}/templates/config/plugins/xauth-pam.conf
+ %{_datadir}/%{name}/templates/config/plugins/xcbc.conf
+&lt;span class=&quot;gi&quot;&gt;+%{_datadir}/%{name}/templates/config/plugins/kernel-libipsec.conf&lt;/span&gt;
+ %{_datadir}/%{name}/templates/config/%{name}.conf
+ %{_datadir}/%{name}/templates/config/%{name}.d/attest.conf
+ %{_datadir}/%{name}/templates/config/%{name}.d/charon-logging.conf&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;修改完之后进行打包和安装&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  $ rpmbuild -bb rpmbuild/SPECS/strongswan.spec
+  # rpm -ivh rpmbuild/RPMS/i686/strongswan-5.1.3-1.el6.i686.rpm 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;配置&lt;/h2&gt;
+
+&lt;p&gt;这里的设置使用PSK+Xauth的认证方式&lt;/p&gt;
+
+&lt;p&gt;/etc/strongswan/ipsec.conf&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;config setup
+	&lt;span class=&quot;c&quot;&gt;# strictcrlpolicy=yes&lt;/span&gt;
+	&lt;span class=&quot;c&quot;&gt;# uniqueids = no&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;# charondebug=&amp;quot;ike 1, chd 1, knl 1, cfg 0&amp;quot;&lt;/span&gt;
+
+conn %default
+	&lt;span class=&quot;nv&quot;&gt;ikelifetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;24h
+	&lt;span class=&quot;nv&quot;&gt;keylife&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8h
+	&lt;span class=&quot;nv&quot;&gt;rekeymargin&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3m
+	&lt;span class=&quot;nv&quot;&gt;keyingtries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+        &lt;span class=&quot;nv&quot;&gt;fragmentation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;yes
+        &lt;span class=&quot;nv&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;%defaultroute
+        &lt;span class=&quot;nv&quot;&gt;leftsubnet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.0.0.0/0
+
+conn nat-t 
+        &lt;span class=&quot;nv&quot;&gt;right&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;%any
+        &lt;span class=&quot;nv&quot;&gt;rightsourceip&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;10.8.0.0/24
+        &lt;span class=&quot;nv&quot;&gt;leftauth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;psk
+        &lt;span class=&quot;nv&quot;&gt;rightauth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;psk
+        &lt;span class=&quot;nv&quot;&gt;rightauth2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;xauth
+        &lt;span class=&quot;nv&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;add&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;/etc/strongswan/ipsec.secrets&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;: PSK &lt;span class=&quot;s1&quot;&gt;&amp;#39;mypsk&amp;#39;&lt;/span&gt;    &lt;span class=&quot;c&quot;&gt;#预共享密钥&lt;/span&gt;
+
+username : XAUTH &lt;span class=&quot;s2&quot;&gt;&amp;quot;password&amp;quot;&lt;/span&gt;  &lt;span class=&quot;c&quot;&gt;#用户名和密码&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;/etc/strongswan/strongswan.d/charon.conf&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;...
+    &lt;span class=&quot;c&quot;&gt;#这里省略了其他的默认配置， 指定DNS服务器&lt;/span&gt;
+    &lt;span class=&quot;nv&quot;&gt;dns1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8.8.8.8
+    &lt;span class=&quot;nv&quot;&gt;dns2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8.8.4.4
+    ...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;启动服务&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; # service strongswan start
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;snat&quot;&gt;配置转发和SNAT&lt;/h2&gt;
+
+&lt;p&gt;启用转发&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  # vi /etc/sysctl.conf # 修改 net.ipv4.ip_forward = 1
+  # sysctl -p
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;启用SNAT&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  # iptables -t nat -A POSTROUTING -j SANT --to-source a.b.c.d # VPS的外部IP地址
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;客户端配置&lt;/h2&gt;
+
+&lt;p&gt;Android手机: VPN 配置类型中选择IPSec Xautu PSK, 预共享密钥和用户名密码为/etc/strongswan/ipsec.secrets中的设置&lt;/p&gt;
+
+&lt;p&gt;Mac OSX: VPN类型选用CISCO IPSEC， 预共享密钥和用户名密码同上，群组名称记得留空&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 03 Jul 2014 18:35:06 +0800</pubDate>
+        <link>http://yourdomain.com/l2tp/ipsec/2014/07/03/strongswan-setup/</link>
+        <guid isPermaLink="true">http://yourdomain.com/l2tp/ipsec/2014/07/03/strongswan-setup/</guid>
+        
+        
+        <category>l2tp</category>
+        
+        <category>ipsec</category>
+        
+      </item>
+    
+  </channel>
+</rss>

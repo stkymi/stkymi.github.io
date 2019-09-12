@@ -1,0 +1,38 @@
+---
+layout: post
+title: "Windows部署服务" 
+date:   2019-07-12 10:35:06
+categories: 
+---
+
+<!-- more -->
+
+### Windows Deployment Services（Windows部署服务，简称：WDS）
+
+WDS必须和DHCP服务器配合。当设置完成后，客户端从网卡启动时，会通过DHCP获取到IP和PXE服务器的信息。随后客户端连接到WDS服务器下载特定的启动镜像来引导。引导完成后就进入了Windows PE环境，即可开始安装过程。Windows 7之后的系统镜像(ISO)内，最关键的两个文件就是`boot.wim`（启动映像）和`install.wim`（安装映像）。如果单纯地使用WDS导入默认的系统启动映像，则安装界面和普通的安装步骤完全一致，达不到自动化部署的目的。
+
+### Microsoft Deployment Toolkit （微软部署工具包，简称：MDT）
+
+MDT可以在安装过程中自动的安装驱动、软件、加入域控制器等等各种细化的系统定制。不需要像WDS那种部署方式，每一次修改都需要修改WIM文件，重新封装打包。
+
+MDT必须依赖WDS服务和Windows Assessment and Deployment Kit (简称Windows ADK)，安装完成后的主控制台为`Deployment Workbench`。~~Microsoft SQL Server和MDT结合起来可以使得部署的定制性非常的详细，此处不作分析~~
+
+MDT是使用配置文件来控制整个部署过程，其中最关键的文件是`Bootstrap.ini`和`CustomSettings.ini`，MDT配置完成后，通过`Update Deployment Share` 更新或生成默认文件名为`LiteTouchPE_x64.wim`以及`LiteTouchPE_x86.wim`的启动映像，然后将需要的启动映像添加到WDS以替代默认的系统启动映像，引导后则会根据MDT的既定配置完成部署。
+
+## 安装驱动
+
+在大多数情况下，实际上并不在操作系统安装期间为每个设备安装驱动程序。相反，在Preinstall阶段，它将：
+收集计算机上所有设备的列表及其相应的即插即用设备ID（PnPID）。然后，它将在您的部署共享（在Out-of-Box Drivers文件夹和control\drivers.xml文件中）的“Out-of-Box Drivers”文件夹中搜索任何匹配项。对于找到的每个驱动程序包，它会将驱动程序本地复制到c:\drivers文件夹中；或者根据选择的selection profile所关联的驱动进行全部复制。
+
+对于添加到c:\drivers中的每个文件夹。该文件夹将添加到注册表：
+```
+HKLM\Software\Microsoft\Windows\CurrentVersion\DevicePath
+```
+在Postinstall阶段，当操作系统安装后并找到新设备时，将在这些路径中查找驱动程序。
+
+**关键参数就是两个阶段中的 Inject drivers
+
+They're named the same but they are two different things. "Inject Drivers" under the Preinstall section is an Inject Drivers task that allows you to designate which drivers will be installed (via selection profile) ; "Inject Drivers" under Postinstall is actually a Run Command Line task that calls ZTIDrivers.wsf
+
+The pre-install driver injection simply gathers the necessary drivers based on your selection profile if any, or the PnP automatic detection. It copies those drivers from your deployment location to a temporary Out-of-Box folder in the internal hard disk. After that, it decompresses your WIM image into the internal drive and reboots. During the second driver injection phase, it will actually do the driver install into the operating system using the drivers that were copied during the pre-install phase.
+
