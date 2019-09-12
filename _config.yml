@@ -1,9 +1,0 @@
-# Site settings
-title: Jekyll's Ramblings
-description: "linux is free only if your time is free"
-#twitter_username: 
-#github_username:  
-
-# Build settings
-markdown: kramdown
-#permalink: pretty
