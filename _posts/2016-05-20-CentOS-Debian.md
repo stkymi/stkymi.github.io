@@ -54,6 +54,17 @@ TCPKeepAlive yes
 ClientAliveInterval 30
 ClientAliveCountMax 60
 ```
+
+### 磁盘空间不足
+
+逐步查看磁盘、文件夹容量；一般为运行过程中产生的log文件占用了大量的磁盘空间
+```
+df -h
+du -hs /*
+du -hs /root/*
+du -hs /var/log/*
+```
+
 ### linux系统用户管理与组管理
 
 Unix系统支持多个用户在同一时间内登陆并执行不同的任务、互不影响
