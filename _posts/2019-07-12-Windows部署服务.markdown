@@ -35,3 +35,9 @@ HKLM\Software\Microsoft\Windows\CurrentVersion\DevicePath
 They're named the same but they are two different things. "Inject Drivers" under the Preinstall section is an Inject Drivers task that allows you to designate which drivers will be installed (via selection profile) ; "Inject Drivers" under Postinstall is actually a Run Command Line task that calls ZTIDrivers.wsf
 
 The pre-install driver injection simply gathers the necessary drivers based on your selection profile if any, or the PnP automatic detection. It copies those drivers from your deployment location to a temporary Out-of-Box folder in the internal hard disk. After that, it decompresses your WIM image into the internal drive and reboots. During the second driver injection phase, it will actually do the driver install into the operating system using the drivers that were copied during the pre-install phase.
+
+## 格式化磁盘或分区；确定安装位置
+
+Format and Partition Disk 若是重装系统，则Disable this step;或添加Task Sequence Variable变量 Specific logical drive letter equals C 
+
+Install Operating System 选择系统的安装位置，默认为Logical drive letter stored in a variable OSDisk,因为在Format and Partition Disk 这一步会将指定分区赋予OSDisk变量，作为系统分区的标记。如果这一步禁用了，则需要修改安装位置为 Specific logical drive letter C 
