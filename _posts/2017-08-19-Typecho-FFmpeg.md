@@ -54,7 +54,7 @@ lsmod | grep bbr
 
 转码
 ```
-ffmpeg -i i.flv o.mp4
+ffmpeg -i i.flv -c copy o.mp4
 ```
 
 合并
