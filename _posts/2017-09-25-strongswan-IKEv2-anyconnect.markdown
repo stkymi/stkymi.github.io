@@ -11,7 +11,7 @@ OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供�
 
 安装依赖
 ```
-yum install pam-devel openssl-devel gmp gcc gcc-c++
+yum install pam-devel openssl-devel gcc gcc-c++ m4 gmp 
 apt install libpam0g-dev libssl-dev
 ```
 ```
