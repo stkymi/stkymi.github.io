@@ -108,7 +108,6 @@ net.ipv4.ip_forward = 1
 ```
 iptables -t nat -A POSTROUTING -s 172.16.0.0/12 -o venet0 -j MASQUERADE
 ```
-centOS
 ```
 service iptables save  # IPv4规则会保存到 /etc/sysconfig/iptables 文件,保存后系统重启会自动加载
 chkconfig iptables on  # 开机启动
@@ -254,8 +253,8 @@ max-same-clients = 2
 cookie-timeout = 172800
 # 连接中断的时间在cookie-timeout数值内可以自动重连
 
-ipv4-network = 192.168.8.0
-ipv4-netmask = 255.255.255.0
+ipv4-network = 172.17.0.0
+ipv4-netmask = 255.255.0.0
  
 dns = 8.8.8.8
 dns = 1.1.1.1
