@@ -160,7 +160,7 @@ chkconfig iptables on  # 开机启动
 ```
 ### 启动脚本
 
-保存到`/etc/init.d/`目录并赋予执行权限
+保存到`/etc/init.d/strongswan`并赋予执行权限
 ```
 #!/bin/sh
 #
