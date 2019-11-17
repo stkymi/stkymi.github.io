@@ -25,12 +25,10 @@ cd strongswan-*
 ./configure --enable-openssl --disable-gmp --enable-kernel-libipsec
 ```
 仅包含最简单的PSK预共享密钥认证，这里使用openssl替换gmp,因为Debian不带gmp包，也要编译，呵呵
-```
-./configure  --enable-eap-identity --enable-eap-md5 --enable-eap-mschapv2 --enable-eap-tls --enable-eap-ttls --enable-eap-peap --enable-eap-tnc --enable-eap-dynamic --enable-eap-radius --enable-xauth-eap --enable-xauth-pam --enable-dhcp --enable-addrblock --enable-unity --enable-certexpire --enable-radattr --enable-tools --enable-openssl --disable-gmp --enable-kernel-libipsec
-```
+
 ```
 make
-make install 或者 make upgrade
+make install
 ```
 
 默认安装到`/usr/local`目录，配置文件在 `/usr/local/etc`
@@ -58,19 +56,6 @@ ipsec pki --issue --lifetime 3650 --cacert ca.cert.pem --cakey ca.key.pem --in s
 ```
 #### ~~安装证书~~
 编译的路径为`/usr/local/etc/ipsec.d`
-```
-cp ca.key.pem /etc/ipsec.d/private/
-cp ca.cert.pem /etc/ipsec.d/cacerts/
-cp server.cert.pem /etc/ipsec.d/certs/
-cp server.pub.pem /etc/ipsec.d/certs/
-cp server.key.pem /etc/ipsec.d/private/
-
-cp ca.key.pem /etc/strongswan/ipsec.d/private/
-cp ca.cert.pem /etc/strongswan/ipsec.d/cacerts/
-cp server.cert.pem /etc/strongswan/ipsec.d/certs/
-cp server.pub.pem /etc/strongswan/ipsec.d/certs/
-cp server.key.pem /etc/strongswan/ipsec.d/private/
-```
 
 ### 更新：通过Caddy从Let's Encrypt获取服务器证书
 链接服务器证书和私钥
@@ -96,7 +81,7 @@ conn %default
 	left=%any                    
 	leftsubnet=0.0.0.0/0        
 	right=%any                  
- 	rightsourceip=192.168.0.0/16
+ 	rightsourceip=172.16.0.0/16
 	leftcert=server.cert.pem
 	leftid=domain
 	rightid=%any                 
@@ -106,23 +91,6 @@ conn IKEv2-PSK-PSK
         leftauth=psk
         rightauth=psk
         auto=add
-conn IKEv2-Pubkey-EAP	
-	leftauth=pubkey            
-       	rightauth=eap-mschapv2       
-	leftsendcert=always        
-	rightsendcert=never          
-	auto=add           
-conn Windows
-    keyexchange=ikev2
-    ike=aes256-sha256-modp1024,aes256-sha1-modp1024,3des-sha1-modp1024!
-    esp=aes256-sha256,aes256-sha1,3des-sha1!
-    leftsendcert=always
-    leftauth=pubkey
-    rightauth=eap-mschapv2
-    rightsendcert=never
-    eap_identity=%any
-    rekey=no
-    auto=add
 ```
 
 密码认证文件 `/etc/strongswan/ipsec.secrets`
@@ -138,20 +106,7 @@ username : EAP "password"
 net.ipv4.ip_forward = 1
 ```
 ```
-iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ens3 -j MASQUERADE
-```
-Debian
-```
-iptables-save > /etc/iptables
-```
-编辑`/etc/network/if-pre-up.d/iptables`，添加启动脚本
-```
-#!/bin/sh
-/sbin/iptables-restore < /etc/iptables
-```
-必须赋予脚本执行权限，修改配置后应保存
-```
-chmod -R 755 /etc/network/if-pre-up.d/iptables 
+iptables -t nat -A POSTROUTING -s 172.16.0.0/12 -o venet0 -j MASQUERADE
 ```
 centOS
 ```
@@ -290,7 +245,7 @@ cert-user-oid = 2.5.4.3
 server-cert = /etc/pki/ocserv/public/domain.com.crt
 server-key = /etc/pki/ocserv/private/domain.com.key
 ca-cert = /etc/pki/ocserv/cacerts/ca.crt
-# 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA 
+# 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA;用户名和密码登录方式不需要CA证书
 # 注意这里的路径最后的位置不能有空格
 max-clients = 16
 # 允许同时连接的总客户端数量
