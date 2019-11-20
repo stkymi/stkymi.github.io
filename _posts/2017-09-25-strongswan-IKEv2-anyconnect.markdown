@@ -12,7 +12,6 @@ OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供�
 安装依赖
 ```
 yum install pam-devel openssl-devel gcc gcc-c++ m4 gmp 
-apt install libpam0g-dev libssl-dev
 ```
 ```
 wget http://download.strongswan.org/strongswan.tar.gz
@@ -22,7 +21,7 @@ cd strongswan-*
 编译：OpenVZ必须添加 `--enable-kernel-libipsec`
 
 ```
-./configure --enable-openssl --disable-gmp --enable-kernel-libipsec
+./configure --enable-kernel-libipsec --enable-openssl --disable-gmp
 ```
 仅包含最简单的PSK预共享密钥认证，这里使用openssl替换gmp,因为Debian不带gmp包，也要编译，呵呵
 
@@ -60,7 +59,7 @@ ipsec pki --issue --lifetime 3650 --cacert ca.cert.pem --cakey ca.key.pem --in s
 ### 更新：通过Caddy从Let's Encrypt获取服务器证书
 链接服务器证书和私钥
 ```
-ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/strongswan/ipsec.d/certs/cert.crt
+ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/strongswan/ipsec.d/certs/server.crt
 ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.key /etc/strongswan/ipsec.d/private/private.key
 ```
 Windows：必须提供Let's Encrypt中间证书 Let’s Encrypt Authority X3以及根证书DST Root CA X3，否则会出现`错误13801:IKE身份验证凭证不可接受。` 中间证书和根证书都可以在官网https://letsencrypt.org/zh-cn/certificates/ 获取。
@@ -82,7 +81,7 @@ conn %default
 	leftsubnet=0.0.0.0/0        
 	right=%any                  
  	rightsourceip=172.16.0.0/16
-	leftcert=server.cert.pem
+	leftcert=server.crt
 	leftid=domain
 	rightid=%any                 
         leftdns=8.8.8.8
@@ -96,7 +95,7 @@ conn IKEv2-PSK-PSK
 密码认证文件 `/etc/strongswan/ipsec.secrets`
 
 ```
-: RSA server.key.pem  
+: RSA private.key  
 : PSK "The key"    
 username : EAP "password"  
 ```
@@ -238,12 +237,12 @@ udp-port = 443
 try-mtu-discovery = true
 # 开启以后可以增强VPN性能
 
-cert-user-oid = 2.5.4.3
+# cert-user-oid = 2.5.4.3
 # 让服务器读取用户证书,适用于证书登录
 
-server-cert = /etc/pki/ocserv/public/domain.com.crt
-server-key = /etc/pki/ocserv/private/domain.com.key
-ca-cert = /etc/pki/ocserv/cacerts/ca.crt
+server-cert = /etc/pki/ocserv/public/server.crt
+server-key = /etc/pki/ocserv/private/private.key
+# ca-cert = /etc/pki/ocserv/cacerts/ca.crt
 # 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA;用户名和密码登录方式不需要CA证书
 # 注意这里的路径最后的位置不能有空格
 max-clients = 16
@@ -266,170 +265,11 @@ cisco-client-compat = true
 添加路由表，以下IP段不经过VPN。AnyConnect限制200条路由表
 ```
 #  route = #全部注释掉route选项，启用 no-route
-no-route = 1.0.0.0/255.128.0.0
-no-route = 1.160.0.0/255.224.0.0
-no-route = 1.192.0.0/255.224.0.0
-no-route = 10.0.0.0/255.0.0.0
-no-route = 14.0.0.0/255.224.0.0
-no-route = 14.96.0.0/255.224.0.0
-no-route = 14.128.0.0/255.224.0.0
-no-route = 14.192.0.0/255.224.0.0
-no-route = 27.0.0.0/255.192.0.0
-no-route = 27.96.0.0/255.224.0.0
-no-route = 27.128.0.0/255.128.0.0
-no-route = 36.0.0.0/255.192.0.0
-no-route = 36.96.0.0/255.224.0.0
-no-route = 36.128.0.0/255.128.0.0
-no-route = 39.0.0.0/255.224.0.0
-no-route = 39.64.0.0/255.192.0.0
-no-route = 39.128.0.0/255.192.0.0
-no-route = 42.0.0.0/255.0.0.0
-no-route = 43.224.0.0/255.224.0.0
-no-route = 45.64.0.0/255.192.0.0
-no-route = 47.64.0.0/255.192.0.0
-no-route = 49.0.0.0/255.128.0.0
-no-route = 49.128.0.0/255.224.0.0
-no-route = 49.192.0.0/255.192.0.0
-no-route = 54.192.0.0/255.224.0.0
-no-route = 58.0.0.0/255.128.0.0
-no-route = 58.128.0.0/255.224.0.0
-no-route = 58.192.0.0/255.192.0.0
-no-route = 59.32.0.0/255.224.0.0
-no-route = 59.64.0.0/255.192.0.0
-no-route = 59.128.0.0/255.128.0.0
-no-route = 60.0.0.0/255.192.0.0
-no-route = 60.160.0.0/255.224.0.0
-no-route = 60.192.0.0/255.192.0.0
-no-route = 61.0.0.0/255.192.0.0
-no-route = 61.64.0.0/255.224.0.0
-no-route = 61.128.0.0/255.192.0.0
-no-route = 61.224.0.0/255.224.0.0
-no-route = 100.64.0.0/255.192.0.0
-no-route = 101.0.0.0/255.128.0.0
-no-route = 101.128.0.0/255.224.0.0
-no-route = 101.192.0.0/255.192.0.0
-no-route = 103.0.0.0/255.192.0.0
-no-route = 103.224.0.0/255.224.0.0
-no-route = 106.0.0.0/255.128.0.0
-no-route = 106.224.0.0/255.224.0.0
-no-route = 110.0.0.0/254.0.0.0
-no-route = 112.0.0.0/255.128.0.0
-no-route = 112.128.0.0/255.224.0.0
-no-route = 112.192.0.0/255.192.0.0
-no-route = 113.0.0.0/255.128.0.0
-no-route = 113.128.0.0/255.224.0.0
-no-route = 113.192.0.0/255.192.0.0
-no-route = 114.0.0.0/255.128.0.0
-no-route = 114.128.0.0/255.224.0.0
-no-route = 114.192.0.0/255.192.0.0
-no-route = 115.0.0.0/255.0.0.0
-no-route = 116.0.0.0/255.0.0.0
-no-route = 117.0.0.0/255.128.0.0
-no-route = 117.128.0.0/255.192.0.0
-no-route = 118.0.0.0/255.224.0.0
-no-route = 118.64.0.0/255.192.0.0
-no-route = 118.128.0.0/255.128.0.0
-no-route = 119.0.0.0/255.128.0.0
-no-route = 119.128.0.0/255.192.0.0
-no-route = 119.224.0.0/255.224.0.0
-no-route = 120.0.0.0/255.192.0.0
-no-route = 120.64.0.0/255.224.0.0
-no-route = 120.128.0.0/255.224.0.0
-no-route = 120.192.0.0/255.192.0.0
-no-route = 121.0.0.0/255.128.0.0
-no-route = 121.192.0.0/255.192.0.0
-no-route = 122.0.0.0/254.0.0.0
-no-route = 124.0.0.0/255.0.0.0
-no-route = 125.0.0.0/255.128.0.0
-no-route = 125.160.0.0/255.224.0.0
-no-route = 125.192.0.0/255.192.0.0
-no-route = 127.0.0.0/255.0.0.0
-no-route = 139.0.0.0/255.224.0.0
-no-route = 139.128.0.0/255.128.0.0
-no-route = 140.64.0.0/255.224.0.0
-no-route = 140.128.0.0/255.224.0.0
-no-route = 140.192.0.0/255.192.0.0
-no-route = 144.0.0.0/255.192.0.0
-no-route = 144.96.0.0/255.224.0.0
-no-route = 144.224.0.0/255.224.0.0
-no-route = 150.0.0.0/255.224.0.0
-no-route = 150.96.0.0/255.224.0.0
-no-route = 150.128.0.0/255.224.0.0
-no-route = 150.192.0.0/255.192.0.0
-no-route = 152.96.0.0/255.224.0.0
-no-route = 153.0.0.0/255.192.0.0
-no-route = 153.96.0.0/255.224.0.0
-no-route = 157.0.0.0/255.192.0.0
-no-route = 157.96.0.0/255.224.0.0
-no-route = 157.128.0.0/255.224.0.0
-no-route = 157.224.0.0/255.224.0.0
-no-route = 159.224.0.0/255.224.0.0
-no-route = 161.192.0.0/255.224.0.0
-no-route = 162.96.0.0/255.224.0.0
-no-route = 163.0.0.0/255.192.0.0
-no-route = 163.96.0.0/255.224.0.0
-no-route = 163.128.0.0/255.192.0.0
-no-route = 163.192.0.0/255.224.0.0
-no-route = 166.96.0.0/255.224.0.0
-no-route = 167.128.0.0/255.192.0.0
-no-route = 168.160.0.0/255.224.0.0
-no-route = 169.254.0.0/255.255.0.0
-no-route = 171.0.0.0/255.128.0.0
-no-route = 171.192.0.0/255.224.0.0
-no-route = 172.16.0.0/255.240.0.0
-no-route = 175.0.0.0/255.128.0.0
-no-route = 175.128.0.0/255.192.0.0
-no-route = 180.64.0.0/255.192.0.0
-no-route = 180.128.0.0/255.128.0.0
-no-route = 182.0.0.0/255.0.0.0
-no-route = 183.0.0.0/255.192.0.0
-no-route = 183.64.0.0/255.224.0.0
-no-route = 183.128.0.0/255.128.0.0
-no-route = 192.0.0.0/255.255.255.0
-no-route = 192.0.2.0/255.255.255.0
-no-route = 192.88.99.0/255.255.255.0
-no-route = 192.96.0.0/255.224.0.0
-no-route = 192.160.0.0/255.248.0.0
-no-route = 192.168.0.0/255.255.0.0
-no-route = 192.169.0.0/255.255.0.0
-no-route = 192.170.0.0/255.254.0.0
-no-route = 192.172.0.0/255.252.0.0
-no-route = 192.176.0.0/255.240.0.0
-no-route = 198.18.0.0/255.254.0.0
-no-route = 198.51.100.0/255.255.255.0
-no-route = 202.0.0.0/255.128.0.0
-no-route = 202.128.0.0/255.192.0.0
-no-route = 202.192.0.0/255.224.0.0
-no-route = 203.0.0.0/255.128.0.0
-no-route = 203.128.0.0/255.192.0.0
-no-route = 203.192.0.0/255.224.0.0
-no-route = 210.0.0.0/255.192.0.0
-no-route = 210.64.0.0/255.224.0.0
-no-route = 210.160.0.0/255.224.0.0
-no-route = 210.192.0.0/255.224.0.0
-no-route = 211.64.0.0/255.192.0.0
-no-route = 211.128.0.0/255.192.0.0
-no-route = 218.0.0.0/255.128.0.0
-no-route = 218.160.0.0/255.224.0.0
-no-route = 218.192.0.0/255.192.0.0
-no-route = 219.64.0.0/255.224.0.0
-no-route = 219.128.0.0/255.224.0.0
-no-route = 219.192.0.0/255.192.0.0
-no-route = 220.96.0.0/255.224.0.0
-no-route = 220.128.0.0/255.128.0.0
-no-route = 221.0.0.0/255.224.0.0
-no-route = 221.96.0.0/255.224.0.0
-no-route = 221.128.0.0/255.128.0.0
-no-route = 222.0.0.0/255.0.0.0
-no-route = 223.0.0.0/255.224.0.0
-no-route = 223.64.0.0/255.192.0.0
-no-route = 223.128.0.0/255.128.0.0
-no-route = 224.0.0.0/224.0.0.0
 ```
 服务器证书
 ```
-ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/pki/ocserv//public/domain.com.crt
-ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.key /etc/pki/ocserv/private/domain.com.key
+ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/pki/ocserv//public/server.crt
+ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.key /etc/pki/ocserv/private/private.key
 ```
 用户管理
 ```
