@@ -131,6 +131,7 @@ exit $RETVAL
 ```
 ```
 chmod -R 755 /etc/init.d/v2ray
+chkconfig --add v2ray
 chkconfig v2ray on
 service  v2ray start
 ```
