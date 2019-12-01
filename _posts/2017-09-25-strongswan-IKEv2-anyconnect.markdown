@@ -7,6 +7,7 @@ date:   2017-09-26 10:35:06
 ### Strongswan
 OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供此插件，因此OpenVZ架构下的Debian只能编译安装（编译后均使用`ipsec`和`swanctl`命令）；若是包安装方式：CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
 
+## 务必使用 centos-6-x86_64-minimal.tar.gz
 #### 编译安装
 
 安装依赖
@@ -289,4 +290,4 @@ certtool --generate-certificate --load-privkey user.key --load-ca-certificate ca
 ```
 certtool --to-p12 --load-privkey user.key --pkcs-cipher 3des-pkcs12 --load-certificate user.crt --outfile user.p12 --outder
 ```
-再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。
+再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。OpenVZ需要开启TUN，否则Anyconnect无法登录。
