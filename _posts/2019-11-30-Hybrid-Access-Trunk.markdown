@@ -41,6 +41,7 @@ Hybrid 判断该Hybrid口对哪些vlan是untag,哪些是tag,如果流入封包�
 强制授权（authorized-force）：表示端口始终处于授权状态，允许用户不经认证授权即可访问网络资源。
 强制非授权（unauthorized-force）：表示端口始终处于非授权状态，不允许用户进行认证。设备端不对通过该端口接入的客户端提供认证服务。
 ```
+
 域:
 
 在huawei域配置完成后，用户进行接入认证时，以格式“user@huawei”输入用户名即可在huawei域下进行aaa认证。如果用户名中不携带域名或携带的域名不存在，用户将会在默认域进行认证。用户所属认证域是由接入设备（RADIUS客户端）而非RADIUS Server决定。在Switch上执行命令undo radius-server user-name domain-included后，Switch会把不带域名的用户名发送到RADIUS Server认证，但Switch仍会将用户置于huawei域中进行认证。
