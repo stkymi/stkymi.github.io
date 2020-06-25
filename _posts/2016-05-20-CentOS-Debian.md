@@ -26,7 +26,7 @@ yum list | grep NAME
 apt-cache show NAME
 ```
 ### 搜索文本
-`grep 'fonts.googleapis.com' -n --color -r .`
+`grep ‘fonts.googleapis.com’ -n --color -r .`
 
 ### tar
 
