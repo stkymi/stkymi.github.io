@@ -52,9 +52,9 @@ cd strongswan-*
 编译：OpenVZ必须添加 `--enable-kernel-libipsec`
 
 ```
-./configure --enable-kernel-libipsec --enable-openssl --disable-gmp
+./configure --enable-kernel-libipsec --enable-openssl --disable-gmp --enable-eap-identity --enable-eap-mschapv2 
 ```
-仅包含最简单的PSK预共享密钥认证，这里使用openssl替换gmp,因为Debian不带gmp包，也要编译，呵呵
+~~仅包含最简单的PSK预共享密钥认证，~~ 这里使用openssl替换gmp,因为Debian不带gmp包，也要编译
 
 ```
 make
@@ -84,9 +84,10 @@ ipsec pki --gen --outform pem > server.key.pem
 ipsec pki --pub --in server.key.pem --outform pem > server.pub.pem
 ipsec pki --issue --lifetime 3650 --cacert ca.cert.pem --cakey ca.key.pem --in server.pub.pem --dn "C=CN, O=ZhuZhou, CN=IP or domain" --san="IP or domain" --outform pem > server.cert.pem
 ```
-#### ~~安装证书~~
+#### 安装证书
 编译的路径为`/usr/local/etc/ipsec.d`
-
+Windows使用IKEv2的最大难题之一就是证书了吧，总结了经验教训下来，最重要的一点就是，遇到问题要查看log，不要瞎琢磨。
+泛域名证书是支持的，在客户端打开服务器部署的证书，查看证书路径，一般为根证书->中间证书->服务器证书。那么，就要把根证书和中间证书（可以从Windows系统中导出）放到ipsec.d的cacerts文件夹中，否则会提示IKE身份验证凭证不可接受。
 ### 更新：通过Caddy从Let's Encrypt获取服务器证书
 链接服务器证书和私钥
 ```
@@ -99,12 +100,12 @@ cd /etc/strongswan/ipsec.d/cacerts
 wget https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem 
 ```
 ### 配置Strongswan
-自5.7版本开始使用`swanctl.conf`配置文件，但目前仍兼容旧的配置方法
+自5.7版本开始使用`swanctl.conf`配置文件（编译添加 --enable-swanctl ），但目前仍兼容旧的配置方法
 
 ipsec 配置文件`/etc/strongswan/ipsec.conf`
 ```
 config setup
-uniqueids = no
+uniqueids = never
 
 conn %default                       
 	keyexchange=ike           
@@ -121,6 +122,26 @@ conn IKEv2-PSK-PSK
         leftauth=psk
         rightauth=psk
         auto=add
+conn IKEV2-Windows-eap-mschapv2
+        dpdaction=clear
+        dpddelay=60s
+        rekey=no
+        fragmentation=yes
+        ike=aes256-sha1-modp1024!
+        leftauth=pubkey
+        leftsendcert=always
+        rightauth=eap-mschapv2
+        rightsendcert=never
+	eap_identity=%identity
+        auto=add
+
+#关于leftid，如果只编译psk认证，也没有部署服务器证书，这里写什么都是可以的，只要不包含特殊字符
+#添加了eap-mschapv2和证书后，必须写成证书的域名，否则Iphone的PSK方式都无法连接了，Android不受影响
+#leftid完全不影响Windows的eap-mschapv2连接。
+#如果不定义ike=aes256-sha1-modp1024! Windows连接提示策略匹配错误，试了几个，Windows只有这个算法可以连接
+#如果不定义eap_identity=%identity Windows用保存的密码连接总是提示不正确，要重新输一遍密码。但是定义之后，其实任何用户名都是可以的，只要密码正确即可
+#编译时就要添加 --enable-eap-identity
+
 ```
 
 密码认证文件 `/etc/strongswan/ipsec.secrets`
@@ -129,6 +150,8 @@ conn IKEv2-PSK-PSK
 : RSA private.key  
 : PSK "The key"    
 username : EAP "password"  
+
+#PSK密钥只能有一把，EAP可以添加多行
 ```
 内核转发与iptables配置
 修改/etc/sysctl.conf 并执行命令 `sysctl -p`
@@ -142,6 +165,8 @@ iptables -t nat -A POSTROUTING -s 172.16.0.0/12 -o venet0 -j MASQUERADE
 service iptables save  # IPv4规则会保存到 /etc/sysconfig/iptables 文件,保存后系统重启会自动加载
 chkconfig iptables on  # 开机启动
 ```
+Windows要在网卡属性、网络属性、高级中勾选“在远程网络上使用默认网关” Windows 10 还可以设置VPN代理属性，私网地址等不走VPN路由
+
 ### 启动脚本
 
 保存到`/etc/init.d/strongswan`并赋予执行权限
@@ -294,8 +319,10 @@ cisco-client-compat = true
 # 使ocserv兼容AnyConnect
 ```
 添加路由表，以下IP段不经过VPN。AnyConnect限制200条路由表
+假设客户端使用的是A类的私网地址，那么即使 no-route 添加了10.0.0.0/8 ,这一条路由也不会在Anyconnect客户端的路由表中体现
 ```
 #  route = #全部注释掉route选项，启用 no-route
+
 ```
 服务器证书
 ```
