@@ -27,11 +27,12 @@ CA证书是由CA（Certification Authority）机构发布的数字证书。其�
 
 HTTPS在保证数据安全传输上使用对称加密和非对称加密相结合的方式来进行的，简单来说就是通过一次非对称加密算法进行了最终通信密钥的生成、确认和交换，然后在后续的通信过程中使用最终通信密钥进行对称加密通信。之所以不是全程非对称加密，是因为非对称加密的计算量大，影响通信效率。
 
-
+```
 作者：JasonZ
 链接：https://juejin.cn/post/6844903809068564493
 来源：掘金
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
 
 ### Strongswan
 OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供此插件，因此OpenVZ架构下的Debian只能编译安装（编译后均使用`ipsec`和`swanctl`命令）；若是包安装方式：CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
