@@ -5,6 +5,7 @@ date:   2017-11-16 10:35:06
 categories:
 ---
 
+### 2020年已不再使用V2ray
 ```
 bash <(curl -L -s https://install.direct/go.sh)
 ```
