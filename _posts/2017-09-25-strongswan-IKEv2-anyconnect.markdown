@@ -42,10 +42,11 @@ OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供�
 
 安装依赖
 ```
-yum install pam-devel openssl-devel gcc gcc-c++ m4 gmp 
+yum install pam-devel openssl-devel gcc gcc-c++  gmp 
+sudo apt-get install libpam0g-dev libssl-dev make gcc
 ```
 ```
-wget http://download.strongswan.org/strongswan.tar.gz
+wget --no-check-certificate https://download.strongswan.org/strongswan.tar.gz
 tar -xzf strongswan.tar.gz
 cd strongswan-*
 ```
@@ -58,13 +59,13 @@ cd strongswan-*
 
 ```
 make
-make install
+sudo make install 
 ```
 
 默认安装到`/usr/local`目录，配置文件在 `/usr/local/etc`
 
 ```
-ipsec start/stop/status
+sudo ipsec start/stop/status
 ```
 
 ### 证书（Windows必选，Iphone、Android可选）
@@ -123,17 +124,17 @@ conn IKEv2-PSK-PSK
         rightauth=psk
         auto=add
 conn IKEV2-Windows-eap-mschapv2
-        dpdaction=clear
-        dpddelay=60s
-        rekey=no
-        fragmentation=yes
-        ike=aes256-sha1-modp1024!
-        leftauth=pubkey
-        leftsendcert=always
-        rightauth=eap-mschapv2
-        rightsendcert=never
+	dpdaction=clear
+	dpddelay=60s
+	rekey=no
+	fragmentation=yes
+	ike=aes256-sha1-modp1024!
+	leftauth=pubkey
+	leftsendcert=always
+	rightauth=eap-mschapv2
+	rightsendcert=never
 	eap_identity=%identity
-        auto=add
+	auto=add
 
 #关于leftid，如果只编译psk认证，也没有部署服务器证书，这里写什么都是可以的，只要不包含特殊字符
 #添加了eap-mschapv2和证书后，必须写成证书的域名，否则Iphone的PSK方式都无法连接了，Android不受影响
