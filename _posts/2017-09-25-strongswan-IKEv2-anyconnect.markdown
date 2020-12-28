@@ -37,7 +37,9 @@ HTTPS在保证数据安全传输上使用对称加密和非对称加密相结合
 ### Strongswan
 OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供此插件，因此OpenVZ架构下的Debian只能编译安装（编译后均使用`ipsec`和`swanctl`命令）；若是包安装方式：CentOS使用`strongswan`命令、有strongswan文件夹，Debian使用`ipsec`命令、没有strongswan文件夹并且需要安装pki和eap-mschapv2插件
 
-## 务必使用 centos-6-x86_64-minimal.tar.gz
+## 务必使用 centos-6-x86_64-minimal.tar.gz 
+低版本系统编译新版strongswan非常简单，但是编译新版ocserv非常困难。所以通过epel-release实现。CentOS6停留在了0.12.6版本
+
 #### 编译安装
 
 安装依赖
@@ -279,7 +281,7 @@ chkconfig --add strongswan
 chkconfig strongswan on
 ```
 ### 配置客户端
-安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
+~~安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,~~适配器属性选择“需要加密”和“在远程网络上使用默认网关”。
 
 ### ocserv
 ```
