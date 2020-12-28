@@ -21,6 +21,10 @@ vi /etc/sysconfig/network-scripts/ifcfg-eth0
 
 ### 旧版本的仓库被归档
 
+打开`/etc/yum.repos.d/CentOS-Base.repo`配置文件，编辑源地址
+```
+注释所有的mirrorlist，启用所有的baseurl，主地址全部修改为http://vault.centos.org/
+```
 打开`/etc/apt/sources.list`配置文件,编辑源地址
 ```
 deb http://mirrors.163.com/debian-archive/debian wheezy main
