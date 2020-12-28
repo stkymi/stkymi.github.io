@@ -12,10 +12,20 @@ https://pkgs.org/
 ### 修改主机名,重启生效
 `hostnamectl set-hostname NAME`
 
+### CentOS 6 获取不到IP地址
+```
+vi /etc/sysconfig/network-scripts/ifcfg-eth0
+```
+将“ONBOOT=no” 选项改成“ONBOOT=yes”，运行命令:
+`service network restart ; dhclient`
+
 ### 旧版本的仓库被归档
 
 打开`/etc/apt/sources.list`配置文件,编辑源地址
-
+```
+deb http://mirrors.163.com/debian-archive/debian wheezy main
+deb http://archive.debian.org/debian/ wheezy main
+```
 发行文档 https://wiki.debian.org/DebianReleases
 
 ### 查询指定包的详情
