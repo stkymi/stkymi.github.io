@@ -281,7 +281,7 @@ chkconfig --add strongswan
 chkconfig strongswan on
 ```
 ### 配置客户端
-~~安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,~~~适配器属性勾选“在远程网络上使用默认网关”。
+~~安装 CA 根证书 ca.cert.pem，以验证服务器的真实性；Windows将 ca.cert.pem 重命名为 ca.cert.crt，安装至“受信任的根证书颁发机构”,~~适配器属性勾选“在远程网络上使用默认网关”。
 之前在笔记本和苹果三星使用都正常，近日在客厅的主机使用，可以正常打开youtube页面，但播放视频时一直转圈，使用Anyconnect连接播放再切换IKEv2就可以正常播放；访问google提示证书不受信任，查看证书为颁发给facebook，简直一头雾水。产生问题的原因是因为家里的路由器无线是不支持IPv6的，而客厅主机使用有线连接，获取到了IPv6地址。另外根据网友的踩吭，20H2版本的Windows 10 即使在IPv6属性勾选“在远程网络上使用默认网关”，IPv6流量也不会走VPN通道，解决方法为手动添加::/0默认路由。我的VPS不支持IPv6网络，先不管。
 
 ### ocserv
