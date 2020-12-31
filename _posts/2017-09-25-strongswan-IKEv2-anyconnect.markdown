@@ -39,13 +39,13 @@ OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供�
 
 ## 务必使用 centos-6-x86_64-minimal.tar.gz 
 低版本系统编译新版strongswan非常简单，但是编译新版ocserv非常困难。所以通过epel-release实现。CentOS6停留在了0.12.6版本
-
+编译ocserv各种错误，已放弃
 #### 编译安装
 
 安装依赖
 ```
-yum install pam-devel openssl-devel gcc gcc-c++  gmp 
-sudo apt-get install libpam0g-dev libssl-dev make gcc
+yum install pam-devel openssl-devel gcc gcc-c++  gmp-devel
+apt-get install libpam0g-dev libssl-dev make gcc libgmp-dev
 ```
 ```
 wget --no-check-certificate https://download.strongswan.org/strongswan.tar.gz
@@ -57,11 +57,10 @@ cd strongswan-*
 ```
 ./configure --enable-kernel-libipsec --enable-openssl --disable-gmp --enable-eap-identity --enable-eap-mschapv2 
 ```
-~~仅包含最简单的PSK预共享密钥认证，~~ 这里使用openssl替换gmp,因为Debian不带gmp包，也要编译
-
+~~仅包含最简单的PSK预共享密钥认证，~~ 这里使用openssl替换gmp,主要看有没有安装依赖
 ```
 make
-sudo make install 
+make install 
 ```
 
 默认安装到`/usr/local`目录，配置文件在 `/usr/local/etc`
