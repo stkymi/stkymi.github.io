@@ -39,7 +39,7 @@ OpenVZ需要开启TUN，并安装libipsec插件,然而Debian的apt并不提供�
 
 ## 务必使用 centos-6-x86_64-minimal.tar.gz 
 低版本系统编译新版strongswan非常简单，但是编译新版ocserv非常困难。所以通过epel-release实现。CentOS6停留在了0.12.6版本
-编译ocserv各种错误，已放弃
+编译ocserv各种错误，已放弃。
 #### 编译安装
 
 安装依赖
@@ -66,7 +66,7 @@ make install
 默认安装到`/usr/local`目录，配置文件在 `/usr/local/etc`
 
 ```
-sudo ipsec start/stop/status
+ipsec start/stop/status
 ```
 
 ### 证书（Windows必选，Iphone、Android可选）
