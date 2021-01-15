@@ -167,7 +167,7 @@ iptables -t nat -A POSTROUTING -s 172.16.0.0/12 -o venet0 -j MASQUERADE
 service iptables save  # IPv4规则会保存到 /etc/sysconfig/iptables 文件,保存后系统重启会自动加载
 chkconfig iptables on  # 开机启动
 ```
-Windows要在网卡属性、网络属性、高级中勾选“在远程网络上使用默认网关”（最新版本20H2默认开启了） Windows 10 还可以设置VPN代理属性，私网地址等不走VPN路由
+Windows要在网卡属性、网络属性、高级中勾选“在远程网络上使用默认网关”（最新版本20H2默认开启了） Windows 10 还可以设置VPN代理属性，私网地址等不走VPN路由（实际测试未生效）。
 
 ### 启动脚本
 
@@ -322,7 +322,9 @@ cisco-client-compat = true
 # 使ocserv兼容AnyConnect
 ```
 添加路由表，以下IP段不经过VPN。AnyConnect限制200条路由表
-假设客户端使用的是A类的私网地址，那么即使 no-route 添加了10.0.0.0/8 ,这一条路由也不会在Anyconnect客户端的路由表中体现
+~~假设客户端使用的是A类的私网地址，那么即使 no-route 添加了10.0.0.0/8 ,这一条路由也不会在Anyconnect客户端的路由表中体现~~
+将私网地址添加到no-route，并在客户端勾选 Allow local(LAN) access when using VPN (if configured)，即可让私网地址不走VPN；客户端若配置双网卡，需确认路由问题，使用tracert分析判断。
+
 ```
 #  route = #全部注释掉route选项，启用 no-route
 
