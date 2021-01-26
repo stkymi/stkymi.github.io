@@ -68,6 +68,9 @@ TCPKeepAlive yes
 ClientAliveInterval 30
 ClientAliveCountMax 60
 ```
+### 磁盘管理
+分区工具fdisk仅支持MBR(msdos)分区表，不支持超过2T的硬盘；gdisk用于GPT分区表。parted为高级工具。
+mkfs.ext4 或 mkfs.xfs 格式化分区
 
 ### 磁盘空间不足
 
