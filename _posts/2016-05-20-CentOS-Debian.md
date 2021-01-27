@@ -71,9 +71,10 @@ ClientAliveCountMax 60
 ### 磁盘管理
 分区工具fdisk仅支持MBR(msdos)分区表，不支持超过2T的硬盘；gdisk用于GPT分区表。parted为高级工具。
 mkfs.ext4 或 mkfs.xfs 格式化分区(makefilesystem)
-
-lsblk -f
-
+```
+lsblk
+blkid
+```
 ### 磁盘空间不足
 
 逐步查看磁盘、文件夹容量；一般为运行过程中产生的log文件占用了大量的磁盘空间
