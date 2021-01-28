@@ -32,6 +32,31 @@ deb http://archive.debian.org/debian/ wheezy main
 ```
 发行文档 https://wiki.debian.org/DebianReleases
 
+### 离线源
+
+以ocserv为例
+```
+#安装工具
+yum install yum-utils
+yum install createrepo
+
+#获取安装包
+mkdir /root/epel
+yumdownloader --resolve ocserv  #只获取ocserv安装包
+reposync -r epel -p /root/epel  #获取所有安装包
+
+#制作本地仓库并拷贝到离线服务器
+createrepo -v /root/epel  #会多出一个repodata目录
+
+#直接使用或制作镜像挂载使用
+vi /etc/yum.repos.d/offline-epel.repo
+
+[epel]
+name=ansible
+baseurl=file:///root/epel
+gpgcheck=0
+enabled=1
+```
 ### 查询指定包的详情
 ```
 yum search NAME
