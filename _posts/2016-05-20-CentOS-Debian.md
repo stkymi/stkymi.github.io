@@ -41,7 +41,7 @@ yum install yum-utils
 yum install createrepo
 
 #获取安装包
-mkdir /root/epel
+mkdir /root/epel && cd epel
 yumdownloader --resolve ocserv  #只获取ocserv安装包
 reposync -r epel -p /root/epel  #获取所有安装包
 
@@ -52,11 +52,17 @@ createrepo -v /root/epel  #会多出一个repodata目录
 vi /etc/yum.repos.d/offline-epel.repo
 
 [epel]
-name=ansible
+name=epel
 baseurl=file:///root/epel
 gpgcheck=0
 enabled=1
 ```
+实际还是会提示缺少数个libev类的插件，经查为extras库提供，但企业内网只提供了base库。
+解决方法为先搜索得到包的具体名称，并和ocserv一样下载到本地文件夹内再createrepo
+```
+yumdownloader --resolve libev -p /root/epel
+```
+
 ### 查询指定包的详情
 ```
 yum search NAME
