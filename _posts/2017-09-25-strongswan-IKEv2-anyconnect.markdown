@@ -300,7 +300,7 @@ try-mtu-discovery = true
 # 让服务器读取用户证书,适用于证书登录
 
 server-cert = /etc/pki/ocserv/public/server.crt
-server-key = /etc/pki/ocserv/private/private.key
+server-key = /etc/pki/ocserv/private/server.key
 # ca-cert = /etc/pki/ocserv/cacerts/ca.crt
 # 服务器证书、私钥和CA证书的位置，这里的CA指的是签发登录证书的CA;用户名和密码登录方式不需要CA证书
 # 注意这里的路径最后的位置不能有空格
@@ -531,7 +531,7 @@ no-route = 223.128.0.0/255.128.0.0
 服务器证书
 ```
 ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/pki/ocserv//public/server.crt
-ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.key /etc/pki/ocserv/private/private.key
+ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.key /etc/pki/ocserv/private/server.key
 ```
 用户管理
 ```
