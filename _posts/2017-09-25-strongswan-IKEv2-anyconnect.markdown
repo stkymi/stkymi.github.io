@@ -541,15 +541,16 @@ ocpasswd -c /etc/ocserv/ocpasswd -d name   #删除用户名为name的用户，�
 ocpasswd -c /etc/ocserv/ocpasswd -l name   #锁定用户名为name的用户，无任何提示
 ocpasswd -c /etc/ocserv/ocpasswd -u name   #解锁用户名为name的用户，无任何提示
 ```
-用户证书：用户证书只需 ocserv 信任 CA 即可，因此使用自签发证书。
+~~用户证书登录：只需 ocserv 信任 CA 即可，因此使用自签发证书。~~配置证书认证未成功，log信息为证书不受信任，可能是证书链的问题，已放弃。
 
-生成一个私钥，再用这个私钥参与用户证书的签发
+~~生成一个私钥，再用这个私钥参与用户证书的签发~~
 ```
 certtool --generate-privkey --outfile user.key
 certtool --generate-certificate --load-privkey user.key --load-ca-certificate ca.crt --load-ca-privkey ca.key --template user.tmpl --outfile user.crt
 ```
-将证书和私钥合成PKCS12格式,会提示创建证书名字和密码。安装证书时需要提供密码
+~~将证书和私钥合成PKCS12格式,会提示创建证书名字和密码。安装证书时需要提供密码~~
 ```
 certtool --to-p12 --load-privkey user.key --pkcs-cipher 3des-pkcs12 --load-certificate user.crt --outfile user.p12 --outder
 ```
+
 再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。OpenVZ需要开启TUN，否则Anyconnect无法登录。
