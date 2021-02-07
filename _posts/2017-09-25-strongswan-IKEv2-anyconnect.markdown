@@ -569,7 +569,6 @@ certtool --generate-self-signed --load-privkey ca-key.pem --template ca.tmpl --o
 生成一个私钥，再用这个私钥参与用户证书的签发
 ```
 certtool --generate-privkey --outfile user-key.pem
-certtool --generate-certificate --load-privkey user.key --load-ca-certificate ca.crt --load-ca-privkey ca.key --template user.tmpl --outfile user.crt
 ```
 创建用户证书的tmpl模板user.tmpl
 ```
