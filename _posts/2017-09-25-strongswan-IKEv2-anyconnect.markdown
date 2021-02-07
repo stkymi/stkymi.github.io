@@ -292,8 +292,11 @@ auth = "plain[passwd=/etc/ocserv/ocpasswd]"
  
 tcp-port = 443
 udp-port = 443
-# 这个代表 TCP和UDP监听的端口 默认443，可以更换其他端口，端口号可分开
- 
+# 这个代表 TCP和UDP监听的端口 默认443，可以更换其他端口，端口号可分开；或者禁用UDP
+# ocserv默认使用基于UDP的TLS协议（DTLS）进行加速，但是UDP无法提供可靠的传输。TCP比UDP慢，但是可以提供可靠的传输。一个优化技巧是禁用DTLS，使用标准TLS（通过TCP），然后启用TCP BBR以提高TCP速度
+
+compression = true
+# 开启压缩
 try-mtu-discovery = true
 # 开启以后可以增强VPN性能
 
