@@ -541,16 +541,45 @@ ocpasswd -c /etc/ocserv/ocpasswd -d name   #删除用户名为name的用户，�
 ocpasswd -c /etc/ocserv/ocpasswd -l name   #锁定用户名为name的用户，无任何提示
 ocpasswd -c /etc/ocserv/ocpasswd -u name   #解锁用户名为name的用户，无任何提示
 ```
-~~用户证书登录：只需 ocserv 信任 CA 即可，因此使用自签发证书。~~配置证书认证未成功，log信息为证书不受信任，可能是证书链的问题，已放弃。
+用户证书登录：只需 ocserv 信任 CA 即可，因此使用自签发证书。使用ocserv自动生成的CA证书签发客户端证书未能成功登录，所以使用自签发CA。
 
-~~生成一个私钥，再用这个私钥参与用户证书的签发~~
+生成CA根证书的私钥，再用这个私钥自颁发根证书
 ```
-certtool --generate-privkey --outfile user.key
+certtool --generate-privkey --outfile ca-key.pem
+```
+创建根证书的tmpl模板ca.tmpl
+```
+cn = "BCOC CA"
+organization = "BCOC"
+serial = 1
+expiration_days = 3650
+ca
+signing_key
+cert_signing_key
+crl_signing_key
+```
+颁发根证书
+```
+certtool --generate-self-signed --load-privkey ca-key.pem --template ca.tmpl --outfile ca-cert.pem
+```
+
+生成一个私钥，再用这个私钥参与用户证书的签发
+```
+certtool --generate-privkey --outfile user-key.pem
 certtool --generate-certificate --load-privkey user.key --load-ca-certificate ca.crt --load-ca-privkey ca.key --template user.tmpl --outfile user.crt
 ```
-~~将证书和私钥合成PKCS12格式,会提示创建证书名字和密码。安装证书时需要提供密码~~
+创建用户证书的tmpl模板user.tmpl
 ```
-certtool --to-p12 --load-privkey user.key --pkcs-cipher 3des-pkcs12 --load-certificate user.crt --outfile user.p12 --outder
+cn = "harveymei"
+unit = "standard"
+expiration_days = 3650
+signing_key
+tls_www_client
+```
+颁发用户证书并将证书和私钥合成PKCS12格式,会提示创建证书名字和密码。安装证书时需要提供密码
+```
+certtool --generate-certificate --load-privkey user-key.pem --load-ca-certificate ca-cert.pem --load-ca-privkey ca-key.pem --template user.tmpl --outfile user-cert.pem
+certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-certificate user-cert.pem --outfile user.p12 --outder
 ```
 
 再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。OpenVZ需要开启TUN，否则Anyconnect无法登录。
