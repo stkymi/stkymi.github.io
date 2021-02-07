@@ -585,3 +585,41 @@ certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-c
 ```
 
 再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。OpenVZ需要开启TUN，否则Anyconnect无法登录。
+
+### 吊销证书
+
+如果要禁止已经颁发出去的证书进行登录，可以吊销证书，或者通过登录脚本控制。
+
+在ocserv.conf配置中有connect-script选项，填写脚本路径：
+```
+connect-script=/etc/ocserv/connectscript
+```
+然后创建该脚本，并允许执行：
+```
+#!/bin/sh
+case $USERNAME in
+    userA|userB|userC)
+        exit 1
+        ;;
+        
+    *)  
+        ;;
+esac
+exit 0
+```
+脚本中的用户名称即为要吊销的证书的名称；只要返回值不为0，就不能连接成功。
+
+### 用户分组
+
+可以将用户分成多个组，这些组存在于其证书上，或在登录时显示供用户选择。这样，用户可以利用每个组应用不同的路由表。
+
+使用证书验证的时候，ocserv根据cert-user-oid和cert-group-oid选项寻找证书对应的区域来确定USERNAME和GROUPNAME。用户证书模板应包含：
+```
+CN=userA
+UNIT=GroupA
+```
+在ocserv.conf配置文件中启用：
+```
+cert-user-oid = 2.5.4.3
+cert-group-oid = 2.5.4.11
+```
