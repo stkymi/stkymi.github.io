@@ -532,6 +532,42 @@ no-route = 223.64.0.0/255.192.0.0
 no-route = 223.128.0.0/255.128.0.0
 
 ```
+
+若全部注释no-route
+
+```
+route = 0.0.0.0/5
+route = 8.0.0.0/7
+route = 11.0.0.0/8
+route = 12.0.0.0/6
+route = 16.0.0.0/4
+route = 32.0.0.0/3
+route = 64.0.0.0/2
+route = 128.0.0.0/3
+route = 160.0.0.0/5
+route = 168.0.0.0/6
+route = 172.0.0.0/12
+route = 172.32.0.0/11
+route = 172.64.0.0/10
+route = 172.128.0.0/9
+route = 173.0.0.0/8
+route = 174.0.0.0/7
+route = 176.0.0.0/4
+route = 192.0.0.0/9
+route = 192.128.0.0/11
+route = 192.160.0.0/13
+route = 192.169.0.0/16
+route = 192.170.0.0/15
+route = 192.172.0.0/14
+route = 192.176.0.0/12
+route = 192.192.0.0/10
+route = 193.0.0.0/8
+route = 194.0.0.0/7
+route = 196.0.0.0/6
+route = 200.0.0.0/5
+route = 208.0.0.0/4
+```
+
 服务器证书
 ```
 ln -s /root/.caddy/acme/acme-v02.api.letsencrypt.org/sites/domain.com/domain.com.crt /etc/pki/ocserv//public/server.crt
@@ -586,7 +622,7 @@ certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-c
 
 再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。OpenVZ需要开启TUN，否则Anyconnect无法登录。
 
-anyconnect客户端均使用p12或pfx这种包含密钥的证书，但是安卓端某些型号导入证书可能有bug，而且安卓端的anyconnect无法加载no-route路由表。
+anyconnect客户端均使用p12或pfx这种包含密钥的证书，但是安卓端某些型号导入证书可能有bug，而且安卓端的anyconnect无法加载no-route路由表。若启用route，则苹果的客户端连接即断开。
 
 openconnect客户端的证书和密钥分开导入，不需要合成p12格式。但是都不支持no-route路由，一般只用安卓端。
 
