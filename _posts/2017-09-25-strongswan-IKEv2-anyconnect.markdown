@@ -586,6 +586,10 @@ certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-c
 
 再修改登录方式为证书验证。无论哪种方式都要启用系统的IP转发功能，否则无法访问网络。OpenVZ需要开启TUN，否则Anyconnect无法登录。
 
+anyconnect客户端均使用p12或pfx这种包含密钥的证书，但是安卓端某些型号导入证书可能有bug，而且安卓端的anyconnect无法加载no-route路由表。
+
+openconnect客户端的证书和密钥分开导入，不需要合成p12格式。但是都不支持no-route路由，一般只用安卓端。
+
 ### 吊销证书
 
 如果要禁止已经颁发出去的证书进行登录，可以吊销证书，或者通过登录脚本控制。
