@@ -624,7 +624,7 @@ certtool --to-p12 --load-privkey user-key.pem --pkcs-cipher 3des-pkcs12 --load-c
 
 anyconnect客户端均使用p12或pfx这种包含密钥的证书，但是安卓端某些型号导入证书可能有bug，而且安卓端的anyconnect无法加载no-route路由表。若启用route，则苹果的客户端连接即断开。
 
-openconnect客户端的证书和密钥分开导入，不需要合成p12格式。但是都不支持no-route路由，一般只用安卓端。
+openconnect客户端的证书和密钥分开导入，不需要合成p12格式。但是都不支持no-route路由，一般只用安卓端。安卓端都只支持route分流，但启用route的话，苹果客户端无法连接。
 
 ### 吊销证书
 
